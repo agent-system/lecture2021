@@ -17,3 +17,19 @@ RUN apt update -y -q && \
     apt autoremove -y && \
     apt clean -q -y && \
     rm -rf /var/lib/apt/lists/
+
+### add model_tools
+WORKDIR /catkin_ws
+
+RUN wstool init src && \
+    wstool set -y -t src jsk_model_tools https://github.com/YoheiKakiuchi/jsk_model_tools.git --git --version=parse_urdf_sensor && \
+    wstool update -t src
+
+RUN apt update -q -qq && \
+    rosdep update -q -y && \
+    rosdep install -q -y -r --from-paths src --ignore-src || echo 'Ignore rosdep error' && \
+    apt clean && \
+    rm -rf /var/lib/apt/lists/*
+
+RUN source /opt/ros/${ROS_DISTRO}/setup.bash && \
+    catkin build euscollada

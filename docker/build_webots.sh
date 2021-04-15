@@ -46,5 +46,5 @@ fi
 ## /userdir -> /jskrobotics
 
 # remove temp images
-docker image rm ${TEMP_IMAGE}
+#docker image rm ${TEMP_IMAGE}
 docker image rm ${TEMP_IMAGE}_xserver
