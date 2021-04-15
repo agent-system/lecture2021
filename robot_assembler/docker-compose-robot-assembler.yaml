@@ -1,3 +1,4 @@
+## docker-compose -p roboasm -f docker-compose-robot-assembler.yaml up
 version: "2.3"
 services:
   xserver:
@@ -6,15 +7,15 @@ services:
     security_opt:
       - seccomp:unconfined
     ports:
-      - "3000:80"
+      - "3000:80" ## 3000 is port for http / open http://localhost:3000 with web browser
     environment:
       - DISPLAY=:1
     healthcheck:
       test: ["CMD-SHELL", "test -e /tmp/.X11-unix/X1"]
       interval: "1s"
       retries: 20
-  simulator:
-    image: temp_robot_assembler:latest_xserver
+  main:
+    image: jskrobotics/agent_system_robot_assembler:2021
     ipc: host
     network_mode: host
     security_opt:
@@ -25,12 +26,14 @@ services:
     environment:
       - DISPLAY=:1
       - DOCKER_ROS_SETUP=/catkin_ws/devel/setup.bash
+      - DOCKER_ROS_IP=localhost
       # - ROS_MASTER_URI=http://localhost:11311
-      # - ROS_IP=localhost
       # - ROS_HOSTNAME=localhost
       # - ROS_HOME=/ros_home
     volumes_from:
       - xserver
     depends_on:
       - xserver
-    volumes: [ '/jskrobotics:/jskrobotics' ]
+    volumes: [ '/tmp/jskrobotics:/jskrobotics' ]
+    ## mount directory /tmp/jskrobotics -> docker:/jsk_robotics
+    ## you can change /tmp/jskrobotics to your favorite directory
