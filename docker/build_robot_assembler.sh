@@ -1,9 +1,9 @@
 #!/bin/bash
 set -e
 
-export BASE_IMAGE=jskrobotics/agent_system_ros_melodic:2021
+export BASE_IMAGE=jskrobotics/agent_system:ros_melodic_2021
 TEMP_IMAGE=temp_robot_assembler:latest
-## output: jskrobotics/agent_system_robot_assembler:2021
+## output: jskrobotics/agent_system:robot_assembler_2021
 
 ### main build
 cd build
@@ -33,7 +33,7 @@ cp docker-compose.yaml ../../docker-compose-robot-assembler.yaml
 cd ..
 
 ### tag for output image
-docker tag ${TEMP_IMAGE}_xserver jskrobotics/agent_system_robot_assembler:2021
+docker tag ${TEMP_IMAGE}_xserver jskrobotics/agent_system:robot_assembler_2021
 
 ### for run/exec
 if [ ! -e ../run_roboasm.sh ]; then

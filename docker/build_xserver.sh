@@ -15,8 +15,8 @@ cd docker-xserver
 
 docker build . --no-cache -f Dockerfile --build-arg BASE_IMAGE=${BASE_IMAGE} -t ${TEMP_IMAGE}
 
-## output: jskrobotics/agent_system_xserver:2021
-docker build . -f Dockerfile.wrap_euslisp --build-arg BASE_IMAGE=${TEMP_IMAGE} -t jskrobotics/agent_system_xserver:2021
+## output: jskrobotics/agent_system:xserver_2021
+docker build . -f Dockerfile.wrap_euslisp --build-arg BASE_IMAGE=${TEMP_IMAGE} -t jskrobotics/agent_system:xserver_2021
 
 ##
 docker image rm ${TEMP_IMAGE}

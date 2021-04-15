@@ -2,7 +2,7 @@
 version: "2.3"
 services:
   xserver:
-    image: jskrobotics/agent_system_xserver:2021
+    image: jskrobotics/agent_system:xserver_2021
     ipc: host
     security_opt:
       - seccomp:unconfined
@@ -15,7 +15,7 @@ services:
       interval: "1s"
       retries: 20
   main:
-    image: jskrobotics/agent_system_webots:2021
+    image: jskrobotics/agent_system:webots_2021
     ipc: host
     network_mode: host
     security_opt:

@@ -1,9 +1,9 @@
 #!/bin/bash
 set -e
 
-export BASE_IMAGE=jskrobotics/agent_system_ros_melodic:2021
+export BASE_IMAGE=jskrobotics/agent_system:ros_melodic_2021
 TEMP_IMAGE=temp_webots:latest
-## output: jskrobotics/agent_system_webots:2021
+## output: jskrobotics/agent_system:webots_2021
 
 ### main build
 cd build
@@ -32,7 +32,7 @@ cp docker-compose.yaml ../../docker-compose-webots.yaml
 cd ..
 
 ### buid for urdf2webots
-docker build . --no-cache -f ../dockerfiles/Dockerfile.urdf2webots --build-arg BASE_IMAGE=${TEMP_IMAGE}_xserver --tag jskrobotics/agent_system_webots:2021
+docker build . --no-cache -f ../dockerfiles/Dockerfile.urdf2webots --build-arg BASE_IMAGE=${TEMP_IMAGE}_xserver --tag jskrobotics/agent_system:webots_2021
 
 ### for run/exec
 if [ ! -e ../run_webots.sh ]; then
