@@ -8,11 +8,16 @@ TEMP_IMAGE=temp_robot_assembler:latest
 ### main build
 cd build
 
-wget https://raw.githubusercontent.com/agent-system/robot_assembler/master/docker/Dockerfile.assembler -O Dockerfile.assembler
+if [ ! -e Dockerfile.assembler ]; then
+    wget https://raw.githubusercontent.com/agent-system/robot_assembler/master/docker/Dockerfile.assembler -O Dockerfile.assembler
+fi
 
 docker build . --no-cache -f Dockerfile.assembler --tag ${TEMP_IMAGE} --build-arg BASE_IMAGE=${BASE_IMAGE}
 
 ### wrap for xserver
+if [ -e robot_assembler_wrapper ]; then
+    rm -rf robot_assembler_wrapper
+fi
 git clone --depth=1 -b xserver_nvidia https://github.com/YoheiKakiuchi/misc_docker.git robot_assembler_wrapper
 
 cd robot_assembler_wrapper
@@ -31,10 +36,13 @@ cd ..
 docker tag ${TEMP_IMAGE}_xserver jskrobotics/agent_system_robot_assembler:2021
 
 ### for run/exec
-wget https://github.com/YoheiKakiuchi/misc_docker/raw/master/run.sh  -O ../run_roboasm.sh
-wget https://github.com/YoheiKakiuchi/misc_docker/raw/master/exec.sh -O ../exec_roboasm.sh
+if [ ! -e ../run_roboasm.sh ]; then
+    wget https://github.com/YoheiKakiuchi/misc_docker/raw/master/run.sh  -O ../run_roboasm.sh
+fi
+if [ ! -e ../exec_roboasm.sh ]; then
+    wget https://github.com/YoheiKakiuchi/misc_docker/raw/master/exec.sh -O ../exec_roboasm.sh
+fi
 
 # remove temp images
 docker image rm ${TEMP_IMAGE}
 docker image rm ${TEMP_IMAGE}_xserver
-cd ..

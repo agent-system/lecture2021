@@ -8,11 +8,16 @@ TEMP_IMAGE=temp_webots:latest
 ### main build
 cd build
 
-wget https://github.com/cyberbotics/webots-docker/raw/master/Dockerfile -O Dockerfile.webots-docker
+if [ ! -e Dockerfile.webots-docker ]; then
+    wget https://github.com/cyberbotics/webots-docker/raw/master/Dockerfile -O Dockerfile.webots-docker
+fi
 
 docker build . --file Dockerfile.webots-docker --tag ${TEMP_IMAGE} --build-arg BASE_IMAGE=${BASE_IMAGE} --build-arg WEBOTS_PACKAGE_PREFIX=_ubuntu-18.04
 
 ### wrap for xserver
+if [ -e webots_wrapper ]; then
+    rm -rf webots_wrapper
+fi
 git clone --depth=1 -b xserver_nvidia https://github.com/YoheiKakiuchi/misc_docker.git webots_wrapper
 
 cd webots_wrapper
@@ -30,8 +35,12 @@ cd ..
 docker build . --no-cache -f ../dockerfiles/Dockerfile.urdf2webots --build-arg BASE_IMAGE=${TEMP_IMAGE}_xserver --tag jskrobotics/agent_system_webots:2021
 
 ### for run/exec
-wget https://github.com/YoheiKakiuchi/misc_docker/raw/master/run.sh  -O ../run_webots.sh
-wget https://github.com/YoheiKakiuchi/misc_docker/raw/master/exec.sh -O ../exec_webots.sh
+if [ ! -e ../run_webots.sh ]; then
+    wget https://github.com/YoheiKakiuchi/misc_docker/raw/master/run.sh  -O ../run_webots.sh
+fi
+if [ ! -e ../exec_webots.sh ]; then
+    wget https://github.com/YoheiKakiuchi/misc_docker/raw/master/exec.sh -O ../exec_webots.sh
+fi
 ## image: ubuntu:18.04 ->
 ## container: misc_docker ->
 ## /userdir -> /jskrobotics
@@ -39,4 +48,3 @@ wget https://github.com/YoheiKakiuchi/misc_docker/raw/master/exec.sh -O ../exec_
 # remove temp images
 docker image rm ${TEMP_IMAGE}
 docker image rm ${TEMP_IMAGE}_xserver
-cd ..

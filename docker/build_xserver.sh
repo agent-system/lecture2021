@@ -7,7 +7,9 @@ TEMP_IMAGE=temp_xserver:latest
 ##
 cd build
 
-git clone -b build_from_baseimage https://github.com/YoheiKakiuchi/docker-xserver.git
+if [ ! -e docker-xserver ]; then
+    git clone --depth=1 -b build_from_baseimage https://github.com/YoheiKakiuchi/docker-xserver.git
+fi
 
 cd docker-xserver
 
@@ -18,4 +20,3 @@ docker build . -f Dockerfile.wrap_euslisp --build-arg BASE_IMAGE=${TEMP_IMAGE} -
 
 ##
 docker image rm ${TEMP_IMAGE}
-cd ../..
