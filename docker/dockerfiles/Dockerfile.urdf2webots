@@ -1,0 +1,19 @@
+ARG BASE_IMAGE
+FROM ${BASE_IMAGE}
+
+SHELL ["/bin/bash", "-c"]
+ENV DEBIAN_FRONTEND noninteractive
+
+RUN apt update -y -q && \
+    apt install -q -qq -y python-pip && \
+    apt autoremove -y && \
+    apt clean -q -y && \
+    rm -rf /var/lib/apt/lists/
+
+RUN pip install urdf2webots
+
+RUN apt update -y -q && \
+    apt install -q -qq -y ros-melodic-webots-ros && \
+    apt autoremove -y && \
+    apt clean -q -y && \
+    rm -rf /var/lib/apt/lists/
