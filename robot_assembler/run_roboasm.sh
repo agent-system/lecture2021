@@ -1,7 +1,7 @@
 #!/bin/bash
 
 OPT=${DOCKER_OPTION} ## -it --cpuset-cpus 0-2
-iname=${DOCKER_IMAGE:-"jsk_robotics/agent_system_robot_assembler:2021"} ##
+iname=${DOCKER_IMAGE:-"jskrobotics/agent_system_robot_assembler:2021"} ##
 cname=${DOCKER_CONTAINER:-"proc_robot_assembler"} ## name of container (should be same as in exec.sh)
 
 DEFAULT_USER_DIR="$(pwd)"

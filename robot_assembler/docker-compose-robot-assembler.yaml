@@ -1,7 +1,7 @@
 version: "2.3"
 services:
   xserver:
-    image: devrt/xserver
+    image: jskrobotics/agent_system_xserver:2021
     ipc: host
     security_opt:
       - seccomp:unconfined

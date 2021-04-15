@@ -1,9 +1,9 @@
 #!/bin/bash
 set -e
 
-export BASE_IMAGE=jsk_robotics/agent_system_ros_melodic:2021
+export BASE_IMAGE=jskrobotics/agent_system_ros_melodic:2021
 TEMP_IMAGE=temp_webots:latest
-## output: jsk_robotics/agent_system_webots:2021
+## output: jskrobotics/agent_system_webots:2021
 
 ### main build
 cd build
@@ -27,7 +27,7 @@ cp docker-compose.yaml ../../docker-compose-webots.yaml
 cd ..
 
 ### buid for urdf2webots
-docker build . --no-cache -f ../dockerfiles/Dockerfile.urdf2webots --build-arg BASE_IMAGE=${TEMP_IMAGE}_xserver --tag jsk_robotics/agent_system_webots:2021
+docker build . --no-cache -f ../dockerfiles/Dockerfile.urdf2webots --build-arg BASE_IMAGE=${TEMP_IMAGE}_xserver --tag jskrobotics/agent_system_webots:2021
 
 ### for run/exec
 wget https://github.com/YoheiKakiuchi/misc_docker/raw/master/run.sh  -O ../run_webots.sh
