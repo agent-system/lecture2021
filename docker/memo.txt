@@ -1,0 +1,14 @@
+
+original_base: nvidia/opengl:1.2-glvnd-runtime-ubuntu18.04
+ubuntu: jskrobotics/agent_system_ubuntu18.04:2021// build_base.sh
+  xserver: jskrobotics/agent_system_xserver:2021 // build_xserver.sh
+  ros: jskrobotics/agent_system_ros_melodic:2021 // build_base.sh
+    webots: jskrobotics/agent_system_webots:2021 // build_webots.sh
+    robot-assembler: jskrobotics/agent_system_robot_assembler:2021 // build_robot_assembler.sh
+
+## docker push jskrobotics/agent_system_ubuntu18.04:2021
+## docker push jskrobotics/agent_system_ros_melodic:2021
+docker push jskrobotics/agent_system_xserver:2021
+docker push jskrobotics/agent_system_webots:2021
+docker push jskrobotics/agent_system_robot_assembler:2021
+
