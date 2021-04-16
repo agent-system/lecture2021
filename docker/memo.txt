@@ -3,12 +3,30 @@ original_base: nvidia/opengl:1.2-glvnd-runtime-ubuntu18.04
 ubuntu: jskrobotics/agent_system:ubuntu18.04_2021// build_base.sh
   xserver: jskrobotics/agent_system:xserver_2021 // build_xserver.sh
   ros: jskrobotics/agent_system:ros_melodic_2021 // build_base.sh
+    gazebo11_dart:  jskrobotics/agent_system:gazebo11_dart_2021 // build_gazebo.sh
     webots: jskrobotics/agent_system:webots_2021 // build_webots.sh
     robot-assembler: jskrobotics/agent_system:robot_assembler_2021 // build_robot_assembler.sh
 
-## docker push jskrobotics/agent_system:ubuntu18.04_2021
-## docker push jskrobotics/agent_system:ros_melodic_2021
-docker push jskrobotics/agent_system:xserver_2021
-docker push jskrobotics/agent_system:webots_2021
-docker push jskrobotics/agent_system:robot_assembler_2021
+# docker push jskrobotics/agent_system:ubuntu18.04_2021
+# docker push jskrobotics/agent_system:ros_melodic_2021
+# docker push jskrobotics/agent_system:xserver_2021
+# docker push jskrobotics/agent_system:webots_2021
+# docker push jskrobotics/agent_system:robot_assembler_2021
+docker push -a jskrobotics/agent_system
 
+###
+latest=2021
+build_date=2021.04.15
+
+for name in ubuntu18.04 ros_melodic xserver webots robot_assembler gazebo11_dart; do
+  docker tag jskrobotics/agent_system:${name}_${latest} jskrobotics/agent_system:${name}_${build_date}
+  docker push jskrobotics/agent_system:${name}_${build_date}
+  docker push jskrobotics/agent_system:${name}_${latest}
+done
+
+suffix=${latest}
+suffix=${build_date}
+for name in ubuntu18.04 xserver ros_melodic webots robot_assembler gazebo11_dart; do
+  docker pull jskrobotics/agent_system:${name}_${suffix}
+done
+###
