@@ -32,4 +32,4 @@ RUN mkdir /catkin_ws; cd /catkin_ws && \
     source /opt/ros/${ROS_DISTRO}/setup.bash && \
     catkin config --install && \
     catkin build euscollada && \
-    catkin build -l -b -d -y
+    catkin clean -l -b -d -y
