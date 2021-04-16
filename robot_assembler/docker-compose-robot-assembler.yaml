@@ -25,15 +25,16 @@ services:
     #command: [ /entrypoint_xserver.sh, roslaunch, target_pkg, target.launch ]
     environment:
       - DISPLAY=:1
-      - DOCKER_ROS_SETUP=/catkin_ws/devel/setup.bash
+      - DOCKER_ROS_SETUP=/catkin_ws/install/setup.bash
       - DOCKER_ROS_IP=localhost
       # - ROS_MASTER_URI=http://localhost:11311
+      # - ROS_IP=localhost
       # - ROS_HOSTNAME=localhost
       # - ROS_HOME=/ros_home
+              ## mount directory /tmp/jskrobotics -> docker:/jsk_robotics
+    volumes:  ## you can change /tmp/jskrobotics to your favorite directory
+      - '/tmp/jskrobotics:/jskrobotics'
     volumes_from:
       - xserver
     depends_on:
       - xserver
-    volumes: [ '/tmp/jskrobotics:/jskrobotics' ]
-    ## mount directory /tmp/jskrobotics -> docker:/jsk_robotics
-    ## you can change /tmp/jskrobotics to your favorite directory

@@ -1,13 +1,13 @@
 #!/bin/bash
 
 OPT=${DOCKER_OPTION} ## -it --cpuset-cpus 0-2
-iname=${DOCKER_IMAGE:-"jskrobotics/agent_system:webots_2021"} ##
-cname=${DOCKER_CONTAINER:-"proc_webots"} ## name of container (should be same as in exec.sh)
+iname=${DOCKER_IMAGE:-"jskrobotics/agent_system:gazebo11_dart_2021"} ##
+cname=${DOCKER_CONTAINER:-"proc_gazebo"} ## name of container (should be same as in exec.sh)
 
 DEFAULT_USER_DIR="$(pwd)"
 mtdir=${MOUNTED_DIR:-$DEFAULT_USER_DIR}
 
-VAR=${@:-"webots"}
+VAR=${@:-"gazebo"}
 #VAR=${@:-"bash --rcfile /entryrc"}
 if [ $# -eq 0 -a -z "$OPT" ]; then
     OPT=-it
@@ -32,7 +32,7 @@ docker run ${OPT}    \
     ${NET_OPT}       \
     --env="DISPLAY"  \
     --env="DOCKER_ROS_IP=localhost" \
-    --env="DOCKER_ROS_SETUP=/catkin_ws/install/setup.bash" \
+    --env="DOCKER_ROS_SETUP=/gazebo_ros_pkg_ws/install/setup.bash" \
     --env="QT_X11_NO_MITSHM=1" \
     --volume="/tmp/.X11-unix:/tmp/.X11-unix:rw" \
     --name=${cname} \

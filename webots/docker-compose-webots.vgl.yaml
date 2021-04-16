@@ -1,3 +1,5 @@
+## before running: xhost +si:localuser:root
+## after running: xhost -local:root
 ## docker-compose -p webots -f docker-compose-webots.yaml up
 version: "2.3"
 services:
@@ -20,11 +22,13 @@ services:
     network_mode: host
     security_opt:
       - seccomp:unconfined
-    command: [bash, -c, 'until xset q; do sleep 3; done && webots']
+    runtime: nvidia
+    command: [bash, -c, 'until xset q; do sleep 3; done && vglrun webots']
     #command: [bash, -c, 'while true; do sleep 5; done'] ##for debug
     #command: [ /entrypoint_xserver.sh, roslaunch, target_pkg, target.launch ]
     environment:
       - DISPLAY=:1
+      - VGL_DISPLAY=:0 ## naitive display (running opengl)
       - DOCKER_ROS_SETUP=/catkin_ws/install/setup.bash
       - DOCKER_ROS_IP=localhost
       # - ROS_MASTER_URI=http://localhost:11311
@@ -33,6 +37,7 @@ services:
       # - ROS_HOME=/ros_home
               ## mount directory /tmp/jskrobotics -> docker:/jsk_robotics
     volumes:  ## you can change /tmp/jskrobotics to your favorite directory
+      - /tmp/.X11-unix/X0:/tmp/.X11-unix/X0
       - '/tmp/jskrobotics:/jskrobotics'
     volumes_from:
       - xserver

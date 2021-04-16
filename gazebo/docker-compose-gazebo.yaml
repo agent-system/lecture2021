@@ -1,4 +1,4 @@
-## docker-compose -p webots -f docker-compose-webots.yaml up
+## docker-compose -p gazebo -f docker-compose-gazebo.yaml up
 version: "2.3"
 services:
   xserver:
@@ -15,17 +15,17 @@ services:
       interval: "1s"
       retries: 20
   main:
-    image: jskrobotics/agent_system:webots_2021
+    image: jskrobotics/agent_system:gazebo11_dart_2021
     ipc: host
     network_mode: host
     security_opt:
       - seccomp:unconfined
-    command: [bash, -c, 'until xset q; do sleep 3; done && webots']
+    command: [bash, -c, 'until xset q; do sleep 3; done && gazebo']
     #command: [bash, -c, 'while true; do sleep 5; done'] ##for debug
     #command: [ /entrypoint_xserver.sh, roslaunch, target_pkg, target.launch ]
     environment:
       - DISPLAY=:1
-      - DOCKER_ROS_SETUP=/catkin_ws/install/setup.bash
+      - DOCKER_ROS_SETUP=/gazebo_ros_pkg_ws/install/setup.bash
       - DOCKER_ROS_IP=localhost
       # - ROS_MASTER_URI=http://localhost:11311
       # - ROS_IP=localhost

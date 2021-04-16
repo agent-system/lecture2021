@@ -32,7 +32,7 @@ docker run ${OPT}    \
     ${NET_OPT}       \
     --env="DISPLAY"  \
     --env="DOCKER_ROS_IP=localhost" \
-    --env="DOCKER_ROS_SETUP=/catkin_ws/devel/setup.bash" \
+    --env="DOCKER_ROS_SETUP=/catkin_ws/install/setup.bash" \
     --env="QT_X11_NO_MITSHM=1" \
     --volume="/tmp/.X11-unix:/tmp/.X11-unix:rw" \
     --name=${cname} \
