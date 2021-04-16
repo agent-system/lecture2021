@@ -1,6 +1,9 @@
 ARG BASE_IMAGE
 FROM ${BASE_IMAGE}
 
+ARG CATKIN_WS
+ARG CATKIN_BUILD
+
 SHELL ["/bin/bash", "-c"]
 ENV DEBIAN_FRONTEND noninteractive
 
@@ -20,16 +23,17 @@ RUN apt update -y -q && \
 
 ### add model_tools
 WORKDIR /
-RUN mkdir /catkin_ws; cd /catkin_ws && \
-    wstool init src && \
+RUN if [ "${CATKIN_WS}" = "" ]; then mkdir /catkin_ws; cd /catkin_ws; wstool init src; else cd ${CATKIN_WS}; fi && \
     wstool set -y -t src jsk_model_tools https://github.com/YoheiKakiuchi/jsk_model_tools.git --git --version=parse_urdf_sensor && \
-    wstool update -t src && \
+    wstool update -t src jsk_model_tools && \
+    source /opt/ros/${ROS_DISTRO}/setup.bash && \
     apt update -q -qq && \
     rosdep update -q -y && \
     rosdep install -q -y -r --from-paths src --ignore-src || echo 'Ignore rosdep error' && \
     apt clean && \
     rm -rf /var/lib/apt/lists/* && \
     source /opt/ros/${ROS_DISTRO}/setup.bash && \
+    catkin clean -y && \
     catkin config --install && \
-    catkin build euscollada && \
+    catkin build euscollada ${CATKIN_BUILD} && \
     catkin clean -l -b -d -y
