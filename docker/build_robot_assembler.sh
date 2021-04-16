@@ -6,6 +6,9 @@ TEMP_IMAGE=temp_robot_assembler:latest
 ## output: jskrobotics/agent_system:robot_assembler_2021
 
 ### main build
+if [ ! -e build ]; then
+    mkdir build
+fi
 cd build
 
 if [ ! -e Dockerfile.assembler ]; then

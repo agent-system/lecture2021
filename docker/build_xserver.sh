@@ -5,6 +5,9 @@ export BASE_IMAGE=nvidia/opengl:1.2-glvnd-runtime-ubuntu18.04
 TEMP_IMAGE=temp_xserver:latest
 
 ##
+if [ ! -e build ]; then
+    mkdir build
+fi
 cd build
 
 if [ ! -e docker-xserver ]; then

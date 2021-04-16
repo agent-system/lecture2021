@@ -6,6 +6,9 @@ TEMP_IMAGE=temp_webots:latest
 ## output: jskrobotics/agent_system:webots_2021
 
 ### main build
+if [ ! -e build ]; then
+    mkdir build
+fi
 cd build
 
 if [ ! -e Dockerfile.webots-docker ]; then

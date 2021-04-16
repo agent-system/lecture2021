@@ -5,6 +5,9 @@ TEMP_IMAGE=temp_gazebo:latest
 ## output: jskrobotics/agent_system:gazebo11_dart_2021
 
 ### main build
+if [ ! -e build ]; then
+    mkdir build
+fi
 cd build
 
 if [ ! -e Dockerfile.gazebo_dart ]; then
@@ -13,7 +16,6 @@ fi
 
 docker build . --no-cache -f Dockerfile.gazebo_dart --tag ${TEMP_IMAGE} --build-arg BASE_IMAGE=${BASE_IMAGE}
 
-exit 0
 
 ### wrap for xserver
 if [ -e gazebo_wrapper ]; then
@@ -23,7 +25,7 @@ git clone --depth=1 -b xserver_nvidia https://github.com/YoheiKakiuchi/misc_dock
 
 cd gazebo_wrapper
 
-./wrap_for_docker_xserver.sh ${TEMP_IMAGE} --ros --virtualgl
+./wrap_for_docker_xserver.sh ${TEMP_IMAGE} --ros
 
 # fix docker-compose
 #sed -i -e "s@#command: // should be set at supervisord.conf@command: [bash, -c, 'until xset q; do sleep 3; done \&\& rosrun gazebo_ros gazebo ']@" docker-compose.yaml
@@ -39,11 +41,11 @@ cd ..
 docker tag ${TEMP_IMAGE}_xserver jskrobotics/agent_system:gazebo11_dart_2021
 
 ### for run/exec
-if [ ! -e ../run_roboasm.sh ]; then
-    wget https://github.com/YoheiKakiuchi/misc_docker/raw/master/run.sh  -O ../run_roboasm.sh
+if [ ! -e ../run_gazebo.sh ]; then
+    wget https://github.com/YoheiKakiuchi/misc_docker/raw/master/run.sh  -O ../run_gazebo.sh
 fi
-if [ ! -e ../exec_roboasm.sh ]; then
-    wget https://github.com/YoheiKakiuchi/misc_docker/raw/master/exec.sh -O ../exec_roboasm.sh
+if [ ! -e ../exec_gazebo.sh ]; then
+    wget https://github.com/YoheiKakiuchi/misc_docker/raw/master/exec.sh -O ../exec_gazebo.sh
 fi
 
 #docker image rm ${TEMP_IMAGE}
