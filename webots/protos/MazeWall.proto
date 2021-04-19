@@ -1,0 +1,39 @@
+#VRML_SIM R2021a utf8
+# license: Copyright Cyberbotics Ltd. Licensed for use only with Webots.
+# license url: https://cyberbotics.com/webots_assets_license
+# tags: static
+# A configurable rectangle arena composed of a floor surrounded by walls.
+
+PROTO MazeWall [
+ field SFVec3f    translation     0 0 0
+ field SFRotation rotation        0 1 0 0
+ field SFString   name            "maze wall"
+ field SFString   contactMaterial "default"            # Is `Solid.contactMaterial`.
+ field SFFloat    wallThickness   0.01                 # Defines the thickness of the walls.
+ field SFFloat    wallHeight      0.1                  # Defines the height of the walls.
+ field SFFloat    wallWidth       0.3                  # Defines the height of the walls.
+ field SFNode     wallAppearance  BrushedAluminium {}  # Defines the appearance of the wall.
+]
+{
+   %{
+      local wbcore = require("wbcore")
+      local wallHeight    = fields.wallHeight.value
+      local wallWidth     = fields.wallWidth.value
+      local wallThickness = fields.wallThickness.value
+   }%
+   Solid {
+      translation IS translation
+      rotation    IS rotation
+      children [
+         SolidBox {
+            translation 0 %{= wallHeight / 2 }% 0
+            name "wall"
+            size %{= wallThickness }% %{= wallHeight }% %{= wallWidth }%
+            appearance      IS wallAppearance
+            contactMaterial IS contactMaterial
+         }
+      ]
+      name IS name
+      model "maze wall"
+   }
+}
