@@ -9,6 +9,8 @@ ENV ROS_DISTRO=melodic
 SHELL ["/bin/bash", "-c"]
 ENV DEBIAN_FRONTEND noninteractive
 
+MAINTAINER AgentSystem(JSK Lab.) YoheiKakiuchi <youhei@jsk.imi.i.u-tokyo.ac.jp>
+
 RUN apt update -y -q && \
     apt install -q -qq -y apt-utils mesa-utils less x11-xserver-utils x11-utils && \
     apt install -q -qq -y gnupg curl wget lsb-release && \

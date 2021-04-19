@@ -7,6 +7,8 @@ ARG CATKIN_BUILD
 SHELL ["/bin/bash", "-c"]
 ENV DEBIAN_FRONTEND noninteractive
 
+MAINTAINER AgentSystem(JSK Lab.) YoheiKakiuchi <youhei@jsk.imi.i.u-tokyo.ac.jp>
+
 RUN apt update -y -q && \
     apt install -q -qq -y python-pip && \
     apt autoremove -y && \
