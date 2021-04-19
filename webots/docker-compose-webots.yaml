@@ -21,6 +21,7 @@ services:
     security_opt:
       - seccomp:unconfined
     command: [bash, -c, 'until xset q; do sleep 3; done && webots']
+    #command: [bash, -c, 'until xset q; do sleep 3; done && roslaunch robot_assembler kxr_assembler.launch']
     #command: [bash, -c, 'while true; do sleep 5; done'] ##for debug
     #command: [ /entrypoint_xserver.sh, roslaunch, target_pkg, target.launch ]
     environment:
