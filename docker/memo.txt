@@ -7,6 +7,13 @@ ubuntu: jskrobotics/agent_system:ubuntu18.04_2021// build_base.sh
        webots: jskrobotics/agent_system:webots_2021 // build_webots.sh
          gazebo11_dart:  jskrobotics/agent_system:gazebo11_dart_2021 // build_gazebo.sh
 
+## order of docker build 
+build_base.sh
+build_xserver.sh
+build_robot_assembler.sh
+build_webots.sh
+build_gazebo.sh
+
 # docker push jskrobotics/agent_system:ubuntu18.04_2021
 # docker push jskrobotics/agent_system:ros_melodic_2021
 # docker push jskrobotics/agent_system:xserver_2021
