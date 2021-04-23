@@ -3,7 +3,7 @@ WorldInfo {
   info [
     "generated from eus2wrl"
   ]
-  title "kxrl2l5inaba demo"
+  title "kxrl2l6anzaifly demo"
   basicTimeStep 16
   coordinateSystem "NUE" 
   contactProperties [
@@ -147,7 +147,7 @@ DEF WATER Fluid {
   boundingObject USE WATER_BOX
   locked TRUE
 }
-kxrl2l5inaba {
+kxrl2l6anzaifly {
   translation 0.0 0.3 0.0
   rotation 1.000000 0.000000 0.0 -1.57 
   controller "hello_world_demo"

@@ -1,23 +1,27 @@
 #VRML_SIM R2021a utf8
 WorldInfo {
   info [
+    "generated from eus2wrl"
   ]
-  title "Pool dog"
-  basicTimeStep 4
-  coordinateSystem "NUE"
+  title "kxrl2makabe demo"
+  basicTimeStep 16
+  coordinateSystem "NUE" 
+  contactProperties [
+     ContactProperties {
+      material1 "body"
+      material2 "floor"
+      coulombFriction [ 0.5 ]
+    }
+  ]
 }
 Viewpoint {
-  orientation -0.3631869715851604 0.9133349285429613 0.18415898559186192 1.10338
-  position 5.0 3.0 3.0
+  fieldOfView 1.1
+  position 2.0 1.5 1.5
+  orientation  -0.363187 0.913335 0.184159 1.1
 }
 TexturedBackground {
 }
 TexturedBackgroundLight {
-}
-kxrl2makabe {
-  translation -2.0 0.23 0.0
-  rotation 1.000000 0.000000 0.0 -1.57 
-  controller "hello_world_demo"
 }
 DEF FLOOR Solid {
   children [
@@ -142,4 +146,9 @@ DEF WATER Fluid {
   ]
   boundingObject USE WATER_BOX
   locked TRUE
+}
+kxrl2makabe {
+  translation 0.0 0.3 0.0
+  rotation 1.000000 0.000000 0.0 -1.57 
+  controller "hello_world_demo"
 }
