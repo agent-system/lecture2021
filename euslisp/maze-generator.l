@@ -75,6 +75,20 @@
    ;;(setq walls (send wall-table :list-values))
    self
    )
+  (:create-occupied-matrix ()
+   (let ((yy (length node-matrix))
+         (xx (length (elt node-matrix 0)))
+         ret)
+     (setq ret (instantiate vector yy))
+     (dotimes (i yy)
+       (let ((dst (instantiate vector xx))
+             (src (elt node-matrix i)))
+         (setf (elt ret i) dst)
+         (dotimes (j xx)
+           (setf (elt dst j) (if (elt src i) :node)))
+         ))
+     ret
+     ))
   ;;
   (:node (x y) (aref (aref node-matrix y) x))
   (:set-node (x y n) (setf (aref (aref node-matrix y) x) n))
@@ -96,6 +110,7 @@
   (:set-goal (x y)
    (send self :goal-state (send self :node x y))
    )
+  (:reset-goal () (send self :goal-state :dymmy))
   (:set-start (x y)
    (send self :start-state (send self :node x y))
    )
