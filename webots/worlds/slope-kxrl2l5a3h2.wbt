@@ -3,7 +3,7 @@ WorldInfo {
   info [
     "generated from eus2wrl"
   ]
-  title "kxrl2l5inaba demo"
+  title "kxrl2l5a3h2 demo"
   basicTimeStep 16
   coordinateSystem "NUE" 
   contactProperties [
@@ -128,27 +128,8 @@ DEF AQUARIUM Solid {
   boundingObject USE SIDES_GROUP
   locked TRUE
 }
-DEF WATER Fluid {
-  translation 0 -0.125 0
-  name "fluid"
-  children [
-    DEF WATER_BOX Shape {
-      appearance PBRAppearance {
-        baseColor 0.7254901960784313 0.8705882352941177 1
-        transparency 0.7
-        roughness 0.2
-        metalness 0
-      }
-      geometry Box {
-        size 12 0.25 8
-      }
-    }
-  ]
-  boundingObject USE WATER_BOX
-  locked TRUE
-}
-kxrl2l5inaba {
-  translation 0.0 0.3 0.0
+kxrl2l5a3h2 {
+  translation 0.0 0.23 0.0
   rotation 1.000000 0.000000 0.0 -1.57 
   controller "hello_world_demo"
 }

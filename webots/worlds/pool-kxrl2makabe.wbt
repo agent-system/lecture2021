@@ -3,16 +3,9 @@ WorldInfo {
   info [
     "generated from eus2wrl"
   ]
-  title "kxrl2l5inaba demo"
+  title "kxrl2makabe demo"
   basicTimeStep 16
   coordinateSystem "NUE" 
-  contactProperties [
-     ContactProperties {
-      material1 "body"
-      material2 "floor"
-      coulombFriction [ 0.5 ]
-    }
-  ]
 }
 Viewpoint {
   fieldOfView 1.1
@@ -22,59 +15,6 @@ Viewpoint {
 TexturedBackground {
 }
 TexturedBackgroundLight {
-}
-DEF FLOOR Solid {
-  children [
-    DEF GND Group {
-      children [
-        Transform {
-          translation -4.42876 -0.25 0
-          children [
-            Shape {
-              appearance DEF GROUND_APPEARANCE PBRAppearance {
-                baseColorMap ImageTexture {
-                  url [
-                    "textures/texture_grid.png"
-                  ]
-                }
-                roughness 1
-                metalness 0
-              }
-              geometry Box {
-                size 3.14249 0.001 8
-              }
-            }
-          ]
-        }
-        Transform {
-          rotation 0 0 1 0.087266
-          children [
-            Shape {
-              appearance USE GROUND_APPEARANCE
-              geometry Box {
-                size 5.73686 0.001 8
-              }
-            }
-          ]
-        }
-        Transform {
-          translation 4.42876 0.25 0
-          children [
-            Shape {
-              appearance USE GROUND_APPEARANCE
-              geometry Box {
-                size 3.14249 0.001 8
-              }
-            }
-          ]
-        }
-      ]
-    }
-  ]
-  name "ground"
-  contactMaterial "floor"
-  boundingObject USE GND
-  locked TRUE
 }
 DEF AQUARIUM Solid {
   translation 0 0.1 0
@@ -147,7 +87,7 @@ DEF WATER Fluid {
   boundingObject USE WATER_BOX
   locked TRUE
 }
-kxrl2l5inaba {
+kxrl2makabe {
   translation 0.0 0.3 0.0
   rotation 1.000000 0.000000 0.0 -1.57 
   controller "hello_world_demo"
