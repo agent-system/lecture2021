@@ -13,7 +13,7 @@ MAINTAINER AgentSystem(JSK Lab.) YoheiKakiuchi <youhei@jsk.imi.i.u-tokyo.ac.jp>
 
 RUN apt update -y -q && \
     apt install -q -qq -y apt-utils mesa-utils less x11-xserver-utils x11-utils && \
-    apt install -q -qq -y gnupg curl wget lsb-release && \
+    apt install -q -qq -y gnupg curl wget lsb-release wmctrl && \
     apt autoremove -y && \
     apt clean -q -y && \
     rm -rf /var/lib/apt/lists/

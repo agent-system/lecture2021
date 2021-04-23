@@ -23,7 +23,7 @@ docker push -a jskrobotics/agent_system
 
 ###
 latest=2021
-build_date=2021.04.15
+build_date=2021.04.21
 
 latest=2021
 for name in ubuntu18.04 ros_melodic xserver robot_assembler webots gazebo11_dart; do docker push jskrobotics/agent_system:${name}_${latest} done
@@ -31,7 +31,7 @@ for name in ubuntu18.04 ros_melodic xserver robot_assembler webots gazebo11_dart
 for name in ubuntu18.04 ros_melodic xserver robot_assembler webots gazebo11_dart; do
   docker tag jskrobotics/agent_system:${name}_${latest} jskrobotics/agent_system:${name}_${build_date}
   docker push jskrobotics/agent_system:${name}_${build_date}
-  docker push jskrobotics/agent_system:${name}_${latest}
+#  docker push jskrobotics/agent_system:${name}_${latest}
 done
 
 suffix=${latest}
