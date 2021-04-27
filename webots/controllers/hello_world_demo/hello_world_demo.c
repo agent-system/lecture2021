@@ -47,8 +47,14 @@ int main(int argc, char **argv) {
   printf("Available devices:\n");
   for (i = 0; i < n_devices; i++) {
     WbDeviceTag tag = wb_robot_get_device_by_index(i);
-    const char *name = wb_device_get_name(tag);
-    printf(" Device #%d name = %s\n", i, name);
+    //const char *model = wb_device_get_model(tag);
+    const char *name  = wb_device_get_name(tag);
+    WbNodeType type   = wb_device_get_node_type(tag);
+    // type is /usr/local/webots/include/controller/c/webots/nodes.h
+    printf(" Device #%d name = %s (%d)\n", i, name, type);
+    if (type == WB_NODE_CAMERA) {
+      wb_camera_enable(tag, 64);
+    }
   }
 
   WbDeviceTag l_arm_shx = wb_robot_get_device("larm-shoulder-p");
@@ -56,7 +62,7 @@ int main(int argc, char **argv) {
   WbDeviceTag r_arm_shx = wb_robot_get_device("rarm-shoulder-p");
   WbDeviceTag r_arm_elx = wb_robot_get_device("rarm-shoulder-r");
   WbDeviceTag head_neck_p = wb_robot_get_device("head-neck-p");
-  
+
   time_step = 64;
   camera_time_step = 64;
   /* get and enable the camera and accelerometer */
@@ -73,19 +79,24 @@ int main(int argc, char **argv) {
   int n_steps_to_achieve__target = 1000 / TIME_STEP;  // 1 second
   double ratio;
 #if 1
+  if (l_arm_shx != 0 || r_arm_shx != 0) {
   for (i = 0; i < n_steps_to_achieve__target; i++) {
     ratio = (double)i / n_steps_to_achieve__target;
     wb_motor_set_position(l_arm_shx, l_arm_shx_target * ratio);
     wb_motor_set_position(r_arm_shx, r_arm_shx_target * ratio);
     my_step();
   }
+  }
 #endif
 
   double initTime = wb_robot_get_time();
   while (true) {
     double time = wb_robot_get_time() - initTime;
+    if ( l_arm_elx != 0 )
     wb_motor_set_position(l_arm_elx, -0.6 * (sin(2 * time) - 1.0));
+    if ( r_arm_elx != 0 )
     wb_motor_set_position(r_arm_elx, 0.6 * (sin(2 * time) - 1.0));
+    if ( head_neck_p != 0 )
     wb_motor_set_position(head_neck_p,  -2.0 * sin(time));
     my_step();
   };
