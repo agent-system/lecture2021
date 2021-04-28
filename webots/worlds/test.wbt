@@ -108,7 +108,8 @@ TexturedBackgroundLight {
 }
 RectangleArena {
 }
-KXR_SAMPLE { ## change name
-  translation 0.0 1.0 0.0
-  rotation 0 1 0 0
+AssembledRobot { ## change name
+  translation 0.0 0.3 0.0
+  rotation 0 0 1 1.5707
+  controller "hello_world_demo"
 }
