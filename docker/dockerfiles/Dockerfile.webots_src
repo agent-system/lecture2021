@@ -1,0 +1,47 @@
+FROM ubuntu:18.04 as build
+#FROM osrf/ros:melodic-desktop-full as build
+
+## copy from webots/scripts/install/bashrc.linux
+# Defines the path to Java home.
+#ENV JAVA_HOME=/usr/lib/jvm/java-8-openjdk-amd64
+# For ROS
+ENV ROS_DISTRO=melodic
+# If defined, Webots will not save screen specific perspective changes when closed.
+ENV WEBOTS_DISABLE_SAVE_SCREEN_PERSPECTIVE_ON_CLOSE=1
+# If defined, you are allowed to modify files in the Webots home using Webots.
+ENV WEBOTS_ALLOW_MODIFY_INSTALLATION=1
+# If defined, the loading world progress dialog will never be displayed.
+# ENV WEBOTS_DISABLE_WORLD_LOADING_DIALOG=1
+
+# Defines the path to Webots home.
+ENV WEBOTS_HOME=/tmp/webots
+ENV LD_LIBRARY_PATH=$WEBOTS_HOME/lib/webots
+
+RUN apt update -q -qq -y
+RUN apt install -q -qq -y tzdata
+ENV TZ=Asia/Tokyo
+RUN apt install -q -qq -y git gnupg
+
+WORKDIR /tmp
+RUN git clone https://github.com/cyberbotics/webots.git
+
+WORKDIR /tmp/webots
+RUN git checkout -b bR2021a R2021a
+RUN git submodule init
+RUN git submodule update
+RUN scripts/install/linux_compilation_dependencies.sh
+RUN scripts/install/linux_optional_compilation_dependencies.sh
+
+## ??
+#require --network host / DISPLAY=:0
+
+ENV DISPLAY :0
+
+RUN make -j$(nproc) distrib
+
+#
+# LABEL maintainer="AgentSystem(JSK Lab.) YoheiKakiuchi <youhei@jsk.imi.i.u-tokyo.ac.jp>"
+# ENV DISPLAY ":0"
+# ENV DEBIAN_FRONTEND noninteractive
+# COPY --from=build /
+#
