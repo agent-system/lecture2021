@@ -1,0 +1,74 @@
+ARG BASE_IMAGE
+
+#
+#docker build . -f Dockerfile.webots_just_build --build-arg BASE_IMAGE=jskrobotics/agent_system:robot_assembler_2021 -t jskrobotics/agent_system:webots_just_compile_2021 -t 
+#
+
+#FROM ubuntu:18.04 as build
+FROM osrf/ros:melodic-desktop-full as build
+
+ARG BUILD_DIR=/usr/local
+ARG WEBOTS_DIR=webots
+ARG WEBOTS_VERSION=R2021a
+## ARG DISPLAY=:0
+
+## copy from webots/scripts/install/bashrc.linux
+# Defines the path to Java home.
+#ENV JAVA_HOME=/usr/lib/jvm/java-8-openjdk-amd64
+# For ROS
+#ENV ROS_DISTRO melodic
+# If defined, Webots will not save screen specific perspective changes when closed.
+ENV WEBOTS_DISABLE_SAVE_SCREEN_PERSPECTIVE_ON_CLOSE 1
+# If defined, you are allowed to modify files in the Webots home using Webots.
+ENV WEBOTS_ALLOW_MODIFY_INSTALLATION 1
+# If defined, the loading world progress dialog will never be displayed.
+# ENV WEBOTS_DISABLE_WORLD_LOADING_DIALOG 1
+
+# Defines the path to Webots home.
+ENV WEBOTS_HOME ${BUILD_DIR}/${WEBOTS_DIR}
+ENV LD_LIBRARY_PATH $WEBOTS_HOME/lib/webots
+
+ENV LANG C.UTF-8
+ENV LC_ALL C.UTF-8
+
+SHELL ["/bin/bash", "-c"]
+ENV DEBIAN_FRONTEND noninteractive
+ENV TZ=Asia/Tokyo
+
+RUN apt update -q -qq -y
+RUN apt install -q -qq -y tzdata
+RUN apt install -q -qq -y git gnupg
+
+WORKDIR ${BUILD_DIR}
+RUN git clone https://github.com/cyberbotics/webots.git ${WEBOTS_DIR}
+
+WORKDIR ${BUILD_DIR}/${WEBOTS_DIR}
+RUN git checkout -b for_build ${WEBOTS_VERSION}
+RUN git submodule init
+RUN git submodule update
+RUN scripts/install/linux_compilation_dependencies.sh
+## RUN scripts/install/linux_optional_compilation_dependencies.sh
+
+## ENV DISPLAY ${DISPLAY}
+
+RUN make -j$(nproc)
+
+# ## last stage
+FROM ${BASE_IMAGE}
+
+ARG BUILD_DIR=/usr/local
+ARG WEBOTS_DIR=webots
+
+LABEL maintainer="AgentSystem(JSK Lab.) YoheiKakiuchi <youhei@jsk.imi.i.u-tokyo.ac.jp>"
+ENV DEBIAN_FRONTEND noninteractive
+
+COPY --from=build ${BUILD_DIR}/${WEBOTS_DIR}/ /usr/local/webots
+
+RUN apt update -y -q && \
+    /usr/local/webots/scripts/install/linux_runtime_dependencies.sh && \
+    apt autoremove -y && \
+    apt clean -q -y && \
+    rm -rf /var/lib/apt/lists/
+
+ENV WEBOTS_HOME /usr/local/webots
+ENV LD_LIBRARY_PATH $LD_LIBRARY_PATH:$WEBOTS_HOME/lib/webots
