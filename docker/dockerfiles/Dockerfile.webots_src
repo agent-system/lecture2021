@@ -1,47 +1,79 @@
+ARG BASE_IMAGE
+
+#
+#DISPLAY=:0 xhost +si:localuser:root
+#docker build . --network host -f Dockerfile.webots_src --build-arg BASE_IMAGE=jskrobotics/agent_system:robot_assembler_2021 -t jskrobotics/agent_system:webots_src_2021 -t 
+#
+
 FROM ubuntu:18.04 as build
 #FROM osrf/ros:melodic-desktop-full as build
+
+ARG BUILD_DIR=/build
+ARG WEBOTS_DIR=webots_src
+ARG WEBOTS_VERSION=R2021a
+ARG DISPLAY=:0
 
 ## copy from webots/scripts/install/bashrc.linux
 # Defines the path to Java home.
 #ENV JAVA_HOME=/usr/lib/jvm/java-8-openjdk-amd64
 # For ROS
-ENV ROS_DISTRO=melodic
+ENV ROS_DISTRO melodic
 # If defined, Webots will not save screen specific perspective changes when closed.
-ENV WEBOTS_DISABLE_SAVE_SCREEN_PERSPECTIVE_ON_CLOSE=1
+ENV WEBOTS_DISABLE_SAVE_SCREEN_PERSPECTIVE_ON_CLOSE 1
 # If defined, you are allowed to modify files in the Webots home using Webots.
-ENV WEBOTS_ALLOW_MODIFY_INSTALLATION=1
+ENV WEBOTS_ALLOW_MODIFY_INSTALLATION 1
 # If defined, the loading world progress dialog will never be displayed.
-# ENV WEBOTS_DISABLE_WORLD_LOADING_DIALOG=1
+# ENV WEBOTS_DISABLE_WORLD_LOADING_DIALOG 1
 
 # Defines the path to Webots home.
-ENV WEBOTS_HOME=/tmp/webots
-ENV LD_LIBRARY_PATH=$WEBOTS_HOME/lib/webots
+ENV WEBOTS_HOME ${BUILD_DIR}/${WEBOTS_DIR}
+ENV LD_LIBRARY_PATH $WEBOTS_HOME/lib/webots
+
+ENV LANG C.UTF-8
+ENV LC_ALL C.UTF-8
+
+SHELL ["/bin/bash", "-c"]
+ENV DEBIAN_FRONTEND noninteractive
+ENV TZ=Asia/Tokyo
 
 RUN apt update -q -qq -y
 RUN apt install -q -qq -y tzdata
-ENV TZ=Asia/Tokyo
 RUN apt install -q -qq -y git gnupg
 
-WORKDIR /tmp
-RUN git clone https://github.com/cyberbotics/webots.git
+WORKDIR ${BUILD_DIR}
+RUN git clone https://github.com/cyberbotics/webots.git ${WEBOTS_DIR}
 
-WORKDIR /tmp/webots
-RUN git checkout -b bR2021a R2021a
+WORKDIR ${BUILD_DIR}/${WEBOTS_DIR}
+RUN git checkout -b for_build ${WEBOTS_VERSION}
 RUN git submodule init
 RUN git submodule update
 RUN scripts/install/linux_compilation_dependencies.sh
 RUN scripts/install/linux_optional_compilation_dependencies.sh
 
-## ??
-#require --network host / DISPLAY=:0
-
-ENV DISPLAY :0
+ENV DISPLAY ${DISPLAY}
 
 RUN make -j$(nproc) distrib
 
-#
-# LABEL maintainer="AgentSystem(JSK Lab.) YoheiKakiuchi <youhei@jsk.imi.i.u-tokyo.ac.jp>"
-# ENV DISPLAY ":0"
-# ENV DEBIAN_FRONTEND noninteractive
-# COPY --from=build /
-#
+WORKDIR ${BUILD_DIR}
+RUN tar xf ${BUILD_DIR}/${WEBOTS_DIR}/distribution/webots-${WEBOTS_VERSION}-x86-64.tar.bz2
+
+# ## last stage
+FROM ${BASE_IMAGE}
+
+ARG BUILD_DIR=/build
+ARG WEBOTS_DIR=webots_src
+
+LABEL maintainer="AgentSystem(JSK Lab.) YoheiKakiuchi <youhei@jsk.imi.i.u-tokyo.ac.jp>"
+ENV DEBIAN_FRONTEND noninteractive
+
+COPY --from=build ${BUILD_DIR}/webots/ /usr/local/webots
+COPY --from=build ${BUILD_DIR}/${WEBOTS_DIR}/scripts/install/linux_runtime_dependencies.sh /usr/local/webots/scripts/
+
+RUN apt update -y -q && \
+    /usr/local/webots/scripts/linux_runtime_dependencies.sh && \
+    apt autoremove -y && \
+    apt clean -q -y && \
+    rm -rf /var/lib/apt/lists/
+
+ENV WEBOTS_HOME /usr/local/webots
+ENV LD_LIBRARY_PATH $LD_LIBRARY_PATH:$WEBOTS_HOME/lib/webots
