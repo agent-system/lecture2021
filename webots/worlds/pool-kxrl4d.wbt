@@ -88,7 +88,8 @@ DEF WATER Fluid {
   locked TRUE
 }
 kxrl4d {
-  translation 0.0 0.3 0.0
+  translation 0.0 0.1 0.0
   rotation 1.000000 0.000000 0.0 -1.57 
-  controller "hello_world_demo"
+  #controller "hello_world_demo"
+  controller "python_demo"
 }
