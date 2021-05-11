@@ -130,7 +130,7 @@ if display:
     display.attachCamera(camera)
     display.setColor(0xFF0000)
 
-np = robot.getDevice('head-neck-p')
+hp = robot.getDevice('head-neck-p')
 lf = robot.getDevice('larm-shoulder-p')
 rf = robot.getDevice('rarm-shoulder-p')
 lb = robot.getDevice('lleg-crotch-p')
@@ -138,8 +138,8 @@ rb = robot.getDevice('rleg-crotch-p')
 
 cycle_steps = 10
 
-if np:
-    np.setPosition(2.0 - math.pi * 0.3)
+if hp:
+    hp.setPosition(2.0 - math.pi * 0.3)
 
 counter = 0
 while robot.step(timestep) != -1:
