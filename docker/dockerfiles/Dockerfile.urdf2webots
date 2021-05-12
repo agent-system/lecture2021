@@ -9,14 +9,26 @@ ENV DEBIAN_FRONTEND noninteractive
 
 LABEL maintainer="AgentSystem(JSK Lab.) YoheiKakiuchi <youhei@jsk.imi.i.u-tokyo.ac.jp>"
 
+## pip version
+#RUN apt update -y -q && \
+#    apt install -q -qq -y python-pip && \
+#    apt autoremove -y && \
+#    apt clean -q -y && \
+#    rm -rf /var/lib/apt/lists/ && \
+#    pip install urdf2webots
+
+## source version
 RUN apt update -y -q && \
     apt install -q -qq -y python-pip && \
     apt autoremove -y && \
     apt clean -q -y && \
     rm -rf /var/lib/apt/lists/
 
-RUN pip install urdf2webots
+WORKDIR /
+RUN git clone --depth=1 https://github.com/agent-system/urdf2webots.git
+RUN cd /urdf2webots && pip install -r requirements.txt
 
+### ros API
 RUN apt update -y -q && \
     apt install -q -qq -y ros-melodic-webots-ros && \
     apt autoremove -y && \
