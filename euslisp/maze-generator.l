@@ -21,8 +21,10 @@
   )
 (defmethod maze-arc
   (:set-wall (w) (setq wall w))
-  (:wall () w)
+  (:wall () wall)
   (:active? () (send wall :active?))
+  (:related-to-nodes (nodes)
+   (or (memq from nodes) (memq to nodes)))
   )
 (defclass maze-node
   :super node
@@ -39,25 +41,32 @@
   (:xy () (cons x-index y-index))
   (:xy-vector () (integer-vector x-index y-index))
   (:xy-list () (list x-index y-index))
-  (:xy= (_x _y) (and (= _x x) (= _y y)))
+  (:xy= (_x _y) (and (= _x x-index) (= _y y-index)))
   )
 (defclass maze-graph
   :super graph
-  :slots (NN wall-table walls node-matrix))
+  :slots (x-length y-length wall-table walls node-matrix))
 
 (defmethod maze-graph
-  (:create
-   (size)
+  (:create (&key (size) (x) (y))
    (send-super :init) ;;
-   (setq NN (+ (* 2 size) 1))
-   (setq wall-table (make-hash-table))
-   (setq node-matrix (instantiate vector NN))
-   (dotimes (i NN)
-     (setf (aref node-matrix i) (instantiate vector NN))
+   (cond
+    ((and size (null x) (null y))
+     (setq x-length (+ (* 2 size) 1))
+     (setq y-length (+ (* 2 size) 1))
      )
+    ((and x y (> x 0) (> y 0))
+     (setq x-length x)
+     (setq y-length y))
+    (t (warn ";; please set size or x and y"))
+    )
+   (setq wall-table (make-hash-table))
+   (setq node-matrix (instantiate vector y-length))
+   (dotimes (i y-length)
+     (setf (aref node-matrix i) (instantiate vector x-length)))
    ;; create nodes and walls
-   (dotimes (y NN)
-     (dotimes (x NN)
+   (dotimes (y y-length)
+     (dotimes (x x-length)
        (let ((nd (instance maze-node :init (format nil "~0,3D_~0,3D" x y) x y)))
          (send self :add-node nd)
          (send self :set-node x y nd)
@@ -75,6 +84,7 @@
    ;;(setq walls (send wall-table :list-values))
    self
    )
+  (:size () (cons x-length y-length))
   (:create-occupied-matrix ()
    (let ((yy (length node-matrix))
          (xx (length (elt node-matrix 0)))
@@ -89,6 +99,69 @@
          ))
      ret
      ))
+  (:change-size
+   (&key (size) (x) (y))
+   (let ((new-x 0)
+         (new-y 0) removed-nodes added-nodes)
+     (cond
+      ((and size (null x) (null y))
+       (setq new-x (+ (* 2 size) 1))
+       (setq new-y (+ (* 2 size) 1))
+       )
+      ((and x y (> x 0) (> y 0))
+       (setq new-x x)
+       (setq new-y y))
+      (t
+       (warn ";; please set size or x and y~%")
+       (return-from :change-size)
+       ))
+     (when (and (= new-x x-length) (= new-y y-length))
+       (warn ";; set same size~%")
+       (return-from :change-size))
+   (setq new-matrix (instantiate vector new-y))
+   (dotimes (i new-y)
+     (setf (aref new-matrix i) (instantiate vector new-x)))
+
+   (dotimes (y (max new-y y-length))
+     (dotimes (x (max new-x x-length))
+       (let ((cur-src
+              (if (and (< x x-length) (< y y-length))
+                  (aref (aref node-matrix y) x))))
+         (cond
+          ((and (< x new-x) (< y new-y))
+           (cond
+            (cur-src ;; copy
+             (setf (aref (aref new-matrix y) x) cur-src))
+            (t
+             (let ((nd (instance maze-node :init (format nil "~0,3D_~0,3D" x y) x y)))
+               (push nd added-nodes)
+               (send self :add-node nd)
+               (send self :set-node x y nd)
+               ;; add arc
+               ;; wall
+               )
+             ))
+           )
+          (t
+           (if cur-src (push cur-src removed-nodes)))
+          ))))
+   (let (removed-walls)
+     (dolist (ac (flatten (send-all nodes :arcs)))
+       (if (send ac :related-to-nodes removed-nodes)
+           (push (send ac :wall) removed-walls)))
+     ;;(removed-walls walls)
+     (dolist (w removed-walls)
+       (send wall-htbl :remove w))
+     (setq walls (send wall-htbl :list-keys));;
+     )
+   ))
+  (:horizontal-append-maze
+   (a-maze)
+   )
+  (:vertical-append-maze
+   (a-maze)
+   )
+
   ;;
   (:node (x y) (aref (aref node-matrix y) x))
   (:set-node (x y n) (setf (aref (aref node-matrix y) x) n))
@@ -116,9 +189,9 @@
    )
   (:distance-to-goal (nd)
    (if goal-state
-       (+ (abs (- (send node :x)
+       (+ (abs (- (send (send nd :state) :x)
                   (send goal-state :x)))
-          (abs (- (send node :y)
+          (abs (- (send (send nd :state) :y)
                   (send goal-state :y)))))
    )
   ;;
@@ -131,8 +204,8 @@
           (w (instance maze-wall :init a0 a1))
           )
      (send w :name (format nil "~A=~A" (send from :name) (send to :name)))
-     (sethash a0 wall-table w)
-     (sethash a1 wall-table w)
+     (send wall-table :enter a0 w)
+     (send wall-table :enter a1 w)
      (send a0 :set-wall w)
      (send a1 :set-wall w)
      (push w walls)
@@ -354,27 +427,27 @@
    )
   (:print-maze
    (&optional path)
-   (let ((NN-1 (1- NN))
+   (let ((x-1 (1- x-length))
          (s-list (send-all path :state))
-         -y)
-     ;;
+         -y -y-1)
      (format t " ")
-     (dotimes (x NN) (format t "_."))
+     (dotimes (x x-length) (format t "_."))
      (terpri)
      ;;
-     (dotimes (y NN)
-       (setq -y (- NN y 1)
+     (dotimes (y y-length)
+       (setq -y (- y-length y 1)
              -y-1 (1- -y))
        (format t "|")
-       (dotimes (x NN)
+       (dotimes (x x-length)
          (let* ((nd (send self :node x -y))
-                (x+nd (if (< x NN-1) (send self :node (1+ x) -y)))
+                (x+nd (if (< x x-1)  (send self :node (1+ x) -y)))
                 (y-nd (if (> -y 0)   (send self :node x -y-1)))
                 (al (send nd :arc-list))
                 (ac0 (find-if #'(lambda (ac) (eq (send ac :to) x+nd)) al))
                 (ac1 (find-if #'(lambda (ac) (eq (send ac :to) y-nd)) al))
                 (in-path (memq nd s-list))
-                (w-w  (if in-path "=" "_"))
+                (w-w  (if in-path (format nil "~C[4m*~C[0m" 27 27)
+                        "_"))
                 (wo-w (if in-path "*" " "))
                 )
            ;;(pprint (list x -y in-path nd x+nd y-nd ac0 ac1 ))
@@ -415,9 +488,59 @@
        (send self :set-start (car start-xy) (cdr start-xy)))
    (if goal-xy
        (send self :set-goal (car goal-xy) (cdr goal-xy)))
-   (let ((slv (instance best-first-graph-search-solver :init self)))
+   (let ((slv (instance a*-maze-search-solver :init self)))
      (send slv :solve self :verbose verbose))
    )
+  (:check-maze-all
+   (&key (start-xy) (goal-xy) (verbose nil))
+   (if start-xy
+       (send self :set-start (car start-xy) (cdr start-xy))
+     (send self :set-start 0 0))
+   ;;(if goal-xy
+   ;;(send self :set-goal (car goal-xy) (cdr goal-xy)))
+   (send self :goal-state :goal) ;; never access to <goal>
+   (let ((slv (instance best-first-graph-search-solver :init self)))
+     (send slv :solve self :verbose verbose :clear-if-failed nil)
+     ;;
+     (eq (length (send slv :close-list))
+         (* x-length y-length))
+     ))
+  (:check-maze ;; hash table version
+   (&key (start-xy) (goal-xy) (verbose nil))
+   (let ((htbl (make-hash-table))
+         (result t))
+     (if start-xy
+         (send self :set-start (car start-xy) (cdr start-xy)))
+     (if goal-xy
+         (send self :set-goal (car goal-xy) (cdr goal-xy)))
+     (while result
+       (if verbose (format t ";; start with ~A~%" start-state))
+       (let ((slv (instance best-first-graph-search-solver :init self)))
+         (setq result (send slv :solve self :verbose verbose :clear-if-failed nil))
+         (let ((clist (send slv :close-list)))
+           (if (not (or result clist)) ;; clist is null => can not move from start-state
+               (return-from :check-maze nil))
+           (dolist (st clist)
+             (send htbl :enter st st))
+           (send htbl :enter start-state start-state))
+         ;; check all
+         (setq start-state nil)
+         (let (st)
+           (block :solve-maze
+             (dotimes (y y-length)
+               (dotimes (x x-length)
+                 (setq st (send htbl :get (send self :node x y)))
+                 (if (not st)
+                     (if (not result)
+                         (return-from :check-maze nil)
+                       (progn (setq start-state (send self :node x y))
+                              (return-from :solve-maze))))
+                 ))))
+         (if (and (not result) (eq start-state goal-state))
+             (return-from :check-maze))
+         (if (not start-state) (setq result nil))
+         ))
+     t))
   )
 
 (defun create-maze (size) ;;
@@ -448,52 +571,119 @@
    )
   )
 
-(defun search-random-maze (&key (varbose) (size 2) (start-xy (cons 0 0)) (goal-xy (cons (* 2 size) (* 2 size))))
+(defun search-random-maze (&key (varbose) (size 2) (fail 1) (start-xy (cons 0 0))
+                                (goal-xy (cons (* 2 size) (* 2 size))))
   (let* ((m (create-maze size))
          (m-param (send m :get-maze-parameter))
          (m-len (length m-param))
          (result t)
+         (fail-count 0)
          prev-param
          )
-    (while result
-      (setq prev-param (copy-seq m-param))
+    (while (>= fail fail-count)
       (let ((i (random m-len)))
+        (while (aref m-param i)
+          (incf i)
+          (if (>= i m-len) (setq i (random m-len))))
+        (setq prev-param (copy-seq m-param))
         (setf (aref m-param i) t)
         (send m :set-maze-parameter m-param)
         (if varbose (progn (send m :print-maze) (terpri)))
-        (setq result (send m :solve-maze :start-xy start-xy :goal-xy goal-xy))
+        ;;(setq result (send m :solve-maze :start-xy start-xy :goal-xy goal-xy))
+        (setq result (send m :check-maze :start-xy start-xy :goal-xy goal-xy))
         )
+      (cond
+       (result
+        (setq fail-count 0))
+       (t ;; failed
+        (incf fail-count)
+        (setq m-param prev-param)
+        ))
       )
     (send m :set-maze-parameter prev-param)
     m
     ))
 
 (warn "
-(setq mz (let ((m (search-random-maze :size 3))) (send m :print-maze) m))
+(setq mz (let ((m (search-random-maze :size 4 :fail 4))) (send m :print-maze) m))
 (send mz :dump-world \"maze.wbt\")
 ")
 
-;;(setq m (create-maze 2))
-;;(send m :solve-maze :start-xy (cons 0 0) :goal-xy (cons 4 4))
-;;(search-random-maze :start-xy (cons 0 0) :goal-xy (cons 4 4))
 ;;
-;;(send m :set-start 0 0)
-;;(send m :set-goal 4 4)
-;;(setq slv (instance best-first-graph-search-solver :init m))
-;;(setq res (send slv :solve m :verbose nil))
-#|
-goal固定
-start固定 / N for A, N for B
-start-to-goal のA合計とB合計が同じ
+;; should be merged at origin
+;;
+;; override
+(defclass graph-search-solver
+  :super solver
+  :slots (open-list close-htbl))
+(defmethod graph-search-solver
+  (:solve-init (prblm)
+    (setq close-htbl (make-hash-table))
+    (send self :add-to-open-list
+          (instance solver-node :init (send prblm :start-state) :cost 0)))
+  ;; close-list functions
+  (:find-node-in-close-list (n)
+   (send close-htbl :get (send n :state)))
+  (:add-to-close-list (st)
+   (send close-htbl :enter st st)
+   close-htbl)
+  (:solve (prblm &key (verbose nil) (clear-if-failed t))
+    (send self :solve-init prblm)
+    (while (not (send self :null-open-list?))
+;;;       (if verbose
+;;;           (warn "current open-list num -> ~A -- ~A --~%"
+;;;                 (length open-list)
+;;;                 :solve))
+      (let ((target-node (send self :pop-from-open-list :debug verbose)))
+        ;; here, target-node is removed from open-list in :pop-from-open-list.
+;;;         (if verbose
+;;;             (warn "target-node is ~A -- ~A -- ~%"
+;;;                   (send target-node :state) :solve))
+        (cond ((send prblm :goal-test (send target-node :state))
+;;;                (if verbose
+;;;                    (warn "arrived at goal! -- ~A --~%" :solve))
+               (return-from :solve (send target-node :path)))
+              ((not (send self :find-node-in-close-list target-node))
+               (send self :add-to-close-list (send target-node :state))
+               (send self :add-list-to-open-list
+                     (send target-node :expand prblm :verbose verbose)))
+              )))
+    (when verbose
+      (warn "open-list is nil... -- ~A --~%" :solve)
+      (warn "search was missed!! -- ~A --~%" :solve))
+    (when clear-if-failed
+      (send self :clear-open-list)
+      (setq close-htbl (make-hash-table)))
+    nil)
+  ;; open-list functions
+  (:add-to-open-list (obj/list)
+    (if (listp obj/list)
+        (send self :add-list-to-open-list obj/list)
+      (send self :add-object-to-open-list obj/list)))
+  (:null-open-list? ()
+    (null open-list))
+  (:clear-open-list ()
+    (warn "you have to override :clear-open-list method~%")
+    nil)
+  (:add-list-to-open-list (lst)
+    (warn "you have to override :add-list-to-open-list method~%")
+    nil)
+  (:add-object-to-open-list (lst)
+    (warn "you have to override :add-object-to-open-list method~%")
+    nil)
+  (:pop-from-open-list (&key (debug))
+    (warn "you have to override :pop-from-open-list method~%")
+    nil)
+  ;; accessors
+  (:open-list (&optional arg)
+    (if arg (setq open-list arg))
+    open-list)
+  (:close-list
+   (&optional arg)
+   (when arg
+     (setq close-htbl (make-hash-table))
+     (dolist (s arg)
+       (send close-htbl :enter s :node)))
+   (send close-htbl :list-keys))
+  )
 
-閉じられたpathが無い -> すべてのノードからgoalへ行ける
-  (結構探索に時間かかるか...)
-  すべてのpathをマージして/その中にないstateからgoalへのpathを探索
-
-randomに壁を追加
-  start から goal探索
-   (fail するまで繰り返し)
-
-
-
-|#
