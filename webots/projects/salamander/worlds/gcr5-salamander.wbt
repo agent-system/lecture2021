@@ -1,0 +1,1230 @@
+#VRML_SIM R2021a utf8
+WorldInfo {
+  info [
+    "generated from eus2wrl"
+  ]
+  title "salamander demo"
+  basicTimeStep 16
+  coordinateSystem "NUE" 
+  contactProperties [
+     ContactProperties {
+      material1 "body"
+      material2 "floor"
+      coulombFriction [ 0.5 ]
+    }
+  ]
+}
+Viewpoint {
+  fieldOfView 1.1
+  position 5.0 2.5 3.0
+  orientation  -0.363187 0.913335 0.184159 1.1
+}
+
+TexturedBackground {
+}
+TexturedBackgroundLight {
+}
+DEF FLOOR Solid {
+  children [
+    DEF GND Group {
+      children [
+        Transform {
+          translation -4.42876 -0.25 0
+          children [
+            Shape {
+              appearance DEF GROUND_APPEARANCE PBRAppearance {
+                baseColorMap ImageTexture {
+                  url [
+                    "textures/texture_grid.png"
+                  ]
+                }
+                roughness 1
+                metalness 0
+              }
+              geometry Box {
+                size 3.14249 0.001 8
+              }
+            }
+          ]
+        }
+        Transform {
+          rotation 0 0 1 0.087266
+          children [
+            Shape {
+              appearance USE GROUND_APPEARANCE
+              geometry Box {
+                size 5.73686 0.001 8
+              }
+            }
+          ]
+        }
+        Transform {
+          translation 4.42876 0.25 0
+          children [
+            Shape {
+              appearance USE GROUND_APPEARANCE
+              geometry Box {
+                size 3.14249 0.001 8
+              }
+            }
+          ]
+        }
+      ]
+    }
+  ]
+  name "ground"
+  contactMaterial "floor"
+  boundingObject USE GND
+  locked TRUE
+}
+DEF AQUARIUM Solid {
+  translation 0 0.1 0
+  children [
+    DEF SIDES_GROUP Group {
+      children [
+        Transform {
+          translation 0 0 4
+          children [
+            DEF GLASS_SHAPE1 Shape {
+              appearance DEF GLASS_APPEARANCE PBRAppearance {
+                baseColor 1 0.6 0.6
+                roughness 1
+                metalness 0
+              }
+              geometry Box {
+                size 12 0.7 0.02
+              }
+            }
+          ]
+        }
+        Transform {
+          translation 0 0 -4
+          children [
+            USE GLASS_SHAPE1
+          ]
+        }
+        Transform {
+          translation -6 0 0
+          rotation 0 1 0 1.5708
+          children [
+            DEF GLASS_SHAPE2 Shape {
+              appearance USE GLASS_APPEARANCE
+              geometry Box {
+                size 8 0.7 0.02
+              }
+            }
+          ]
+        }
+        Transform {
+          translation 6 0 0
+          rotation 0 1 0 1.5708
+          children [
+            USE GLASS_SHAPE2
+          ]
+        }
+      ]
+    }
+  ]
+  name "aquarium"
+  boundingObject USE SIDES_GROUP
+  locked TRUE
+}
+DEF WATER Fluid {
+  translation 0 -0.125 0
+  name "fluid"
+  children [
+    DEF WATER_BOX Shape {
+      appearance PBRAppearance {
+        baseColor 0.7254901960784313 0.8705882352941177 1
+        transparency 0.7  roughness 0.2  metalness 0 }
+      geometry Box { size 12 0.25 8 }
+    }
+  ]
+  boundingObject USE WATER_BOX
+  locked TRUE
+}
+
+Solid {
+  translation 1.00521 0.5 -2.75173
+  rotation -0.48978614029103495 -0.15329904009109155 -0.8582592505099848 2.73794
+  children [
+  DEF S Shape {
+      appearance PBRAppearance {
+        baseColor 0.807843 0.72549 0.498039
+        roughness 1.1102230246251565e-16
+        metalness 0
+      }
+      geometry Cylinder { radius 0.05 height 0.1 } } ]
+  name "G00"
+  immersionProperties [
+    ImmersionProperties {
+      fluidName "fluid"
+      dragForceCoefficients 0.1 0 0
+      dragTorqueCoefficients 0.001 0 0
+      viscousResistanceTorqueCoefficient 0.005 } ]
+  boundingObject USE S
+  physics Physics { density 500
+    damping Damping { linear 0.5 angular 0.5 } } } 
+Solid {
+  translation 4.13157 0.5 2.10336
+  rotation -0.48978614029103495 -0.15329904009109155 -0.8582592505099848 2.73794
+  children [
+  DEF S Shape {
+      appearance PBRAppearance {
+        baseColor 0.807843 0.72549 0.498039
+        roughness 1.1102230246251565e-16
+        metalness 0
+      }
+      geometry Cylinder { radius 0.05 height 0.1 } } ]
+  name "G01"
+  immersionProperties [
+    ImmersionProperties {
+      fluidName "fluid"
+      dragForceCoefficients 0.1 0 0
+      dragTorqueCoefficients 0.001 0 0
+      viscousResistanceTorqueCoefficient 0.005 } ]
+  boundingObject USE S
+  physics Physics { density 500
+    damping Damping { linear 0.5 angular 0.5 } } } 
+Solid {
+  translation 4.93189 0.5 2.85515
+  rotation -0.48978614029103495 -0.15329904009109155 -0.8582592505099848 2.73794
+  children [
+  DEF S Shape {
+      appearance PBRAppearance {
+        baseColor 0.807843 0.72549 0.498039
+        roughness 1.1102230246251565e-16
+        metalness 0
+      }
+      geometry Cylinder { radius 0.05 height 0.1 } } ]
+  name "G02"
+  immersionProperties [
+    ImmersionProperties {
+      fluidName "fluid"
+      dragForceCoefficients 0.1 0 0
+      dragTorqueCoefficients 0.001 0 0
+      viscousResistanceTorqueCoefficient 0.005 } ]
+  boundingObject USE S
+  physics Physics { density 500
+    damping Damping { linear 0.5 angular 0.5 } } } 
+Solid {
+  translation -0.493183 0.5 1.21248
+  rotation -0.48978614029103495 -0.15329904009109155 -0.8582592505099848 2.73794
+  children [
+  DEF S Shape {
+      appearance PBRAppearance {
+        baseColor 0.807843 0.72549 0.498039
+        roughness 1.1102230246251565e-16
+        metalness 0
+      }
+      geometry Cylinder { radius 0.05 height 0.1 } } ]
+  name "G03"
+  immersionProperties [
+    ImmersionProperties {
+      fluidName "fluid"
+      dragForceCoefficients 0.1 0 0
+      dragTorqueCoefficients 0.001 0 0
+      viscousResistanceTorqueCoefficient 0.005 } ]
+  boundingObject USE S
+  physics Physics { density 500
+    damping Damping { linear 0.5 angular 0.5 } } } 
+Solid {
+  translation -2.48503 0.5 0.867591
+  rotation -0.48978614029103495 -0.15329904009109155 -0.8582592505099848 2.73794
+  children [
+  DEF S Shape {
+      appearance PBRAppearance {
+        baseColor 0.807843 0.72549 0.498039
+        roughness 1.1102230246251565e-16
+        metalness 0
+      }
+      geometry Cylinder { radius 0.05 height 0.1 } } ]
+  name "G04"
+  immersionProperties [
+    ImmersionProperties {
+      fluidName "fluid"
+      dragForceCoefficients 0.1 0 0
+      dragTorqueCoefficients 0.001 0 0
+      viscousResistanceTorqueCoefficient 0.005 } ]
+  boundingObject USE S
+  physics Physics { density 500
+    damping Damping { linear 0.5 angular 0.5 } } } 
+Solid {
+  translation -2.03651 0.5 -1.86111
+  rotation -0.48978614029103495 -0.15329904009109155 -0.8582592505099848 2.73794
+  children [
+  DEF S Shape {
+      appearance PBRAppearance {
+        baseColor 0.807843 0.72549 0.498039
+        roughness 1.1102230246251565e-16
+        metalness 0
+      }
+      geometry Cylinder { radius 0.05 height 0.1 } } ]
+  name "G05"
+  immersionProperties [
+    ImmersionProperties {
+      fluidName "fluid"
+      dragForceCoefficients 0.1 0 0
+      dragTorqueCoefficients 0.001 0 0
+      viscousResistanceTorqueCoefficient 0.005 } ]
+  boundingObject USE S
+  physics Physics { density 500
+    damping Damping { linear 0.5 angular 0.5 } } } 
+Solid {
+  translation 4.82552 0.5 0.10923
+  rotation -0.48978614029103495 -0.15329904009109155 -0.8582592505099848 2.73794
+  children [
+  DEF S Shape {
+      appearance PBRAppearance {
+        baseColor 0.807843 0.72549 0.498039
+        roughness 1.1102230246251565e-16
+        metalness 0
+      }
+      geometry Cylinder { radius 0.05 height 0.1 } } ]
+  name "G06"
+  immersionProperties [
+    ImmersionProperties {
+      fluidName "fluid"
+      dragForceCoefficients 0.1 0 0
+      dragTorqueCoefficients 0.001 0 0
+      viscousResistanceTorqueCoefficient 0.005 } ]
+  boundingObject USE S
+  physics Physics { density 500
+    damping Damping { linear 0.5 angular 0.5 } } } 
+Solid {
+  translation 0.258386 0.5 -2.32856
+  rotation -0.48978614029103495 -0.15329904009109155 -0.8582592505099848 2.73794
+  children [
+  DEF S Shape {
+      appearance PBRAppearance {
+        baseColor 0.807843 0.72549 0.498039
+        roughness 1.1102230246251565e-16
+        metalness 0
+      }
+      geometry Cylinder { radius 0.05 height 0.1 } } ]
+  name "G07"
+  immersionProperties [
+    ImmersionProperties {
+      fluidName "fluid"
+      dragForceCoefficients 0.1 0 0
+      dragTorqueCoefficients 0.001 0 0
+      viscousResistanceTorqueCoefficient 0.005 } ]
+  boundingObject USE S
+  physics Physics { density 500
+    damping Damping { linear 0.5 angular 0.5 } } } 
+Solid {
+  translation 0.171367 0.5 -1.32889
+  rotation -0.48978614029103495 -0.15329904009109155 -0.8582592505099848 2.73794
+  children [
+  DEF S Shape {
+      appearance PBRAppearance {
+        baseColor 0.807843 0.72549 0.498039
+        roughness 1.1102230246251565e-16
+        metalness 0
+      }
+      geometry Cylinder { radius 0.05 height 0.1 } } ]
+  name "G08"
+  immersionProperties [
+    ImmersionProperties {
+      fluidName "fluid"
+      dragForceCoefficients 0.1 0 0
+      dragTorqueCoefficients 0.001 0 0
+      viscousResistanceTorqueCoefficient 0.005 } ]
+  boundingObject USE S
+  physics Physics { density 500
+    damping Damping { linear 0.5 angular 0.5 } } } 
+Solid {
+  translation 4.47301 0.5 -1.79953
+  rotation -0.48978614029103495 -0.15329904009109155 -0.8582592505099848 2.73794
+  children [
+  DEF S Shape {
+      appearance PBRAppearance {
+        baseColor 0.807843 0.72549 0.498039
+        roughness 1.1102230246251565e-16
+        metalness 0
+      }
+      geometry Cylinder { radius 0.05 height 0.1 } } ]
+  name "G09"
+  immersionProperties [
+    ImmersionProperties {
+      fluidName "fluid"
+      dragForceCoefficients 0.1 0 0
+      dragTorqueCoefficients 0.001 0 0
+      viscousResistanceTorqueCoefficient 0.005 } ]
+  boundingObject USE S
+  physics Physics { density 500
+    damping Damping { linear 0.5 angular 0.5 } } } 
+Salamander {
+  name "S0"
+  translation -1.0 0.5 -2.20741
+  rotation 0 1 0 1.5708
+  controller "salamander"
+}
+
+Solid {
+  translation 0.691529 0.5 -2.53051
+  rotation -0.48978614029103495 -0.15329904009109155 -0.8582592505099848 2.73794
+  children [
+  DEF S Shape {
+      appearance PBRAppearance {
+        baseColor 0.807843 0.72549 0.498039
+        roughness 1.1102230246251565e-16
+        metalness 0
+      }
+      geometry Cylinder { radius 0.05 height 0.1 } } ]
+  name "G10"
+  immersionProperties [
+    ImmersionProperties {
+      fluidName "fluid"
+      dragForceCoefficients 0.1 0 0
+      dragTorqueCoefficients 0.001 0 0
+      viscousResistanceTorqueCoefficient 0.005 } ]
+  boundingObject USE S
+  physics Physics { density 500
+    damping Damping { linear 0.5 angular 0.5 } } } 
+Solid {
+  translation -4.32566 0.5 0.680357
+  rotation -0.48978614029103495 -0.15329904009109155 -0.8582592505099848 2.73794
+  children [
+  DEF S Shape {
+      appearance PBRAppearance {
+        baseColor 0.807843 0.72549 0.498039
+        roughness 1.1102230246251565e-16
+        metalness 0
+      }
+      geometry Cylinder { radius 0.05 height 0.1 } } ]
+  name "G11"
+  immersionProperties [
+    ImmersionProperties {
+      fluidName "fluid"
+      dragForceCoefficients 0.1 0 0
+      dragTorqueCoefficients 0.001 0 0
+      viscousResistanceTorqueCoefficient 0.005 } ]
+  boundingObject USE S
+  physics Physics { density 500
+    damping Damping { linear 0.5 angular 0.5 } } } 
+Solid {
+  translation -4.31389 0.5 -1.60613
+  rotation -0.48978614029103495 -0.15329904009109155 -0.8582592505099848 2.73794
+  children [
+  DEF S Shape {
+      appearance PBRAppearance {
+        baseColor 0.807843 0.72549 0.498039
+        roughness 1.1102230246251565e-16
+        metalness 0
+      }
+      geometry Cylinder { radius 0.05 height 0.1 } } ]
+  name "G12"
+  immersionProperties [
+    ImmersionProperties {
+      fluidName "fluid"
+      dragForceCoefficients 0.1 0 0
+      dragTorqueCoefficients 0.001 0 0
+      viscousResistanceTorqueCoefficient 0.005 } ]
+  boundingObject USE S
+  physics Physics { density 500
+    damping Damping { linear 0.5 angular 0.5 } } } 
+Solid {
+  translation 0.936513 0.5 0.642354
+  rotation -0.48978614029103495 -0.15329904009109155 -0.8582592505099848 2.73794
+  children [
+  DEF S Shape {
+      appearance PBRAppearance {
+        baseColor 0.807843 0.72549 0.498039
+        roughness 1.1102230246251565e-16
+        metalness 0
+      }
+      geometry Cylinder { radius 0.05 height 0.1 } } ]
+  name "G13"
+  immersionProperties [
+    ImmersionProperties {
+      fluidName "fluid"
+      dragForceCoefficients 0.1 0 0
+      dragTorqueCoefficients 0.001 0 0
+      viscousResistanceTorqueCoefficient 0.005 } ]
+  boundingObject USE S
+  physics Physics { density 500
+    damping Damping { linear 0.5 angular 0.5 } } } 
+Solid {
+  translation -3.84214 0.5 0.66726
+  rotation -0.48978614029103495 -0.15329904009109155 -0.8582592505099848 2.73794
+  children [
+  DEF S Shape {
+      appearance PBRAppearance {
+        baseColor 0.807843 0.72549 0.498039
+        roughness 1.1102230246251565e-16
+        metalness 0
+      }
+      geometry Cylinder { radius 0.05 height 0.1 } } ]
+  name "G14"
+  immersionProperties [
+    ImmersionProperties {
+      fluidName "fluid"
+      dragForceCoefficients 0.1 0 0
+      dragTorqueCoefficients 0.001 0 0
+      viscousResistanceTorqueCoefficient 0.005 } ]
+  boundingObject USE S
+  physics Physics { density 500
+    damping Damping { linear 0.5 angular 0.5 } } } 
+Solid {
+  translation -3.50425 0.5 -2.83123
+  rotation -0.48978614029103495 -0.15329904009109155 -0.8582592505099848 2.73794
+  children [
+  DEF S Shape {
+      appearance PBRAppearance {
+        baseColor 0.807843 0.72549 0.498039
+        roughness 1.1102230246251565e-16
+        metalness 0
+      }
+      geometry Cylinder { radius 0.05 height 0.1 } } ]
+  name "G15"
+  immersionProperties [
+    ImmersionProperties {
+      fluidName "fluid"
+      dragForceCoefficients 0.1 0 0
+      dragTorqueCoefficients 0.001 0 0
+      viscousResistanceTorqueCoefficient 0.005 } ]
+  boundingObject USE S
+  physics Physics { density 500
+    damping Damping { linear 0.5 angular 0.5 } } } 
+Solid {
+  translation 4.2474 0.5 -2.90449
+  rotation -0.48978614029103495 -0.15329904009109155 -0.8582592505099848 2.73794
+  children [
+  DEF S Shape {
+      appearance PBRAppearance {
+        baseColor 0.807843 0.72549 0.498039
+        roughness 1.1102230246251565e-16
+        metalness 0
+      }
+      geometry Cylinder { radius 0.05 height 0.1 } } ]
+  name "G16"
+  immersionProperties [
+    ImmersionProperties {
+      fluidName "fluid"
+      dragForceCoefficients 0.1 0 0
+      dragTorqueCoefficients 0.001 0 0
+      viscousResistanceTorqueCoefficient 0.005 } ]
+  boundingObject USE S
+  physics Physics { density 500
+    damping Damping { linear 0.5 angular 0.5 } } } 
+Solid {
+  translation 0.892159 0.5 2.63954
+  rotation -0.48978614029103495 -0.15329904009109155 -0.8582592505099848 2.73794
+  children [
+  DEF S Shape {
+      appearance PBRAppearance {
+        baseColor 0.807843 0.72549 0.498039
+        roughness 1.1102230246251565e-16
+        metalness 0
+      }
+      geometry Cylinder { radius 0.05 height 0.1 } } ]
+  name "G17"
+  immersionProperties [
+    ImmersionProperties {
+      fluidName "fluid"
+      dragForceCoefficients 0.1 0 0
+      dragTorqueCoefficients 0.001 0 0
+      viscousResistanceTorqueCoefficient 0.005 } ]
+  boundingObject USE S
+  physics Physics { density 500
+    damping Damping { linear 0.5 angular 0.5 } } } 
+Solid {
+  translation 2.13309 0.5 1.02392
+  rotation -0.48978614029103495 -0.15329904009109155 -0.8582592505099848 2.73794
+  children [
+  DEF S Shape {
+      appearance PBRAppearance {
+        baseColor 0.807843 0.72549 0.498039
+        roughness 1.1102230246251565e-16
+        metalness 0
+      }
+      geometry Cylinder { radius 0.05 height 0.1 } } ]
+  name "G18"
+  immersionProperties [
+    ImmersionProperties {
+      fluidName "fluid"
+      dragForceCoefficients 0.1 0 0
+      dragTorqueCoefficients 0.001 0 0
+      viscousResistanceTorqueCoefficient 0.005 } ]
+  boundingObject USE S
+  physics Physics { density 500
+    damping Damping { linear 0.5 angular 0.5 } } } 
+Solid {
+  translation 0.978506 0.5 2.23149
+  rotation -0.48978614029103495 -0.15329904009109155 -0.8582592505099848 2.73794
+  children [
+  DEF S Shape {
+      appearance PBRAppearance {
+        baseColor 0.807843 0.72549 0.498039
+        roughness 1.1102230246251565e-16
+        metalness 0
+      }
+      geometry Cylinder { radius 0.05 height 0.1 } } ]
+  name "G19"
+  immersionProperties [
+    ImmersionProperties {
+      fluidName "fluid"
+      dragForceCoefficients 0.1 0 0
+      dragTorqueCoefficients 0.001 0 0
+      viscousResistanceTorqueCoefficient 0.005 } ]
+  boundingObject USE S
+  physics Physics { density 500
+    damping Damping { linear 0.5 angular 0.5 } } } 
+Salamander {
+  name "S1"
+  translation -1.0 0.5 0.475291
+  rotation 0 1 0 1.5708
+  controller "salamander"
+}
+
+Solid {
+  translation 1.88101 0.5 1.81459
+  rotation -0.48978614029103495 -0.15329904009109155 -0.8582592505099848 2.73794
+  children [
+  DEF S Shape {
+      appearance PBRAppearance {
+        baseColor 0.807843 0.72549 0.498039
+        roughness 1.1102230246251565e-16
+        metalness 0
+      }
+      geometry Cylinder { radius 0.05 height 0.1 } } ]
+  name "G20"
+  immersionProperties [
+    ImmersionProperties {
+      fluidName "fluid"
+      dragForceCoefficients 0.1 0 0
+      dragTorqueCoefficients 0.001 0 0
+      viscousResistanceTorqueCoefficient 0.005 } ]
+  boundingObject USE S
+  physics Physics { density 500
+    damping Damping { linear 0.5 angular 0.5 } } } 
+Solid {
+  translation -2.89801 0.5 0.766388
+  rotation -0.48978614029103495 -0.15329904009109155 -0.8582592505099848 2.73794
+  children [
+  DEF S Shape {
+      appearance PBRAppearance {
+        baseColor 0.807843 0.72549 0.498039
+        roughness 1.1102230246251565e-16
+        metalness 0
+      }
+      geometry Cylinder { radius 0.05 height 0.1 } } ]
+  name "G21"
+  immersionProperties [
+    ImmersionProperties {
+      fluidName "fluid"
+      dragForceCoefficients 0.1 0 0
+      dragTorqueCoefficients 0.001 0 0
+      viscousResistanceTorqueCoefficient 0.005 } ]
+  boundingObject USE S
+  physics Physics { density 500
+    damping Damping { linear 0.5 angular 0.5 } } } 
+Solid {
+  translation -2.03694 0.5 2.16809
+  rotation -0.48978614029103495 -0.15329904009109155 -0.8582592505099848 2.73794
+  children [
+  DEF S Shape {
+      appearance PBRAppearance {
+        baseColor 0.807843 0.72549 0.498039
+        roughness 1.1102230246251565e-16
+        metalness 0
+      }
+      geometry Cylinder { radius 0.05 height 0.1 } } ]
+  name "G22"
+  immersionProperties [
+    ImmersionProperties {
+      fluidName "fluid"
+      dragForceCoefficients 0.1 0 0
+      dragTorqueCoefficients 0.001 0 0
+      viscousResistanceTorqueCoefficient 0.005 } ]
+  boundingObject USE S
+  physics Physics { density 500
+    damping Damping { linear 0.5 angular 0.5 } } } 
+Solid {
+  translation 0.001938 0.5 0.96151
+  rotation -0.48978614029103495 -0.15329904009109155 -0.8582592505099848 2.73794
+  children [
+  DEF S Shape {
+      appearance PBRAppearance {
+        baseColor 0.807843 0.72549 0.498039
+        roughness 1.1102230246251565e-16
+        metalness 0
+      }
+      geometry Cylinder { radius 0.05 height 0.1 } } ]
+  name "G23"
+  immersionProperties [
+    ImmersionProperties {
+      fluidName "fluid"
+      dragForceCoefficients 0.1 0 0
+      dragTorqueCoefficients 0.001 0 0
+      viscousResistanceTorqueCoefficient 0.005 } ]
+  boundingObject USE S
+  physics Physics { density 500
+    damping Damping { linear 0.5 angular 0.5 } } } 
+Solid {
+  translation 3.1952 0.5 0.059698
+  rotation -0.48978614029103495 -0.15329904009109155 -0.8582592505099848 2.73794
+  children [
+  DEF S Shape {
+      appearance PBRAppearance {
+        baseColor 0.807843 0.72549 0.498039
+        roughness 1.1102230246251565e-16
+        metalness 0
+      }
+      geometry Cylinder { radius 0.05 height 0.1 } } ]
+  name "G24"
+  immersionProperties [
+    ImmersionProperties {
+      fluidName "fluid"
+      dragForceCoefficients 0.1 0 0
+      dragTorqueCoefficients 0.001 0 0
+      viscousResistanceTorqueCoefficient 0.005 } ]
+  boundingObject USE S
+  physics Physics { density 500
+    damping Damping { linear 0.5 angular 0.5 } } } 
+Solid {
+  translation 3.8794 0.5 -0.665406
+  rotation -0.48978614029103495 -0.15329904009109155 -0.8582592505099848 2.73794
+  children [
+  DEF S Shape {
+      appearance PBRAppearance {
+        baseColor 0.807843 0.72549 0.498039
+        roughness 1.1102230246251565e-16
+        metalness 0
+      }
+      geometry Cylinder { radius 0.05 height 0.1 } } ]
+  name "G25"
+  immersionProperties [
+    ImmersionProperties {
+      fluidName "fluid"
+      dragForceCoefficients 0.1 0 0
+      dragTorqueCoefficients 0.001 0 0
+      viscousResistanceTorqueCoefficient 0.005 } ]
+  boundingObject USE S
+  physics Physics { density 500
+    damping Damping { linear 0.5 angular 0.5 } } } 
+Solid {
+  translation 2.07954 0.5 -1.85106
+  rotation -0.48978614029103495 -0.15329904009109155 -0.8582592505099848 2.73794
+  children [
+  DEF S Shape {
+      appearance PBRAppearance {
+        baseColor 0.807843 0.72549 0.498039
+        roughness 1.1102230246251565e-16
+        metalness 0
+      }
+      geometry Cylinder { radius 0.05 height 0.1 } } ]
+  name "G26"
+  immersionProperties [
+    ImmersionProperties {
+      fluidName "fluid"
+      dragForceCoefficients 0.1 0 0
+      dragTorqueCoefficients 0.001 0 0
+      viscousResistanceTorqueCoefficient 0.005 } ]
+  boundingObject USE S
+  physics Physics { density 500
+    damping Damping { linear 0.5 angular 0.5 } } } 
+Solid {
+  translation 0.791421 0.5 -2.97578
+  rotation -0.48978614029103495 -0.15329904009109155 -0.8582592505099848 2.73794
+  children [
+  DEF S Shape {
+      appearance PBRAppearance {
+        baseColor 0.807843 0.72549 0.498039
+        roughness 1.1102230246251565e-16
+        metalness 0
+      }
+      geometry Cylinder { radius 0.05 height 0.1 } } ]
+  name "G27"
+  immersionProperties [
+    ImmersionProperties {
+      fluidName "fluid"
+      dragForceCoefficients 0.1 0 0
+      dragTorqueCoefficients 0.001 0 0
+      viscousResistanceTorqueCoefficient 0.005 } ]
+  boundingObject USE S
+  physics Physics { density 500
+    damping Damping { linear 0.5 angular 0.5 } } } 
+Solid {
+  translation 0.243944 0.5 0.399426
+  rotation -0.48978614029103495 -0.15329904009109155 -0.8582592505099848 2.73794
+  children [
+  DEF S Shape {
+      appearance PBRAppearance {
+        baseColor 0.807843 0.72549 0.498039
+        roughness 1.1102230246251565e-16
+        metalness 0
+      }
+      geometry Cylinder { radius 0.05 height 0.1 } } ]
+  name "G28"
+  immersionProperties [
+    ImmersionProperties {
+      fluidName "fluid"
+      dragForceCoefficients 0.1 0 0
+      dragTorqueCoefficients 0.001 0 0
+      viscousResistanceTorqueCoefficient 0.005 } ]
+  boundingObject USE S
+  physics Physics { density 500
+    damping Damping { linear 0.5 angular 0.5 } } } 
+Solid {
+  translation 3.71306 0.5 1.53399
+  rotation -0.48978614029103495 -0.15329904009109155 -0.8582592505099848 2.73794
+  children [
+  DEF S Shape {
+      appearance PBRAppearance {
+        baseColor 0.807843 0.72549 0.498039
+        roughness 1.1102230246251565e-16
+        metalness 0
+      }
+      geometry Cylinder { radius 0.05 height 0.1 } } ]
+  name "G29"
+  immersionProperties [
+    ImmersionProperties {
+      fluidName "fluid"
+      dragForceCoefficients 0.1 0 0
+      dragTorqueCoefficients 0.001 0 0
+      viscousResistanceTorqueCoefficient 0.005 } ]
+  boundingObject USE S
+  physics Physics { density 500
+    damping Damping { linear 0.5 angular 0.5 } } } 
+Salamander {
+  name "S2"
+  translation -1.0 0.5 0.360301
+  rotation 0 1 0 1.5708
+  controller "salamander"
+}
+
+Solid {
+  translation 1.56592 0.5 -1.96004
+  rotation -0.48978614029103495 -0.15329904009109155 -0.8582592505099848 2.73794
+  children [
+  DEF S Shape {
+      appearance PBRAppearance {
+        baseColor 0.807843 0.72549 0.498039
+        roughness 1.1102230246251565e-16
+        metalness 0
+      }
+      geometry Cylinder { radius 0.05 height 0.1 } } ]
+  name "G30"
+  immersionProperties [
+    ImmersionProperties {
+      fluidName "fluid"
+      dragForceCoefficients 0.1 0 0
+      dragTorqueCoefficients 0.001 0 0
+      viscousResistanceTorqueCoefficient 0.005 } ]
+  boundingObject USE S
+  physics Physics { density 500
+    damping Damping { linear 0.5 angular 0.5 } } } 
+Solid {
+  translation 2.89145 0.5 -0.908823
+  rotation -0.48978614029103495 -0.15329904009109155 -0.8582592505099848 2.73794
+  children [
+  DEF S Shape {
+      appearance PBRAppearance {
+        baseColor 0.807843 0.72549 0.498039
+        roughness 1.1102230246251565e-16
+        metalness 0
+      }
+      geometry Cylinder { radius 0.05 height 0.1 } } ]
+  name "G31"
+  immersionProperties [
+    ImmersionProperties {
+      fluidName "fluid"
+      dragForceCoefficients 0.1 0 0
+      dragTorqueCoefficients 0.001 0 0
+      viscousResistanceTorqueCoefficient 0.005 } ]
+  boundingObject USE S
+  physics Physics { density 500
+    damping Damping { linear 0.5 angular 0.5 } } } 
+Solid {
+  translation 1.73332 0.5 0.042075
+  rotation -0.48978614029103495 -0.15329904009109155 -0.8582592505099848 2.73794
+  children [
+  DEF S Shape {
+      appearance PBRAppearance {
+        baseColor 0.807843 0.72549 0.498039
+        roughness 1.1102230246251565e-16
+        metalness 0
+      }
+      geometry Cylinder { radius 0.05 height 0.1 } } ]
+  name "G32"
+  immersionProperties [
+    ImmersionProperties {
+      fluidName "fluid"
+      dragForceCoefficients 0.1 0 0
+      dragTorqueCoefficients 0.001 0 0
+      viscousResistanceTorqueCoefficient 0.005 } ]
+  boundingObject USE S
+  physics Physics { density 500
+    damping Damping { linear 0.5 angular 0.5 } } } 
+Solid {
+  translation -3.98003 0.5 -0.757639
+  rotation -0.48978614029103495 -0.15329904009109155 -0.8582592505099848 2.73794
+  children [
+  DEF S Shape {
+      appearance PBRAppearance {
+        baseColor 0.807843 0.72549 0.498039
+        roughness 1.1102230246251565e-16
+        metalness 0
+      }
+      geometry Cylinder { radius 0.05 height 0.1 } } ]
+  name "G33"
+  immersionProperties [
+    ImmersionProperties {
+      fluidName "fluid"
+      dragForceCoefficients 0.1 0 0
+      dragTorqueCoefficients 0.001 0 0
+      viscousResistanceTorqueCoefficient 0.005 } ]
+  boundingObject USE S
+  physics Physics { density 500
+    damping Damping { linear 0.5 angular 0.5 } } } 
+Solid {
+  translation -1.24081 0.5 -2.56095
+  rotation -0.48978614029103495 -0.15329904009109155 -0.8582592505099848 2.73794
+  children [
+  DEF S Shape {
+      appearance PBRAppearance {
+        baseColor 0.807843 0.72549 0.498039
+        roughness 1.1102230246251565e-16
+        metalness 0
+      }
+      geometry Cylinder { radius 0.05 height 0.1 } } ]
+  name "G34"
+  immersionProperties [
+    ImmersionProperties {
+      fluidName "fluid"
+      dragForceCoefficients 0.1 0 0
+      dragTorqueCoefficients 0.001 0 0
+      viscousResistanceTorqueCoefficient 0.005 } ]
+  boundingObject USE S
+  physics Physics { density 500
+    damping Damping { linear 0.5 angular 0.5 } } } 
+Solid {
+  translation 3.15386 0.5 -1.95218
+  rotation -0.48978614029103495 -0.15329904009109155 -0.8582592505099848 2.73794
+  children [
+  DEF S Shape {
+      appearance PBRAppearance {
+        baseColor 0.807843 0.72549 0.498039
+        roughness 1.1102230246251565e-16
+        metalness 0
+      }
+      geometry Cylinder { radius 0.05 height 0.1 } } ]
+  name "G35"
+  immersionProperties [
+    ImmersionProperties {
+      fluidName "fluid"
+      dragForceCoefficients 0.1 0 0
+      dragTorqueCoefficients 0.001 0 0
+      viscousResistanceTorqueCoefficient 0.005 } ]
+  boundingObject USE S
+  physics Physics { density 500
+    damping Damping { linear 0.5 angular 0.5 } } } 
+Solid {
+  translation -0.805165 0.5 -1.40259
+  rotation -0.48978614029103495 -0.15329904009109155 -0.8582592505099848 2.73794
+  children [
+  DEF S Shape {
+      appearance PBRAppearance {
+        baseColor 0.807843 0.72549 0.498039
+        roughness 1.1102230246251565e-16
+        metalness 0
+      }
+      geometry Cylinder { radius 0.05 height 0.1 } } ]
+  name "G36"
+  immersionProperties [
+    ImmersionProperties {
+      fluidName "fluid"
+      dragForceCoefficients 0.1 0 0
+      dragTorqueCoefficients 0.001 0 0
+      viscousResistanceTorqueCoefficient 0.005 } ]
+  boundingObject USE S
+  physics Physics { density 500
+    damping Damping { linear 0.5 angular 0.5 } } } 
+Solid {
+  translation -0.720853 0.5 -2.20508
+  rotation -0.48978614029103495 -0.15329904009109155 -0.8582592505099848 2.73794
+  children [
+  DEF S Shape {
+      appearance PBRAppearance {
+        baseColor 0.807843 0.72549 0.498039
+        roughness 1.1102230246251565e-16
+        metalness 0
+      }
+      geometry Cylinder { radius 0.05 height 0.1 } } ]
+  name "G37"
+  immersionProperties [
+    ImmersionProperties {
+      fluidName "fluid"
+      dragForceCoefficients 0.1 0 0
+      dragTorqueCoefficients 0.001 0 0
+      viscousResistanceTorqueCoefficient 0.005 } ]
+  boundingObject USE S
+  physics Physics { density 500
+    damping Damping { linear 0.5 angular 0.5 } } } 
+Solid {
+  translation -2.45041 0.5 -2.95559
+  rotation -0.48978614029103495 -0.15329904009109155 -0.8582592505099848 2.73794
+  children [
+  DEF S Shape {
+      appearance PBRAppearance {
+        baseColor 0.807843 0.72549 0.498039
+        roughness 1.1102230246251565e-16
+        metalness 0
+      }
+      geometry Cylinder { radius 0.05 height 0.1 } } ]
+  name "G38"
+  immersionProperties [
+    ImmersionProperties {
+      fluidName "fluid"
+      dragForceCoefficients 0.1 0 0
+      dragTorqueCoefficients 0.001 0 0
+      viscousResistanceTorqueCoefficient 0.005 } ]
+  boundingObject USE S
+  physics Physics { density 500
+    damping Damping { linear 0.5 angular 0.5 } } } 
+Solid {
+  translation 3.36155 0.5 0.953075
+  rotation -0.48978614029103495 -0.15329904009109155 -0.8582592505099848 2.73794
+  children [
+  DEF S Shape {
+      appearance PBRAppearance {
+        baseColor 0.807843 0.72549 0.498039
+        roughness 1.1102230246251565e-16
+        metalness 0
+      }
+      geometry Cylinder { radius 0.05 height 0.1 } } ]
+  name "G39"
+  immersionProperties [
+    ImmersionProperties {
+      fluidName "fluid"
+      dragForceCoefficients 0.1 0 0
+      dragTorqueCoefficients 0.001 0 0
+      viscousResistanceTorqueCoefficient 0.005 } ]
+  boundingObject USE S
+  physics Physics { density 500
+    damping Damping { linear 0.5 angular 0.5 } } } 
+Salamander {
+  name "S3"
+  translation -1.0 0.5 2.76934
+  rotation 0 1 0 1.5708
+  controller "salamander"
+}
+
+Solid {
+  translation -1.14237 0.5 1.90083
+  rotation -0.48978614029103495 -0.15329904009109155 -0.8582592505099848 2.73794
+  children [
+  DEF S Shape {
+      appearance PBRAppearance {
+        baseColor 0.807843 0.72549 0.498039
+        roughness 1.1102230246251565e-16
+        metalness 0
+      }
+      geometry Cylinder { radius 0.05 height 0.1 } } ]
+  name "G40"
+  immersionProperties [
+    ImmersionProperties {
+      fluidName "fluid"
+      dragForceCoefficients 0.1 0 0
+      dragTorqueCoefficients 0.001 0 0
+      viscousResistanceTorqueCoefficient 0.005 } ]
+  boundingObject USE S
+  physics Physics { density 500
+    damping Damping { linear 0.5 angular 0.5 } } } 
+Solid {
+  translation -4.42598 0.5 0.881474
+  rotation -0.48978614029103495 -0.15329904009109155 -0.8582592505099848 2.73794
+  children [
+  DEF S Shape {
+      appearance PBRAppearance {
+        baseColor 0.807843 0.72549 0.498039
+        roughness 1.1102230246251565e-16
+        metalness 0
+      }
+      geometry Cylinder { radius 0.05 height 0.1 } } ]
+  name "G41"
+  immersionProperties [
+    ImmersionProperties {
+      fluidName "fluid"
+      dragForceCoefficients 0.1 0 0
+      dragTorqueCoefficients 0.001 0 0
+      viscousResistanceTorqueCoefficient 0.005 } ]
+  boundingObject USE S
+  physics Physics { density 500
+    damping Damping { linear 0.5 angular 0.5 } } } 
+Solid {
+  translation 2.23251 0.5 -0.200703
+  rotation -0.48978614029103495 -0.15329904009109155 -0.8582592505099848 2.73794
+  children [
+  DEF S Shape {
+      appearance PBRAppearance {
+        baseColor 0.807843 0.72549 0.498039
+        roughness 1.1102230246251565e-16
+        metalness 0
+      }
+      geometry Cylinder { radius 0.05 height 0.1 } } ]
+  name "G42"
+  immersionProperties [
+    ImmersionProperties {
+      fluidName "fluid"
+      dragForceCoefficients 0.1 0 0
+      dragTorqueCoefficients 0.001 0 0
+      viscousResistanceTorqueCoefficient 0.005 } ]
+  boundingObject USE S
+  physics Physics { density 500
+    damping Damping { linear 0.5 angular 0.5 } } } 
+Solid {
+  translation -4.7889 0.5 -2.54658
+  rotation -0.48978614029103495 -0.15329904009109155 -0.8582592505099848 2.73794
+  children [
+  DEF S Shape {
+      appearance PBRAppearance {
+        baseColor 0.807843 0.72549 0.498039
+        roughness 1.1102230246251565e-16
+        metalness 0
+      }
+      geometry Cylinder { radius 0.05 height 0.1 } } ]
+  name "G43"
+  immersionProperties [
+    ImmersionProperties {
+      fluidName "fluid"
+      dragForceCoefficients 0.1 0 0
+      dragTorqueCoefficients 0.001 0 0
+      viscousResistanceTorqueCoefficient 0.005 } ]
+  boundingObject USE S
+  physics Physics { density 500
+    damping Damping { linear 0.5 angular 0.5 } } } 
+Solid {
+  translation -3.38227 0.5 -0.448449
+  rotation -0.48978614029103495 -0.15329904009109155 -0.8582592505099848 2.73794
+  children [
+  DEF S Shape {
+      appearance PBRAppearance {
+        baseColor 0.807843 0.72549 0.498039
+        roughness 1.1102230246251565e-16
+        metalness 0
+      }
+      geometry Cylinder { radius 0.05 height 0.1 } } ]
+  name "G44"
+  immersionProperties [
+    ImmersionProperties {
+      fluidName "fluid"
+      dragForceCoefficients 0.1 0 0
+      dragTorqueCoefficients 0.001 0 0
+      viscousResistanceTorqueCoefficient 0.005 } ]
+  boundingObject USE S
+  physics Physics { density 500
+    damping Damping { linear 0.5 angular 0.5 } } } 
+Solid {
+  translation 2.75672 0.5 -1.9164
+  rotation -0.48978614029103495 -0.15329904009109155 -0.8582592505099848 2.73794
+  children [
+  DEF S Shape {
+      appearance PBRAppearance {
+        baseColor 0.807843 0.72549 0.498039
+        roughness 1.1102230246251565e-16
+        metalness 0
+      }
+      geometry Cylinder { radius 0.05 height 0.1 } } ]
+  name "G45"
+  immersionProperties [
+    ImmersionProperties {
+      fluidName "fluid"
+      dragForceCoefficients 0.1 0 0
+      dragTorqueCoefficients 0.001 0 0
+      viscousResistanceTorqueCoefficient 0.005 } ]
+  boundingObject USE S
+  physics Physics { density 500
+    damping Damping { linear 0.5 angular 0.5 } } } 
+Solid {
+  translation 3.48294 0.5 -1.8627
+  rotation -0.48978614029103495 -0.15329904009109155 -0.8582592505099848 2.73794
+  children [
+  DEF S Shape {
+      appearance PBRAppearance {
+        baseColor 0.807843 0.72549 0.498039
+        roughness 1.1102230246251565e-16
+        metalness 0
+      }
+      geometry Cylinder { radius 0.05 height 0.1 } } ]
+  name "G46"
+  immersionProperties [
+    ImmersionProperties {
+      fluidName "fluid"
+      dragForceCoefficients 0.1 0 0
+      dragTorqueCoefficients 0.001 0 0
+      viscousResistanceTorqueCoefficient 0.005 } ]
+  boundingObject USE S
+  physics Physics { density 500
+    damping Damping { linear 0.5 angular 0.5 } } } 
+Solid {
+  translation 3.63866 0.5 -2.36602
+  rotation -0.48978614029103495 -0.15329904009109155 -0.8582592505099848 2.73794
+  children [
+  DEF S Shape {
+      appearance PBRAppearance {
+        baseColor 0.807843 0.72549 0.498039
+        roughness 1.1102230246251565e-16
+        metalness 0
+      }
+      geometry Cylinder { radius 0.05 height 0.1 } } ]
+  name "G47"
+  immersionProperties [
+    ImmersionProperties {
+      fluidName "fluid"
+      dragForceCoefficients 0.1 0 0
+      dragTorqueCoefficients 0.001 0 0
+      viscousResistanceTorqueCoefficient 0.005 } ]
+  boundingObject USE S
+  physics Physics { density 500
+    damping Damping { linear 0.5 angular 0.5 } } } 
+Solid {
+  translation 3.54023 0.5 1.61341
+  rotation -0.48978614029103495 -0.15329904009109155 -0.8582592505099848 2.73794
+  children [
+  DEF S Shape {
+      appearance PBRAppearance {
+        baseColor 0.807843 0.72549 0.498039
+        roughness 1.1102230246251565e-16
+        metalness 0
+      }
+      geometry Cylinder { radius 0.05 height 0.1 } } ]
+  name "G48"
+  immersionProperties [
+    ImmersionProperties {
+      fluidName "fluid"
+      dragForceCoefficients 0.1 0 0
+      dragTorqueCoefficients 0.001 0 0
+      viscousResistanceTorqueCoefficient 0.005 } ]
+  boundingObject USE S
+  physics Physics { density 500
+    damping Damping { linear 0.5 angular 0.5 } } } 
+Solid {
+  translation 1.91404 0.5 -0.619679
+  rotation -0.48978614029103495 -0.15329904009109155 -0.8582592505099848 2.73794
+  children [
+  DEF S Shape {
+      appearance PBRAppearance {
+        baseColor 0.807843 0.72549 0.498039
+        roughness 1.1102230246251565e-16
+        metalness 0
+      }
+      geometry Cylinder { radius 0.05 height 0.1 } } ]
+  name "G49"
+  immersionProperties [
+    ImmersionProperties {
+      fluidName "fluid"
+      dragForceCoefficients 0.1 0 0
+      dragTorqueCoefficients 0.001 0 0
+      viscousResistanceTorqueCoefficient 0.005 } ]
+  boundingObject USE S
+  physics Physics { density 500
+    damping Damping { linear 0.5 angular 0.5 } } } 
+Salamander {
+  name "S4"
+  translation -1.0 0.5 2.53042
+  rotation 0 1 0 1.5708
+  controller "salamander"
+}
