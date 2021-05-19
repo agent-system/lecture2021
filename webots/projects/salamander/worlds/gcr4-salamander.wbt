@@ -145,7 +145,7 @@ DEF WATER Fluid {
 }
 
 Solid {
-  translation 3.60311 0.5 1.94541
+  translation 0.368087 0.5 -2.13939
   rotation -0.48978614029103495 -0.15329904009109155 -0.8582592505099848 2.73794
   children [
   DEF S Shape {
@@ -166,7 +166,7 @@ Solid {
   physics Physics { density 500
     damping Damping { linear 0.5 angular 0.5 } } } 
 Solid {
-  translation 1.67989 0.5 -1.70995
+  translation -3.35863 0.5 -0.226265
   rotation -0.48978614029103495 -0.15329904009109155 -0.8582592505099848 2.73794
   children [
   DEF S Shape {
@@ -187,7 +187,7 @@ Solid {
   physics Physics { density 500
     damping Damping { linear 0.5 angular 0.5 } } } 
 Solid {
-  translation -4.02216 0.5 2.73527
+  translation -2.15797 0.5 -1.56326
   rotation -0.48978614029103495 -0.15329904009109155 -0.8582592505099848 2.73794
   children [
   DEF S Shape {
@@ -208,7 +208,7 @@ Solid {
   physics Physics { density 500
     damping Damping { linear 0.5 angular 0.5 } } } 
 Solid {
-  translation 1.26779 0.5 -1.99708
+  translation -3.79518 0.5 1.5895
   rotation -0.48978614029103495 -0.15329904009109155 -0.8582592505099848 2.73794
   children [
   DEF S Shape {
@@ -229,7 +229,7 @@ Solid {
   physics Physics { density 500
     damping Damping { linear 0.5 angular 0.5 } } } 
 Solid {
-  translation 1.18678 0.5 1.8849
+  translation -1.82922 0.5 -2.75602
   rotation -0.48978614029103495 -0.15329904009109155 -0.8582592505099848 2.73794
   children [
   DEF S Shape {
@@ -250,7 +250,7 @@ Solid {
   physics Physics { density 500
     damping Damping { linear 0.5 angular 0.5 } } } 
 Solid {
-  translation -0.149047 0.5 1.78936
+  translation 0.803477 0.5 0.598049
   rotation -0.48978614029103495 -0.15329904009109155 -0.8582592505099848 2.73794
   children [
   DEF S Shape {
@@ -271,7 +271,7 @@ Solid {
   physics Physics { density 500
     damping Damping { linear 0.5 angular 0.5 } } } 
 Solid {
-  translation -3.96153 0.5 0.042068
+  translation 2.612 0.5 0.522054
   rotation -0.48978614029103495 -0.15329904009109155 -0.8582592505099848 2.73794
   children [
   DEF S Shape {
@@ -292,7 +292,7 @@ Solid {
   physics Physics { density 500
     damping Damping { linear 0.5 angular 0.5 } } } 
 Solid {
-  translation -3.83589 0.5 -1.05599
+  translation 3.26709 0.5 -0.538953
   rotation -0.48978614029103495 -0.15329904009109155 -0.8582592505099848 2.73794
   children [
   DEF S Shape {
@@ -313,7 +313,7 @@ Solid {
   physics Physics { density 500
     damping Damping { linear 0.5 angular 0.5 } } } 
 Solid {
-  translation 0.214605 0.5 0.857726
+  translation -3.5963 0.5 -0.718477
   rotation -0.48978614029103495 -0.15329904009109155 -0.8582592505099848 2.73794
   children [
   DEF S Shape {
@@ -334,7 +334,7 @@ Solid {
   physics Physics { density 500
     damping Damping { linear 0.5 angular 0.5 } } } 
 Solid {
-  translation -1.611 0.5 1.87408
+  translation -3.0277 0.5 -2.27782
   rotation -0.48978614029103495 -0.15329904009109155 -0.8582592505099848 2.73794
   children [
   DEF S Shape {
@@ -356,13 +356,13 @@ Solid {
     damping Damping { linear 0.5 angular 0.5 } } } 
 Salamander {
   name "S0"
-  translation -1.0 0.5 0.034219
+  translation -1.0 0.5 0.618447
   rotation 0 1 0 1.5708
   controller "salamander"
 }
 
 Solid {
-  translation 0.771869 0.5 -1.83609
+  translation 0.952916 0.5 2.86096
   rotation -0.48978614029103495 -0.15329904009109155 -0.8582592505099848 2.73794
   children [
   DEF S Shape {
@@ -383,7 +383,7 @@ Solid {
   physics Physics { density 500
     damping Damping { linear 0.5 angular 0.5 } } } 
 Solid {
-  translation -2.52535 0.5 2.5082
+  translation 3.22639 0.5 -2.92414
   rotation -0.48978614029103495 -0.15329904009109155 -0.8582592505099848 2.73794
   children [
   DEF S Shape {
@@ -404,7 +404,7 @@ Solid {
   physics Physics { density 500
     damping Damping { linear 0.5 angular 0.5 } } } 
 Solid {
-  translation -1.65045 0.5 2.97747
+  translation -4.72246 0.5 -1.09147
   rotation -0.48978614029103495 -0.15329904009109155 -0.8582592505099848 2.73794
   children [
   DEF S Shape {
@@ -425,7 +425,7 @@ Solid {
   physics Physics { density 500
     damping Damping { linear 0.5 angular 0.5 } } } 
 Solid {
-  translation -2.9762 0.5 -0.814967
+  translation 2.24373 0.5 -0.532388
   rotation -0.48978614029103495 -0.15329904009109155 -0.8582592505099848 2.73794
   children [
   DEF S Shape {
@@ -446,7 +446,7 @@ Solid {
   physics Physics { density 500
     damping Damping { linear 0.5 angular 0.5 } } } 
 Solid {
-  translation 0.37293 0.5 -0.182671
+  translation -3.61306 0.5 1.98683
   rotation -0.48978614029103495 -0.15329904009109155 -0.8582592505099848 2.73794
   children [
   DEF S Shape {
@@ -467,7 +467,7 @@ Solid {
   physics Physics { density 500
     damping Damping { linear 0.5 angular 0.5 } } } 
 Solid {
-  translation 0.145714 0.5 -2.80431
+  translation 1.53875 0.5 0.90855
   rotation -0.48978614029103495 -0.15329904009109155 -0.8582592505099848 2.73794
   children [
   DEF S Shape {
@@ -488,7 +488,7 @@ Solid {
   physics Physics { density 500
     damping Damping { linear 0.5 angular 0.5 } } } 
 Solid {
-  translation -0.361752 0.5 1.04427
+  translation 4.24466 0.5 -2.62496
   rotation -0.48978614029103495 -0.15329904009109155 -0.8582592505099848 2.73794
   children [
   DEF S Shape {
@@ -509,7 +509,7 @@ Solid {
   physics Physics { density 500
     damping Damping { linear 0.5 angular 0.5 } } } 
 Solid {
-  translation -0.475153 0.5 2.88507
+  translation -4.10019 0.5 -0.320719
   rotation -0.48978614029103495 -0.15329904009109155 -0.8582592505099848 2.73794
   children [
   DEF S Shape {
@@ -530,7 +530,7 @@ Solid {
   physics Physics { density 500
     damping Damping { linear 0.5 angular 0.5 } } } 
 Solid {
-  translation -3.88841 0.5 -1.82183
+  translation -2.14926 0.5 0.390997
   rotation -0.48978614029103495 -0.15329904009109155 -0.8582592505099848 2.73794
   children [
   DEF S Shape {
@@ -551,7 +551,7 @@ Solid {
   physics Physics { density 500
     damping Damping { linear 0.5 angular 0.5 } } } 
 Solid {
-  translation -2.45076 0.5 2.08879
+  translation -4.55027 0.5 2.33951
   rotation -0.48978614029103495 -0.15329904009109155 -0.8582592505099848 2.73794
   children [
   DEF S Shape {
@@ -573,13 +573,13 @@ Solid {
     damping Damping { linear 0.5 angular 0.5 } } } 
 Salamander {
   name "S1"
-  translation -1.0 0.5 -0.110995
+  translation -1.0 0.5 0.47864
   rotation 0 1 0 1.5708
   controller "salamander"
 }
 
 Solid {
-  translation -4.47356 0.5 -0.600821
+  translation 1.29208 0.5 -1.17807
   rotation -0.48978614029103495 -0.15329904009109155 -0.8582592505099848 2.73794
   children [
   DEF S Shape {
@@ -600,7 +600,7 @@ Solid {
   physics Physics { density 500
     damping Damping { linear 0.5 angular 0.5 } } } 
 Solid {
-  translation -0.075007 0.5 -0.138522
+  translation -3.54276 0.5 0.566385
   rotation -0.48978614029103495 -0.15329904009109155 -0.8582592505099848 2.73794
   children [
   DEF S Shape {
@@ -621,7 +621,7 @@ Solid {
   physics Physics { density 500
     damping Damping { linear 0.5 angular 0.5 } } } 
 Solid {
-  translation 1.60222 0.5 -1.46021
+  translation 4.90572 0.5 -1.12038
   rotation -0.48978614029103495 -0.15329904009109155 -0.8582592505099848 2.73794
   children [
   DEF S Shape {
@@ -642,7 +642,7 @@ Solid {
   physics Physics { density 500
     damping Damping { linear 0.5 angular 0.5 } } } 
 Solid {
-  translation -3.75231 0.5 -1.08979
+  translation -4.47474 0.5 1.35222
   rotation -0.48978614029103495 -0.15329904009109155 -0.8582592505099848 2.73794
   children [
   DEF S Shape {
@@ -663,7 +663,7 @@ Solid {
   physics Physics { density 500
     damping Damping { linear 0.5 angular 0.5 } } } 
 Solid {
-  translation 3.79921 0.5 -1.52145
+  translation 0.06385 0.5 0.258545
   rotation -0.48978614029103495 -0.15329904009109155 -0.8582592505099848 2.73794
   children [
   DEF S Shape {
@@ -684,7 +684,7 @@ Solid {
   physics Physics { density 500
     damping Damping { linear 0.5 angular 0.5 } } } 
 Solid {
-  translation -3.53772 0.5 1.25635
+  translation -3.5242 0.5 1.77194
   rotation -0.48978614029103495 -0.15329904009109155 -0.8582592505099848 2.73794
   children [
   DEF S Shape {
@@ -705,7 +705,7 @@ Solid {
   physics Physics { density 500
     damping Damping { linear 0.5 angular 0.5 } } } 
 Solid {
-  translation 2.49892 0.5 -0.438947
+  translation 2.50987 0.5 2.74796
   rotation -0.48978614029103495 -0.15329904009109155 -0.8582592505099848 2.73794
   children [
   DEF S Shape {
@@ -726,7 +726,7 @@ Solid {
   physics Physics { density 500
     damping Damping { linear 0.5 angular 0.5 } } } 
 Solid {
-  translation -3.89005 0.5 -1.39716
+  translation 2.44465 0.5 0.543615
   rotation -0.48978614029103495 -0.15329904009109155 -0.8582592505099848 2.73794
   children [
   DEF S Shape {
@@ -747,7 +747,7 @@ Solid {
   physics Physics { density 500
     damping Damping { linear 0.5 angular 0.5 } } } 
 Solid {
-  translation 3.62266 0.5 -1.27232
+  translation 4.69904 0.5 0.212286
   rotation -0.48978614029103495 -0.15329904009109155 -0.8582592505099848 2.73794
   children [
   DEF S Shape {
@@ -768,7 +768,7 @@ Solid {
   physics Physics { density 500
     damping Damping { linear 0.5 angular 0.5 } } } 
 Solid {
-  translation -0.572996 0.5 -2.72542
+  translation -1.4396 0.5 -2.19483
   rotation -0.48978614029103495 -0.15329904009109155 -0.8582592505099848 2.73794
   children [
   DEF S Shape {
@@ -790,13 +790,13 @@ Solid {
     damping Damping { linear 0.5 angular 0.5 } } } 
 Salamander {
   name "S2"
-  translation -1.0 0.5 -2.37502
+  translation -1.0 0.5 -1.09454
   rotation 0 1 0 1.5708
   controller "salamander"
 }
 
 Solid {
-  translation -4.21431 0.5 -2.64336
+  translation 0.230086 0.5 2.02444
   rotation -0.48978614029103495 -0.15329904009109155 -0.8582592505099848 2.73794
   children [
   DEF S Shape {
@@ -817,7 +817,7 @@ Solid {
   physics Physics { density 500
     damping Damping { linear 0.5 angular 0.5 } } } 
 Solid {
-  translation 3.556 0.5 -2.87606
+  translation -4.39445 0.5 1.00331
   rotation -0.48978614029103495 -0.15329904009109155 -0.8582592505099848 2.73794
   children [
   DEF S Shape {
@@ -838,7 +838,7 @@ Solid {
   physics Physics { density 500
     damping Damping { linear 0.5 angular 0.5 } } } 
 Solid {
-  translation 0.064445 0.5 1.45039
+  translation 0.769228 0.5 2.31531
   rotation -0.48978614029103495 -0.15329904009109155 -0.8582592505099848 2.73794
   children [
   DEF S Shape {
@@ -859,7 +859,7 @@ Solid {
   physics Physics { density 500
     damping Damping { linear 0.5 angular 0.5 } } } 
 Solid {
-  translation -0.65598 0.5 -1.35675
+  translation 1.08345 0.5 0.594863
   rotation -0.48978614029103495 -0.15329904009109155 -0.8582592505099848 2.73794
   children [
   DEF S Shape {
@@ -880,7 +880,7 @@ Solid {
   physics Physics { density 500
     damping Damping { linear 0.5 angular 0.5 } } } 
 Solid {
-  translation 4.35878 0.5 0.216512
+  translation -0.056448 0.5 -2.92659
   rotation -0.48978614029103495 -0.15329904009109155 -0.8582592505099848 2.73794
   children [
   DEF S Shape {
@@ -901,7 +901,7 @@ Solid {
   physics Physics { density 500
     damping Damping { linear 0.5 angular 0.5 } } } 
 Solid {
-  translation -4.86351 0.5 -1.69372
+  translation -0.386353 0.5 2.18457
   rotation -0.48978614029103495 -0.15329904009109155 -0.8582592505099848 2.73794
   children [
   DEF S Shape {
@@ -922,7 +922,7 @@ Solid {
   physics Physics { density 500
     damping Damping { linear 0.5 angular 0.5 } } } 
 Solid {
-  translation -4.49152 0.5 0.413287
+  translation 4.62949 0.5 1.37071
   rotation -0.48978614029103495 -0.15329904009109155 -0.8582592505099848 2.73794
   children [
   DEF S Shape {
@@ -943,7 +943,7 @@ Solid {
   physics Physics { density 500
     damping Damping { linear 0.5 angular 0.5 } } } 
 Solid {
-  translation 3.63331 0.5 0.646071
+  translation 0.959858 0.5 0.066148
   rotation -0.48978614029103495 -0.15329904009109155 -0.8582592505099848 2.73794
   children [
   DEF S Shape {
@@ -964,7 +964,7 @@ Solid {
   physics Physics { density 500
     damping Damping { linear 0.5 angular 0.5 } } } 
 Solid {
-  translation -2.16106 0.5 2.38417
+  translation 3.4054 0.5 2.61554
   rotation -0.48978614029103495 -0.15329904009109155 -0.8582592505099848 2.73794
   children [
   DEF S Shape {
@@ -985,7 +985,7 @@ Solid {
   physics Physics { density 500
     damping Damping { linear 0.5 angular 0.5 } } } 
 Solid {
-  translation -2.92607 0.5 0.386014
+  translation 4.16964 0.5 -0.68509
   rotation -0.48978614029103495 -0.15329904009109155 -0.8582592505099848 2.73794
   children [
   DEF S Shape {
@@ -1007,7 +1007,7 @@ Solid {
     damping Damping { linear 0.5 angular 0.5 } } } 
 Salamander {
   name "S3"
-  translation -1.0 0.5 2.52973
+  translation -1.0 0.5 -0.785687
   rotation 0 1 0 1.5708
   controller "salamander"
 }

@@ -11,6 +11,7 @@
 (defun main (&optional fname)
    (wb_robot_init)
    (setq *robot-name* (wb_robot_get_name))
+   (format t ";; *robot-name*=~S~%" *robot-name*)
    (load (format nil "../../../models/~A.l" *robot-name*))
    (setq *robot* (funcall (read-from-string *robot-name*)))
    (objects (list *robot*))
