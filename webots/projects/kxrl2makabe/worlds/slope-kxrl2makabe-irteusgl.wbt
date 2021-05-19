@@ -1,0 +1,37 @@
+#VRML_SIM R2021a utf8
+WorldInfo {
+  info [
+    "generated from eus2wrl"
+  ]
+  title "nil demo"
+  basicTimeStep 16
+  coordinateSystem "NUE" 
+  contactProperties [
+     ContactProperties {
+      material1 "body"
+      material2 "floor"
+      coulombFriction [ 0.5 ]
+    }
+  ]
+}
+Viewpoint {
+  fieldOfView 1.1
+  position 2.0 1.5 1.5
+  orientation  -0.363187 0.913335 0.184159 1.1
+}
+
+TexturedBackground {
+}
+TexturedBackgroundLight {
+}
+Floor {
+tileSize 1 1
+}
+
+kxrl2makabe {
+  translation 0.0 0.5 0.0
+  rotation 1.000000 0.000000 0.0 -1.57 
+  controller "irteusgl"
+  controllerArgs "kxr-demo.l"
+  synchronization FALSE
+}

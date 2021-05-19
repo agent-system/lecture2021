@@ -358,4 +358,6 @@ kxrl2makabe {
   translation -3.0 0.5 0.0
   rotation 1.000000 0.000000 0.0 -1.57 
   controller "hello_world_demo"
+  controllerArgs ""
+  synchronization FALSE
 }
