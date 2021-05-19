@@ -104,6 +104,8 @@ timestep = int(robot.getBasicTimeStep() * 4)
 
 camera  = None
 display = None
+receiver = None
+
 num = robot.getNumberOfDevices()
 
 for i in range(num):
@@ -122,6 +124,10 @@ for i in range(num):
         print 'display found {}'.format(dev.getName())
         display = dev
 
+    if dev.getNodeType() == Node.RECEIVER:
+        print 'receiver found {}'.format(dev.getName())
+        receiver = dev
+
 if camera:
     camera.enable(timestep)
 
@@ -129,6 +135,9 @@ if camera:
 if display:
     display.attachCamera(camera)
     display.setColor(0xFF0000)
+
+if receiver:
+    receiver.enable(100)
 
 hp = robot.getDevice('head-neck-p')
 lf = robot.getDevice('larm-shoulder-p')
@@ -143,6 +152,11 @@ if hp:
 
 counter = 0
 while robot.step(timestep) != -1:
+
+    while receiver.getQueueLength() > 0:
+        data = receiver.getData()
+        print 'recv: {}'.format(data)
+        receiver.nextPacket()
 
     if lf and rf and lb and rb:
         pos_a = math.sin(math.pi * (counter % cycle_steps ) / float(cycle_steps))
