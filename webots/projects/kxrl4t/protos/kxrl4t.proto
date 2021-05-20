@@ -648,6 +648,9 @@ PROTO kxrl4t [
                 }
               ]
             }
+          Group {
+          children IS extensionSlot
+          }
           ]
           name "head-neck-y"
           contactMaterial "body"
@@ -1014,6 +1017,9 @@ PROTO kxrl4t [
                       }
                     ]
                   }
+                Group {
+                children IS extensionSlot
+                }
                 ]
                 name "larm-shoulder-r"
                 contactMaterial "body"
@@ -1099,6 +1105,9 @@ PROTO kxrl4t [
                 }
               }
             }
+          Group {
+          children IS extensionSlot
+          }
           ]
           name "larm-shoulder-y"
           contactMaterial "body"
@@ -1481,6 +1490,9 @@ PROTO kxrl4t [
                       }
                     ]
                   }
+                Group {
+                children IS extensionSlot
+                }
                 ]
                 name "lleg-crotch-r"
                 contactMaterial "body"
@@ -1566,6 +1578,9 @@ PROTO kxrl4t [
                 }
               }
             }
+          Group {
+          children IS extensionSlot
+          }
           ]
           name "lleg-crotch-y"
           contactMaterial "body"
@@ -1948,6 +1963,9 @@ PROTO kxrl4t [
                       }
                     ]
                   }
+                Group {
+                children IS extensionSlot
+                }
                 ]
                 name "rarm-shoulder-r"
                 contactMaterial "body"
@@ -2033,6 +2051,9 @@ PROTO kxrl4t [
                 }
               }
             }
+          Group {
+          children IS extensionSlot
+          }
           ]
           name "rarm-shoulder-y"
           contactMaterial "body"
@@ -2415,6 +2436,9 @@ PROTO kxrl4t [
                       }
                     ]
                   }
+                Group {
+                children IS extensionSlot
+                }
                 ]
                 name "rleg-crotch-r"
                 contactMaterial "body"
@@ -2500,6 +2524,9 @@ PROTO kxrl4t [
                 }
               }
             }
+          Group {
+          children IS extensionSlot
+          }
           ]
           name "rleg-crotch-y"
           contactMaterial "body"
@@ -2601,6 +2628,9 @@ PROTO kxrl4t [
           }
         }
       }
+    Group {
+    children IS extensionSlot
+    }
     ]
     name IS name 
     contactMaterial "body"
