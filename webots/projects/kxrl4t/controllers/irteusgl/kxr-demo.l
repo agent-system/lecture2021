@@ -1,5 +1,5 @@
 ;;
-;; Thu May 20 16:35:26 2021
+;; Thu May 20 18:19:26 2021
 ;; Generated for
 ;; https://github.com/agent-system/lecture2021/webots/projects/kxrl4t/controllers/irteusgl/kxr-demo.l
 ;;
@@ -43,8 +43,10 @@
          (get j :sensor)
          (wb_position_sensor_enable (get j :sensor) time_step)))
    (send *robot* :reset-pose)
-   (setq *camera* (wb_robot_get_device "camera_camera0_camera"))
-   (if (> *camera* 0) (wb_camera_enable *camera* time_step))
+   (setq *camera0* (wb_robot_get_device "camera_camera0_camera"))
+   (if (> *camera0* 0) (wb_camera_enable *camera0* time_step))
+   (setq *camera1* (wb_robot_get_device "camera_camera1_camera"))
+   (if (> *camera1* 0) (wb_camera_enable *camera1* time_step))
    (send-webots)
    (if
       (send *robot* :larm-shoulder-r)
