@@ -1,3 +1,8 @@
+;;
+;; Thu May 20 16:35:02 2021
+;; Generated for
+;; https://github.com/agent-system/lecture2021/webots/projects/kxrl2l6anzaifly/controllers/irteusgl/kxr-demo.l
+;;
 (load "../../../models/webotslib.l")
 (setq time_step 16)
 (defun my_step nil
@@ -41,8 +46,12 @@
    (setq *camera* (wb_robot_get_device "camera_camera0_camera"))
    (if (> *camera* 0) (wb_camera_enable *camera* time_step))
    (send-webots)
-   (send *robot* :larm-shoulder-r :joint-angle 90.0)
-   (send *robot* :rarm-shoulder-r :joint-angle -90.0)
+   (if
+      (send *robot* :larm-shoulder-r)
+      (send *robot* :larm-shoulder-r :joint-angle 90.0))
+   (if
+      (send *robot* :rarm-shoulder-r)
+      (send *robot* :rarm-shoulder-r :joint-angle -90.0))
    (send-webots)
    (setq i 0)
    (while
