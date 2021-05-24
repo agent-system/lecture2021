@@ -56,8 +56,17 @@ DEF S1 Salamander {
       width 320
       height 240
     }
+    RangeFinder {
+      name "dep0"
+      fieldOfView 1.8
+      width  80 ## 1/4 of cam0
+      height 60 ## 1/4 of cam0
+    }
  ]
- controller "python_demo"
+ #controller "python_demo"
+ #controller "<extern>"
+ controller "ros"
+ #controllerArgs "--synchronize" ## for ROS synchronize
 }
 DEF FLOOR Solid {
   children [
@@ -220,7 +229,8 @@ DEF WATER Fluid {
   boundingObject USE WATER_BOX
   locked TRUE
 }
-Robot {
+DEF SV Robot {
+  name "SV"
   children [
       Emitter { name "emitter" }
   ]
