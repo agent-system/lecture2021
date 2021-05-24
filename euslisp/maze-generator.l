@@ -544,7 +544,7 @@
   )
 
 (defun create-maze (size) ;;
-  (instance maze-graph :create size)
+  (instance maze-graph :create :size size)
   )
 
 (defclass a*-maze-search-solver
@@ -624,8 +624,14 @@
   ;; close-list functions
   (:find-node-in-close-list (n)
    (send close-htbl :get (send n :state)))
-  (:add-to-close-list (st)
-   (send close-htbl :enter st st)
+  (:add-to-close-list
+   (st &optional (val))
+   (if val
+       (send close-htbl :enter st val)
+     (send close-htbl :enter st st))
+   close-htbl)
+  (:del-from-close-list (st)
+   (send close-htbl :delete st)
    close-htbl)
   (:solve (prblm &key (verbose nil) (clear-if-failed t))
     (send self :solve-init prblm)
@@ -634,7 +640,8 @@
 ;;;           (warn "current open-list num -> ~A -- ~A --~%"
 ;;;                 (length open-list)
 ;;;                 :solve))
-      (let ((target-node (send self :pop-from-open-list :debug verbose)))
+      (let ((target-node (send self :pop-from-open-list :debug verbose))
+            exist-in-close)
         ;; here, target-node is removed from open-list in :pop-from-open-list.
 ;;;         (if verbose
 ;;;             (warn "target-node is ~A -- ~A -- ~%"
@@ -643,10 +650,22 @@
 ;;;                (if verbose
 ;;;                    (warn "arrived at goal! -- ~A --~%" :solve))
                (return-from :solve (send target-node :path)))
-              ((not (send self :find-node-in-close-list target-node))
-               (send self :add-to-close-list (send target-node :state))
+              ((not (setq exist-in-close
+                          (send self :find-node-in-close-list target-node)))
+               (send self :add-to-close-list (send target-node :state)
+                     (send target-node :get :priority-value))
                (send self :add-list-to-open-list
                      (send target-node :expand prblm :verbose verbose)))
+              ((and exist-in-close (send target-node :get :priority-value))
+               (if #|(< (send target-node :get :priority-value) (send exist-in-close :get :min-priority) )|#
+                   t
+                   (format t ";; exit(min) ~A / ~A~%"
+                           exist-in-close (send target-node :get :priority-value)))
+               (when (< (send target-node :get :priority-value)
+                        exist-in-close)
+                 (send self :del-from-close-list (send target-node :state))
+                 (send self :add-object-to-open-list target-node))
+               )
               )))
     (when verbose
       (warn "open-list is nil... -- ~A --~%" :solve)
@@ -687,3 +706,39 @@
    (send close-htbl :list-keys))
   )
 
+#|
+(defmethod graph
+  (:add-arc-from-to (from to &key (both nil) (cost 1))
+    (send-super :add-arc-from-to from to cost :both both)) ;; add arc as cost is 1
+  )
+(defmethod a*-graph-search-solver
+  (:hn (n p)
+       (if (eq (send p :node 'a) (send n :state))
+           1.5 0.0))
+  )
+(let ((gr (instance graph :init)) solver path)
+
+    ;;(setq solver (instance a*-graph-search-solver :init gr))
+    (setq solver (instance breadth-first-graph-search-solver))
+
+    (let ((node-s (instance node :init 's))
+          (node-a (instance node :init 'a))
+          (node-b (instance node :init 'b))
+          (node-g (instance node :init 'g))
+          )
+      (send gr :add-node node-s)
+      (send gr :add-node node-a)
+      (send gr :add-node node-b)
+      (send gr :add-node node-g)
+      (send gr :add-arc-from-to node-s node-a :cost 1)
+      (send gr :add-arc-from-to node-s node-b :cost 2)
+      (send gr :add-arc-from-to node-a node-b :cost 0.5)
+      (send gr :add-arc-from-to node-a node-g :cost 100)
+      (send gr :add-arc-from-to node-b node-g :cost 1)
+      )
+    (send gr :start-state (send gr :node 's))
+    (send gr :goal-state (send gr :node 'g))
+    (setq path (send solver :solve gr :verbose nil))
+    path
+    )
+|#
