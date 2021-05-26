@@ -21,17 +21,44 @@
 #include <webots/device.h>
 #include <webots/motor.h>
 #include <webots/robot.h>
+#include <webots/keyboard.h>
 
 #include <math.h>
 #include <stdio.h>
 #include <stdlib.h>
 
-#define TIME_STEP 16
+#define TIME_STEP 32
 
 void my_step() {
   if (wb_robot_step(TIME_STEP) == -1) {
     wb_robot_cleanup();
     exit(EXIT_SUCCESS);
+  }
+}
+
+void read_keyboard_command() {
+  static int prev_key = 0;
+  int new_key = wb_keyboard_get_key();
+  if (new_key != prev_key) {
+    switch (new_key) {
+    case WB_KEYBOARD_LEFT:
+      printf("keyboard left: %d\n", WB_KEYBOARD_LEFT);
+      break;
+    case WB_KEYBOARD_RIGHT:
+      printf("keyboard right: %d\n", WB_KEYBOARD_RIGHT);
+      break;
+    case WB_KEYBOARD_UP:
+      printf("keyboard up: %d\n", WB_KEYBOARD_UP);
+      break;
+    case WB_KEYBOARD_DOWN:
+      printf("keyboard down: %d\n", WB_KEYBOARD_DOWN);
+      break;
+    default:
+      printf("keyboard: key=%d\n", new_key);
+      break;
+      
+    }
+    prev_key = new_key;
   }
 }
 
@@ -80,10 +107,12 @@ int main(int argc, char **argv) {
     my_step();
   }
 #endif
-
+  wb_keyboard_enable(TIME_STEP);
   double initTime = wb_robot_get_time();
+
   while (true) {
     double time = wb_robot_get_time() - initTime;
+    read_keyboard_command();
     wb_motor_set_position(l_arm_elx, -0.6 * (sin(2 * time) - 1.0));
     wb_motor_set_position(r_arm_elx, 0.6 * (sin(2 * time) - 1.0));
     wb_motor_set_position(head_neck_p,  -2.0 * sin(time));

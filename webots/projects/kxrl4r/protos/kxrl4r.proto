@@ -775,33 +775,6 @@ PROTO kxrl4r [
                       }
                     ]
                   }
-                  Solid {
-                    translation 0.010000 -0.000000 0.026000
-                    rotation 1.000000 0.000000 0.000000 1.570793
-                    children [
-                      Solid {
-                        translation 0.000000 0.000000 0.000000
-                        rotation 0.000000 -1.000000 0.000000 1.570796
-                        children [
-                          Camera {
-                            name "camera_camera0_camera"
-                            fieldOfView 0.785398
-                            width 320
-                            height 240
-                            noise 0.007000
-                          }
-                        Group {
-                        children IS extensionSlot
-                        }
-                        ]
-                        name "camera_camera0"
-                      }
-                    Group {
-                    children IS extensionSlot
-                    }
-                    ]
-                    name "camera_camera0_optical"
-                  }
                 Group {
                 children IS extensionSlot
                 }
@@ -885,7 +858,7 @@ PROTO kxrl4r [
                   ]
                 }
                 physics Physics {
-                  density 500
+                  density 700
                   centerOfMass [ 0.005545 -0.000000 0.014462 ]
                 }
               }
@@ -973,7 +946,7 @@ PROTO kxrl4r [
             ]
           }
           physics Physics {
-            density 500
+            density 700
             centerOfMass [ 0.000000 0.000000 0.020401 ]
           }
         }
@@ -1176,8 +1149,7 @@ PROTO kxrl4r [
                   name "larm-shoulder-w_sensor"
                 }
               ]
-              endPoint TouchSensor {
-                type "force-3d"
+              endPoint Solid {
                 translation 0.000000 0.056500 -0.021000
                 rotation 0.000000 1.000000 0.000000 0.000000
                 children [
@@ -1238,7 +1210,7 @@ PROTO kxrl4r [
                   ]
                 }
                 physics Physics {
-                  density 500
+                  density 700
                   centerOfMass [ 0.000000 0.000000 0.000000 ]
                 }
               }
@@ -1358,7 +1330,7 @@ PROTO kxrl4r [
             ]
           }
           physics Physics {
-            density 500
+            density 700
             centerOfMass [ -0.000000 0.032760 -0.009350 ]
           }
         }
@@ -1561,8 +1533,7 @@ PROTO kxrl4r [
                   name "lleg-crotch-w_sensor"
                 }
               ]
-              endPoint TouchSensor {
-                type "force-3d"
+              endPoint Solid {
                 translation 0.000000 0.056500 -0.021000
                 rotation 0.000000 1.000000 0.000000 0.000000
                 children [
@@ -1623,7 +1594,7 @@ PROTO kxrl4r [
                   ]
                 }
                 physics Physics {
-                  density 500
+                  density 700
                   centerOfMass [ 0.000000 0.000000 0.000000 ]
                 }
               }
@@ -1743,7 +1714,7 @@ PROTO kxrl4r [
             ]
           }
           physics Physics {
-            density 500
+            density 700
             centerOfMass [ -0.000000 0.032760 -0.009350 ]
           }
         }
@@ -1946,8 +1917,7 @@ PROTO kxrl4r [
                   name "rarm-shoulder-w_sensor"
                 }
               ]
-              endPoint TouchSensor {
-                type "force-3d"
+              endPoint Solid {
                 translation 0.000000 -0.056500 -0.021000
                 rotation 0.000000 1.000000 0.000000 0.000000
                 children [
@@ -2008,7 +1978,7 @@ PROTO kxrl4r [
                   ]
                 }
                 physics Physics {
-                  density 500
+                  density 700
                   centerOfMass [ 0.000000 0.000000 0.000000 ]
                 }
               }
@@ -2128,7 +2098,7 @@ PROTO kxrl4r [
             ]
           }
           physics Physics {
-            density 500
+            density 700
             centerOfMass [ 0.000000 -0.032760 -0.009350 ]
           }
         }
@@ -2331,8 +2301,7 @@ PROTO kxrl4r [
                   name "rleg-crotch-w_sensor"
                 }
               ]
-              endPoint TouchSensor {
-                type "force-3d"
+              endPoint Solid {
                 translation 0.000000 -0.056500 -0.021000
                 rotation 0.000000 1.000000 0.000000 0.000000
                 children [
@@ -2393,7 +2362,7 @@ PROTO kxrl4r [
                   ]
                 }
                 physics Physics {
-                  density 500
+                  density 700
                   centerOfMass [ 0.000000 0.000000 0.000000 ]
                 }
               }
@@ -2513,7 +2482,7 @@ PROTO kxrl4r [
             ]
           }
           physics Physics {
-            density 500
+            density 700
             centerOfMass [ 0.000000 -0.032760 -0.009350 ]
           }
         }
@@ -2841,7 +2810,7 @@ PROTO kxrl4r [
       ]
     }
     physics Physics {
-      density 500
+      density 700
       centerOfMass [ 0.000000 0.000000 0.000000 ]
     }
   }
