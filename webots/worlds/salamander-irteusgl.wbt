@@ -41,10 +41,8 @@ TexturedBackgroundLight {
 Salamander {
   translation 3.4 0.29422 3.15
   rotation 0 1 0 1.5708
-#  controller "irteusgl"
-  controller "<extern>"
-#  controllerArgs "salamander.l"
-  controllerArgs ""
+  controller "irteusgl"
+  controllerArgs "salamander.l"
 }
 DEF FLOOR Solid {
   children [
