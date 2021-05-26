@@ -1,0 +1,45 @@
+#VRML_SIM R2021a utf8
+  
+PROTO Water-ball-big-light [
+  field SFVec3f    translation     0 0 0        # Is `Transform.translation`.
+  field SFRotation rotation        0 1 0 0      # Is `Transform.rotation`.
+]
+{
+ Solid {
+  translation IS translation
+  rotation IS rotation
+  children [
+    DEF BALL_SHAPE Shape {
+        appearance PBRAppearance {
+            #baseColor 1.0 0.54 0.08
+            baseColor 1.0 0.0 0.0
+            roughness 0.3
+            metalness 0
+        }
+        geometry Sphere {
+          #radius 0.0325
+          radius 0.3 #0.11
+          subdivision 4
+        }
+      }
+    ]
+  name "ball"
+　immersionProperties [
+    DEF SALAMANDER_POOL_IMMERSION_PROPERTIES ImmersionProperties {
+      fluidName "fluid"
+      dragForceCoefficients 0.1 0 0
+      dragTorqueCoefficients 0.001 0 0
+      viscousResistanceTorqueCoefficient 0.005
+    }
+  ]
+  boundingObject USE BALL_SHAPE
+  physics Physics {
+    density 10
+    #density 10
+    damping Damping {
+      linear 0.5
+      angular 0.5
+    }
+  }
+  }
+}
