@@ -6,57 +6,40 @@
 
 (setq webotslib (load-foreign (format nil "~A/lib/controller/libController.so" (unix:getenv "WEBOTS_HOME"))))
 
-(defmacro defcenum (type &rest args)
-   `(defcstruct ,type (x :integer))
+(defmacro defcenum (type &rest enums)
+ (let ((index 0)
+       (ret))
+  (setq ret
+      (mapcar
+      #'(lambda (x)
+	  (if (keywordp x) (setq x (intern (symbol-name x))))
+	  (cond
+	   ((listp x) (setq index (second x))
+	    (if (keywordp (car x)) 
+		(list 'defconstant (intern (symbol-name (car x))) index)
+	      (list 'defconstant (car x) index)))
+	   (t (list 'defconstant x (incf index)))))
+      enums))
+  `(progn (setq ,type :integer)
+      ,@ret)))
    )
+(defmacro defanonenum (&rest enums)
+   "Converts anonymous enums to defconstants."
+ (let ((index 0)
+       (ret))
+    (setq ret
+      (mapcar
+      #'(lambda (x)
+	 (cond
+	  ((listp x) (setq index (second x)) (list 'defconstant (car x) index))
+	  (t (list 'defconstant x (incf index)))))
+      enums))
+  `(progn ,@ret)))
+
 
 
 
 ;;;SWIG wrapper code starts here
-
-(defmacro defanonenum (&body enums)
-   "Converts anonymous enums to defconstants."
-   `(progn ,@(loop for value in enums
-                        for index = 0 then (1+ index)
-                        when (listp value) do (setf index (second value)
-                                                          value (first value))
-                        collect `(defconstant ,value ,index))))
-#|
-(eval-when (:compile-toplevel :load-toplevel)
-  (unless (fboundp 'swig-lispify)
-    (defun swig-lispify (name flag &optional (package *package*))
-      (labels ((helper (lst last rest &aux (c (car lst)))
-                    (cond
-                      ((null lst)
-                       rest)
-                      ((upper-case-p c)
-                       (helper (cdr lst) 'upper
-                               (case last
-                                 ((lower digit) (list* c #\- rest))
-                                 (t (cons c rest)))))
-                      ((lower-case-p c)
-                       (helper (cdr lst) 'lower (cons (char-upcase c) rest)))
-                      ((digit-char-p c)
-                       (helper (cdr lst) 'digit 
-                               (case last
-                                 ((upper lower) (list* c #\- rest))
-                                 (t (cons c rest)))))
-                      ((char-equal c #\_)
-                       (helper (cdr lst) '_ (cons #\- rest)))
-                      (t
-                       (error "Invalid character: ~A" c)))))
-        (let ((fix (case flag
-                        ((constant enumvalue) "+")
-                        (variable "*")
-                        (t ""))))
-          (intern
-           (concatenate
-            string
-            fix
-            (nreverse (helper (concatenate cons name) nil nil))
-            fix)
-           package))))))
-|#
 ;;;SWIG wrapper code ends here
 
 
@@ -897,6 +880,42 @@
 (defforeign wb_joystick_set_force_axis webotslib
 	"wb_joystick_set_force_axis" () :integer)
 	;;  ( :integer)
+
+(defanonenum 
+	(WB_KEYBOARD_END 312)
+	WB_KEYBOARD_HOME
+	WB_KEYBOARD_LEFT
+	WB_KEYBOARD_UP
+	WB_KEYBOARD_RIGHT
+	WB_KEYBOARD_DOWN
+	(WB_KEYBOARD_PAGEUP 366)
+	WB_KEYBOARD_PAGEDOWN
+	(WB_KEYBOARD_NUMPAD_HOME 375)
+	WB_KEYBOARD_NUMPAD_LEFT
+	WB_KEYBOARD_NUMPAD_UP
+	WB_KEYBOARD_NUMPAD_RIGHT
+	WB_KEYBOARD_NUMPAD_DOWN
+	(WB_KEYBOARD_NUMPAD_END 382)
+	(WB_KEYBOARD_KEY #x0000ffff)
+	(WB_KEYBOARD_SHIFT #x00010000)
+	(WB_KEYBOARD_CONTROL #x00020000)
+	(WB_KEYBOARD_ALT #x00040000))
+
+(defforeign wb_keyboard_enable webotslib
+	"wb_keyboard_enable" () :integer)
+	;;  ( :integer)
+
+(defforeign wb_keyboard_disable webotslib
+	"wb_keyboard_disable" () :integer)
+	;;  ()
+
+(defforeign wb_keyboard_get_sampling_period webotslib
+	"wb_keyboard_get_sampling_period" () :integer)
+	;;  ()
+
+(defforeign wb_keyboard_get_key webotslib
+	"wb_keyboard_get_key" () :integer)
+	;;  ()
 
 (defforeign wb_led_set webotslib
 	"wb_led_set" () :integer)
@@ -2219,10 +2238,10 @@
   *node-type-symbol-list*
   (mapcan
    #'(lambda (n)
-       (if (boundp n)
-           (list (cons (symbol-value n) n))
-         nil))
-   '(
+      (if (boundp n)
+	(list (cons (symbol-value n) n))
+	  nil))
+	      '(
      WB_NODE_NO_NODE
      WB_NODE_APPEARANCE
      WB_NODE_BACKGROUND
