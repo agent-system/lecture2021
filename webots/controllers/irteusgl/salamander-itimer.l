@@ -1,6 +1,6 @@
 ;;;
 ;;;
-(load "../../webotslib.l")
+(load "../../projects/models/webotslib.l")
 
 (setq  X 0 Y 1 Z 2)
 (setq NUM_MOTORS 10)

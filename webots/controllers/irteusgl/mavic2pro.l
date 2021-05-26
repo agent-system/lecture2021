@@ -1,7 +1,8 @@
 ;;
 ;;	for mavic_2_pro-irteusgl.wbt, mavic_2_pro-extern.wbt
 ;;
-(load "../../webotslib.l")
+(load "../../projects/models/webotslib.l")
+
 (defconstant M_PI 3.141592)
 (defun SIGN (x) (if (> x 0) 1 (if (< x 0) -1 0)))
 (defun CLAMP (value low high) (if (< value low) low (if (> value high) high  value)))
