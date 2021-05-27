@@ -344,7 +344,7 @@
 	;;  ( :integer)
 
 (defforeign wb_camera_get_image webotslib
-	"wb_camera_get_image" () (:string))
+	"wb_camera_get_image" () (:foreign-string))
 	;;  ( :integer)
 
 (defforeign wb_camera_get_width webotslib
@@ -448,7 +448,7 @@
 	;;  ( :integer)
 
 (defforeign wb_camera_recognition_get_segmentation_image webotslib
-	"wb_camera_recognition_get_segmentation_image" () (:string))
+	"wb_camera_recognition_get_segmentation_image" () (:foreign-string))
 	;;  ( :integer)
 
 (defforeign wb_camera_recognition_save_segmentation_image webotslib
