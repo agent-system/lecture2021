@@ -276,5 +276,5 @@ Robot {
     mass 0.5
   }
   controller "irteusgl"
-  controller "camera_recognition.l"
+  controllerArgs "camera_recognition.l"
 }

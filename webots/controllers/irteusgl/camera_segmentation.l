@@ -1,12 +1,11 @@
 ;;
-;;
+;; irteusgl controller for camera_segmentation-irteusgl.wbt
 ;;
 (load "../../projects/models/webotslib.l")
 
 (defconstant SPEED 1.5)
 (defconstant TIME_STEP 64)
 (defvar *init* nil)
-
 (defun main-init nil
   (wb_robot_init)
   (setq camera (wb_robot_get_device "camera"))
@@ -15,8 +14,7 @@
     (wb_camera_recognition_enable camera TIME_STEP)
     (wb_camera_recognition_enable_segmentation camera)
     (setq width (wb_camera_get_width camera))
-    (setq height (wb_camera_get_height camera))
-    )
+    (setq height (wb_camera_get_height camera)))
   (setq display (wb_robot_get_device "segmented image display"))
   (setq left_motor (wb_robot_get_device "left wheel motor"))
   (setq right_motor (wb_robot_get_device "right wheel motor"))
@@ -39,11 +37,7 @@
   (wb_robot_step TIME_STEP)
   (when (and (wb_camera_recognition_is_segmentation_enabled camera)
 	     (> (wb_camera_recognition_get_sampling_period camera) 0))
-    ;;(setq data (fstring-to-string (wb_camera_recognition_get_segmentation_image camera)))
-    ;;(setq data (wb_camera_recognition_get_segmentation_image camera))
-    ;;(* width height 4)))
-    (setq data (cout-string (wb_camera_recognition_get_segmentation_image camera) (* width height)))
-    ;;(format t ";; (wb_camera_recognition_get_segmentation_image camera)=~A~%" (length data))
+    (setq data (cout-fstring (wb_camera_recognition_get_segmentation_image camera) (* width height)))
     (when (> (length data) 0)
       (setq segmented_image (wb_display_image_new display width height data WB_IMAGE_BGRA))
       (wb_display_image_paste display segmented_image 0 0 0)
@@ -56,7 +50,6 @@
   (pushnew 'main-step *timer-job*))
 (defun itimer-off nil
   (setq *timer-job* (remove 'main-step *timer-job*)))
-
-(main)
-;;(itimer-on)
+;;(main)
+(itimer-on)
 

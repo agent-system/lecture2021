@@ -108,7 +108,7 @@ Size of the object 1 on the camera image: (88 121)
     ;; number_of_colors, *robjs*[i].colors[3 * j], *robjs*[i].colors[3 * j + 1], *robjs*[i].colors[3 * j + 2]);
     )
   )
-
+(defvar *init* nil)
 (defun itimer-on nil
   (unless *init* (main-init))
   (setq *top-selector-interval* 0.1)
@@ -117,5 +117,5 @@ Size of the object 1 on the camera image: (88 121)
 (defun itimer-off nil
   (setq *timer-job* (remove 'main-step *timer-job*))
   )
-(main)
-;;(itimer-on)
+;;(main)
+(itimer-on)
