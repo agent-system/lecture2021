@@ -7,101 +7,60 @@ WorldInfo {
   coordinateSystem "NUE"
 }
 Viewpoint {
-  orientation -0.021463168085729945 -0.8906247857295742 -0.45423212508570304 3.188205650395308
-  position 0.029244403639071485 1.783690170573626 -1.2321933387076835
+  orientation 0.7346252174262549 -0.6024593478892954 -0.31203929890677645 5.284452
+  position 0.95115265 1.680706 1.2636394
 }
 TexturedBackground {
 }
 TexturedBackgroundLight {
 }
 RectangleArena {
-  floorSize 1.5 1.5
 }
 Can {
   translation -0.29020133 0.06 -0.26762583
 }
-Can {
-  translation 0.341474 0.06 0.326272
-  name "can(1)"
+Apple {
+  translation -0.27766617 0.05 0.22187232
 }
 Apple {
-  translation -0.22946 0.05 0.260886
-}
-Apple {
-  translation -0.56252 0.05 0.621889
+  translation -0.29124061 0.05 0.42827574
   name "apple(1)"
-}
-DEF ORANGE Solid {
-  translation 0.063045 -4.44089e-16 0.00218798
-  children [
-    Orange {
-      translation -0.182317 0.05 0.187654
-    }
-  ]
-  name "orange"
-  recognitionColors [
-    0.988235 0.686275 0.243137
-  ]
-}
-DEF ORANGE Solid {
-  translation 0.503005 1.11022e-15 -0.0858069
-  children [
-    Orange {
-      translation -0.182317 0.05 0.187654
-    }
-  ]
-  name "orange(1)"
-  recognitionColors [
-    0.988235 0.686275 0.243137
-  ]
-}
-JamJar {
-  translation -0.0787751 -1.77636e-15 0.33681
-  rotation 0 1 0 4.692820414042842e-06
-  mass 0
 }
 JamJar {
   translation 0.28829817 0 -0.31403324
   rotation 0 1 0 2.0943951
-  name "jam jar(1)"
   mass 0
 }
-CerealBox {
-  translation -0.194464 -1.11022e-15 0.43865
-  rotation 0 1 0 -2.094395307179586
-}
-CerealBox {
-  translation -0.4153 0 0.450259
-  rotation 0 1 0 -2.3561953071795863
-  name "cereal box(1)"
+BiscuitBox {
+  translation -0.2475227 0.09 0.37291531
+  rotation -0.1861567804306528 -0.6947465916072183 0.6947465916072183 3.5096927
+  size 0.33 0.04 0.17
+  mass 0
 }
 OilBarrel {
-  translation 0.211927 0.07 0.28712
+  translation 0.40230985 0.07 0.1228684
   height 0.14
   radius 0.06
 }
 OilBarrel {
-  translation 0.485864 0.07 0.240466
+  translation 0.27852103 0.07 0.18219826
   name "oil barrel(1)"
   height 0.14
   radius 0.06
 }
 OilBarrel {
-  translation 0.437183 0.07 0.464787
+  translation 0.36487567 0.07 0.31809679
   name "oil barrel(2)"
   height 0.14
   radius 0.06
 }
-BiscuitBox {
-  translation 0.274668 0.04 -0.538412
-  rotation 0.9351132545462786 -0.25056206820525934 0.25056306820553154 1.63784
-}
-RubberDuck {
-  translation -0.384468 0.01 0.243817
-  rotation 0 -1 0 -0.785395307179586
+OilBarrel {
+  translation 0.19656081 0.07 0.36824127
+  name "oil barrel(3)"
+  height 0.14
+  radius 0.06
 }
 Robot {
-  translation -0.000516413 -4.44089e-16 -0.0851798
   rotation 0 1 0 2
   children [
     Transform {
@@ -302,13 +261,7 @@ Robot {
       recognition Recognition {
         frameColor 0.929412 0.831373 0
         frameThickness 3
-        segmentation TRUE
       }
-    }
-    Display {
-      name "segmented image display"
-      width 256
-      height 128
     }
   ]
   name "MyBot"
@@ -323,5 +276,5 @@ Robot {
     mass 0.5
   }
   controller "irteusgl"
-  controllerArgs "camera_segmentation.l"
+  controller "camera_recognition.l"
 }

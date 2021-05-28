@@ -322,6 +322,5 @@ Robot {
     density -1
     mass 0.5
   }
-  controller "irteusgl"
-  controllerArgs "camera_segmentation.l"
+  controller "<extern>"
 }
