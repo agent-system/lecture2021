@@ -448,6 +448,16 @@ void set_motion_pos(WbDeviceTag gps, double *target_position) {
 }
 
 
+void print_success_id() {
+  printf("Current succeeded target ids:\n");
+  for (int i = 0; i < list->len; i++) {
+    if (list->success[i] == true) {
+      printf("id: %d\n", list->id[i]);
+    }
+  }
+}
+
+
 int main() {
   /* body and leg motors */
   WbDeviceTag motor[NUM_MOTORS];
@@ -515,12 +525,13 @@ int main() {
       target_position[i] = clamp(target_position[i], min_motor_position[i], max_motor_position[i]);
       wb_motor_set_position(motor[i], target_position[i]);
     }
-    
-    clean_up();
+    // can be used after adding robots to collect the garbage been pushed to the poor-front
+    // clean_up();
+    print_success_id();
   }
 
-  // can be used after adding robots to collect the garbage been pushed to the poor-front
-  // wb_robot_cleanup();   
+  
+  wb_robot_cleanup();   
    
   return 0; /* this statement is never reached */
 }
