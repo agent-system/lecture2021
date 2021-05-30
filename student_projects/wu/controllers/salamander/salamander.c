@@ -313,20 +313,26 @@ int detecting_garb(WbDeviceTag camera, int *found, int *missing) {
     int temp_new = 0;
     for (int i = 0; i < number_of_objects; ++i) {
       if (objects[i].colors[0] == 1 && objects[i].colors[1] == 0 && objects[i].colors[2] == 0){
-        temp_new = check_list(objects[i].id);
-        if (temp_new == 0) {  // target already reached destination
-          continue;           // check the next object in the view
+        if (current_target_id == -1) {  // if searching new target
+          temp_new = check_list(objects[i].id);
+          if (temp_new == 0) {  // target already reached destination
+            continue;           // check the next object in the view
+          }
+          else {
+            current_target_id = objects[i].id;  // Set this object as the target to push for this time
+          }       
         }
-        else {
-          current_target_id = objects[i].id;  // Set this object as the target to push for this time
-          printf("CURRENT TARGET ID: %d\n", current_target_id);
+        // else if current_target is not the detected object 
+        else if (current_target_id != objects[i].id) {
+          continue;
         }
-        
+
         printf("Currently detected targets:\n");
         printf("len: %d\n", list->len);
         for (int i = 0; i < list->len; i++) {
           printf("id_%d: %d\n", i, list->id[i]);
         }
+        printf("CURRENT TARGET ID: %d\n", current_target_id);
         
         flag = 1;
         *missing = 0;
@@ -378,6 +384,7 @@ int assess_motion(double bearing, double gps_x) {
     printf("Mission Succeed!\n");
     printf("Going back origin\n");
     set_success(current_target_id);
+    current_target_id = -1;  // searching new target
     return 0;
   }
   // Otherwise, normal pushing, return 1
