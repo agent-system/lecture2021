@@ -1,0 +1,45 @@
+PROTO Garbage [
+  field SFVec3f    translation     0 0 0        # Is `Transform.translation`.
+  field SFRotation rotation        0 1 0 0      # Is `Transform.rotation`.
+  field SFVec3f      size         0.2 0.1 0.1        # Is `Transform.translation`.
+  field SFString   name            "garbage"    # Is `Solid.name`.
+]
+{
+  Solid {
+    translation IS translation
+    rotation IS rotation
+    children [
+      DEF GARB_SHAPE Shape {
+        appearance PBRAppearance {
+          baseColor 1 0 0
+          roughness 0
+          metalness 0
+        }
+        geometry Box {
+          size IS size
+        }
+      }
+    ]
+    name IS name
+    contactMaterial "garb"
+    immersionProperties [
+      DEF POOL_IMMERSION_PROPERTIES ImmersionProperties {
+        fluidName "fluid"
+        dragForceCoefficients 0.1 0 0
+        dragTorqueCoefficients 0.001 0 0
+        viscousResistanceTorqueCoefficient 0.005
+      }
+    ]
+    boundingObject USE GARB_SHAPE
+    physics DEF GAB_PHYSICS Physics {
+      density 500
+      damping Damping {
+        linear 0.5
+        angular 0.5
+      }
+    }
+    recognitionColors[
+        1 0 0
+    ]
+  }
+}
