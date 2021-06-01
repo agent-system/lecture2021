@@ -1,5 +1,3 @@
-#!/usr/bin/env python
-
 import rospy
 from std_msgs.msg import String
 from webots_ros.msg import BoolStamped, Float64Stamped, Int32Stamped, Int8Stamped, RadarTarget, RecognitionObject, StringStamped
@@ -93,6 +91,7 @@ class RosClient(object):
     def __init__(self, _name):
         self.name = _name
         self.device_map = {}
+        self.time_step_proxy = None
         self.getDevices()
 
     def getDevices(self):
@@ -121,6 +120,12 @@ class RosClient(object):
         if dev:
             self.device_map[_devname] = dev
 
+    def time_step(self, step):
+        if not self.time_step_proxy:
+            self.time_step_proxy = rospy.ServiceProxy('/{}/robot/time_step'.format(self.name),
+                                                      set_int, persistent=True)
+        self.time_step_proxy.call(step)
+
     def run_program(self, func, **kargs):
         func(self, **kargs)
 
@@ -128,26 +133,14 @@ def callback(data):
     #rospy.loginfo(data.data)
     model_names.append(data.data)
 
-if __name__ == '__main__':
-    rospy.init_node('webots_ros_client', anonymous=True)
-
+def create_model_map():
     sub = rospy.Subscriber("/model_name", String, callback)
     rospy.sleep(1.0)
 
-    print len(model_names)
-    print sub.get_num_connections()
+    #print len(model_names)
+    #print sub.get_num_connections()
 
     for nm in model_names:
         model_map[nm] = RosClient(nm)
 
-    print model_map
-
-    for k in model_map.values():
-        for dv in k.device_map.values():
-            print dv
-            if type(dv) == WbCamera:
-                dv.enable()
-            if type(dv) == WbRangeFinder:
-                dv.enable()
-
-    rospy.spin()
+    return model_map
