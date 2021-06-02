@@ -1,6 +1,13 @@
+# Project
+
 ## Garbage collection by the Salamander Robot
 
 ### Modification
+
+#### World
+- add garbages
+
+#### Salamander
 - add camera
   - enables object detection
 
