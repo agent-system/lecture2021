@@ -38,35 +38,9 @@ TexturedBackground {
 }
 TexturedBackgroundLight {
 }
-DEF S1 Salamander {
+Salamander {
   translation 3.4 0.29422 3.15
   rotation 0 1 0 1.5708
-  extensionSlot [
-    Receiver { name "receiver" }
-    Display {
-      width 320
-      height 240
-      name "cam_display"
-    }
-    Camera {
-      name "cam0"
-      #translation 0 0 0
-      #rotation -0.577350269188 -0.577350269192 -0.577350269188 2.094395102396
-      fieldOfView 1.8
-      width 320
-      height 240
-    }
-    RangeFinder {
-      name "dep0"
-      fieldOfView 1.8
-      width  80 ## 1/4 of cam0
-      height 60 ## 1/4 of cam0
-    }
- ]
- #controller "python_demo"
- #controller "<extern>"
- controller "ros"
- #controllerArgs "--synchronize" ## for ROS synchronize
 }
 DEF FLOOR Solid {
   children [
@@ -228,12 +202,4 @@ DEF WATER Fluid {
   ]
   boundingObject USE WATER_BOX
   locked TRUE
-}
-DEF SV Robot {
-  name "SV"
-  children [
-      Emitter { name "emitter" }
-  ]
-  controller "supervisor_demo"
-  supervisor TRUE
 }

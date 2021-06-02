@@ -31,7 +31,8 @@ WorldInfo {
 }
 Viewpoint {
   orientation -0.3631869715851604 0.9133349285429613 0.18415898559186192 1.10338
-  position 10.0 5.0 5.0
+  position 5.42399 1.14139 4.17935
+#  follow "Salamander"
 }
 TexturedBackground {
 }
@@ -78,6 +79,10 @@ SwimDog {
 
 SwimKhr2hv {
   translation -1.0 2.3 1.0
+}
+
+QRIO {
+  translation 1.0 2.3 1.0
 }
 
 DEF BALL SwimBall {

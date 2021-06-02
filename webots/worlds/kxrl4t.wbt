@@ -6,21 +6,20 @@ WorldInfo {
   title "kxrl4t demo"
   basicTimeStep 16
   coordinateSystem "NUE" 
+TexturedBackground {
+}
+TexturedBackgroundLight {
 }
 Viewpoint {
   fieldOfView 1.1
   position 0.9 1.5 2.0
   orientation  -0.780486 0.58667 0.216011 0.599585
 }
-TexturedBackground {
-}
-TexturedBackgroundLight {
-}
  Floor {
 tileSize 1 1
 }
 kxrl4t {
-  translation 0.0 0.3 0.0
+  translation 0.0 300.0 0.0
   rotation 1.000000 0.000000 0.0 -1.57 
   controller "hello_world_demo"
 }

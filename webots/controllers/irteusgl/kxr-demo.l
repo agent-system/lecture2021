@@ -1,5 +1,5 @@
 ;;
-;; Mon May 31 23:31:05 2021
+;; Wed Jun  2 12:02:39 2021
 ;; Generated for
 ;; https://github.com/agent-system/lecture2021/webots/controllers/irteusgl/kxr-demo.l
 ;;
@@ -16,21 +16,18 @@
    (when
       (find-method (car args) (cadr args))
       (send* args)
-      (send *irtviewer* :draw-objects)
-      (send-webots)))
+      (send-webots)
+      (send *irtviewer* :draw-objects)))
 (defmethod
    robot-model
    (:send-squat
     (knee-angle)
-    (if
-       (send self :lleg-crotch-p)
-       (send self :lleg-crotch-p :joint-angle (- (/ knee-angle 2.0))))
-    (if
-       (send self :lleg-knee-p)
-       (send self :lleg-knee-p :joint-angle knee-angle))
-    (if
-       (send self :lleg-ankle-p)
-       (send self :lleg-ankle-p :joint-angle (- (/ knee-angle 2.0)))))
+    (send self :set-joint-angle :lleg-crotch-p (- (/ knee-angle 2.0)))
+    (send self :set-joint-angle :rleg-crotch-p (- (/ knee-angle 2.0)))
+    (send self :set-joint-angle :lleg-knee-p knee-angle)
+    (send self :set-joint-angle :rleg-knee-p knee-angle)
+    (send self :set-joint-angle :lleg-ankle-p (- (/ knee-angle 2.0)))
+    (send self :set-joint-angle :rleg-ankle-p (- (/ knee-angle 2.0))))
    (:read-webots
     nil
     (dolist
@@ -262,6 +259,14 @@
          (> (setq *acc* (wb_robot_get_device "accelerometer")) 0)
          (wb_accelerometer_enable *acc* time_step)
          (format t ";; accelerometer *acc*=~A enabled~%" *acc*))))
+(setq *pan* 0.0 *tilt* 0.0)
+(defun head-swing nil
+   (when
+      (> (incf *pan* 3.0) 360)
+      (setq *pan* 0)
+      (if (> (incf *tilt* 90.0) 360) (setq *tilt* 0)))
+   (send *robot* :head-neck-y :joint-angle (* 80 (sin (deg2rad *pan*))))
+   (send! *robot* :head-neck-p :joint-angle (* -40 (sin (deg2rad *tilt*)))))
 (defun read-keyboard nil
    (setq new_key (wb_keyboard_get_key))
    (when
@@ -291,8 +296,11 @@
           (set-joint-angle :rarm-shoulder-r -170.0)
           (send! *robot* :send-squat 80)
           (format t "keyboard up: ~d~%" wb_keyboard_up))
-         ((= new_key 102) (send! *robot* :fly -500))
-         ((= new_key 70) (send! *robot* :fly f500))
+         ((and
+             (= (logand 65535 new_key) 70)
+             (= (logand 65536 new_key) 65536))
+          (send! *robot* :fly -500))
+         ((= new_key 70) (send! *robot* :fly 500))
          ((memq new_key (list 67 99)) (send! *robot* :to-car))
          ((memq new_key (list 72 104)) (send! *robot* :to-humanoid))
          ((memq new_key (list 82 114)) (send! *robot* :reset-pose))
@@ -360,7 +368,6 @@
          "camera1 width=~A height=~A~%"
          *camera1-width*
          *camera1-height*))
-   (send-webots)
    (set-joint-angle :larm-shoulder-r 90.0)
    (set-joint-angle :rarm-shoulder-r -90.0)
    (send-webots)
@@ -370,10 +377,11 @@
 (defun main nil (unless *init* (main-init)) (do-until-key (main-step)))
 (defun main-step nil
    (my_step)
-   (read-keyboard)
    (read-webots)
    (recognition-step *camera0*)
    (recognition-step *camera1*)
+   (head-swing)
+   (read-keyboard)
    (send *irtviewer* :draw-objects)
    (x::window-main-one)
    (unix:usleep (* time_step 1000)))
