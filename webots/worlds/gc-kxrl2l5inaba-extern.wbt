@@ -149,8 +149,10 @@ DEF WATER Fluid {
 }
 
 Solid {
-  translation 1.22453 0.5 -0.574885
+  translation -4.05192 0.5 2.71846
   rotation -0.48978614029103495 -0.15329904009109155 -0.8582592505099848 2.73794
+  recognitionColors [0.807843 0.72549 0.498039]
+  model "garbage"
   children [
   DEF S Shape {
       appearance PBRAppearance {
@@ -170,8 +172,10 @@ Solid {
   physics Physics { density 500
     damping Damping { linear 0.5 angular 0.5 } } } 
 Solid {
-  translation 1.56954 0.5 -1.10934
+  translation -2.33772 0.5 0.493361
   rotation -0.48978614029103495 -0.15329904009109155 -0.8582592505099848 2.73794
+  recognitionColors [0.807843 0.72549 0.498039]
+  model "garbage"
   children [
   DEF S Shape {
       appearance PBRAppearance {
@@ -191,8 +195,10 @@ Solid {
   physics Physics { density 500
     damping Damping { linear 0.5 angular 0.5 } } } 
 Solid {
-  translation -2.24109 0.5 -1.61406
+  translation 0.321402 0.5 -2.80766
   rotation -0.48978614029103495 -0.15329904009109155 -0.8582592505099848 2.73794
+  recognitionColors [0.807843 0.72549 0.498039]
+  model "garbage"
   children [
   DEF S Shape {
       appearance PBRAppearance {
@@ -212,8 +218,10 @@ Solid {
   physics Physics { density 500
     damping Damping { linear 0.5 angular 0.5 } } } 
 Solid {
-  translation -2.07096 0.5 -0.794097
+  translation 4.1492 0.5 -2.53439
   rotation -0.48978614029103495 -0.15329904009109155 -0.8582592505099848 2.73794
+  recognitionColors [0.807843 0.72549 0.498039]
+  model "garbage"
   children [
   DEF S Shape {
       appearance PBRAppearance {
@@ -233,8 +241,10 @@ Solid {
   physics Physics { density 500
     damping Damping { linear 0.5 angular 0.5 } } } 
 Solid {
-  translation -3.20806 0.5 -0.134015
+  translation -1.0447 0.5 -1.20151
   rotation -0.48978614029103495 -0.15329904009109155 -0.8582592505099848 2.73794
+  recognitionColors [0.807843 0.72549 0.498039]
+  model "garbage"
   children [
   DEF S Shape {
       appearance PBRAppearance {
@@ -254,8 +264,10 @@ Solid {
   physics Physics { density 500
     damping Damping { linear 0.5 angular 0.5 } } } 
 Solid {
-  translation 4.43005 0.5 -0.703212
+  translation -0.032937 0.5 -2.83578
   rotation -0.48978614029103495 -0.15329904009109155 -0.8582592505099848 2.73794
+  recognitionColors [0.807843 0.72549 0.498039]
+  model "garbage"
   children [
   DEF S Shape {
       appearance PBRAppearance {
@@ -275,8 +287,10 @@ Solid {
   physics Physics { density 500
     damping Damping { linear 0.5 angular 0.5 } } } 
 Solid {
-  translation 0.666943 0.5 -0.803144
+  translation 2.36017 0.5 2.23544
   rotation -0.48978614029103495 -0.15329904009109155 -0.8582592505099848 2.73794
+  recognitionColors [0.807843 0.72549 0.498039]
+  model "garbage"
   children [
   DEF S Shape {
       appearance PBRAppearance {
@@ -296,8 +310,10 @@ Solid {
   physics Physics { density 500
     damping Damping { linear 0.5 angular 0.5 } } } 
 Solid {
-  translation -1.29761 0.5 -2.72146
+  translation -2.09293 0.5 -1.07088
   rotation -0.48978614029103495 -0.15329904009109155 -0.8582592505099848 2.73794
+  recognitionColors [0.807843 0.72549 0.498039]
+  model "garbage"
   children [
   DEF S Shape {
       appearance PBRAppearance {
@@ -317,8 +333,10 @@ Solid {
   physics Physics { density 500
     damping Damping { linear 0.5 angular 0.5 } } } 
 Solid {
-  translation 2.67975 0.5 -2.71383
+  translation 1.00841 0.5 -0.415006
   rotation -0.48978614029103495 -0.15329904009109155 -0.8582592505099848 2.73794
+  recognitionColors [0.807843 0.72549 0.498039]
+  model "garbage"
   children [
   DEF S Shape {
       appearance PBRAppearance {
@@ -338,8 +356,10 @@ Solid {
   physics Physics { density 500
     damping Damping { linear 0.5 angular 0.5 } } } 
 Solid {
-  translation 0.542585 0.5 -2.14578
+  translation 2.82907 0.5 1.55882
   rotation -0.48978614029103495 -0.15329904009109155 -0.8582592505099848 2.73794
+  recognitionColors [0.807843 0.72549 0.498039]
+  model "garbage"
   children [
   DEF S Shape {
       appearance PBRAppearance {

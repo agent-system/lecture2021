@@ -151,6 +151,8 @@ DEF WATER Fluid {
 Solid {
   translation 1.77242 0.5 -2.08845
   rotation -0.48978614029103495 -0.15329904009109155 -0.8582592505099848 2.73794
+  recognitionColors [0.807843 0.72549 0.498039]
+  model "garbage"
   children [
   DEF S Shape {
       appearance PBRAppearance {
@@ -172,6 +174,8 @@ Solid {
 Solid {
   translation -1.25084 0.5 2.9042
   rotation -0.48978614029103495 -0.15329904009109155 -0.8582592505099848 2.73794
+  recognitionColors [0.807843 0.72549 0.498039]
+  model "garbage"
   children [
   DEF S Shape {
       appearance PBRAppearance {
@@ -193,6 +197,8 @@ Solid {
 Solid {
   translation -4.82819 0.5 -2.42175
   rotation -0.48978614029103495 -0.15329904009109155 -0.8582592505099848 2.73794
+  recognitionColors [0.807843 0.72549 0.498039]
+  model "garbage"
   children [
   DEF S Shape {
       appearance PBRAppearance {
@@ -214,6 +220,8 @@ Solid {
 Solid {
   translation -2.37174 0.5 -2.61169
   rotation -0.48978614029103495 -0.15329904009109155 -0.8582592505099848 2.73794
+  recognitionColors [0.807843 0.72549 0.498039]
+  model "garbage"
   children [
   DEF S Shape {
       appearance PBRAppearance {
@@ -235,6 +243,8 @@ Solid {
 Solid {
   translation -3.66645 0.5 0.335716
   rotation -0.48978614029103495 -0.15329904009109155 -0.8582592505099848 2.73794
+  recognitionColors [0.807843 0.72549 0.498039]
+  model "garbage"
   children [
   DEF S Shape {
       appearance PBRAppearance {
@@ -256,6 +266,8 @@ Solid {
 Solid {
   translation -0.355358 0.5 1.40424
   rotation -0.48978614029103495 -0.15329904009109155 -0.8582592505099848 2.73794
+  recognitionColors [0.807843 0.72549 0.498039]
+  model "garbage"
   children [
   DEF S Shape {
       appearance PBRAppearance {
@@ -277,6 +289,8 @@ Solid {
 Solid {
   translation 4.66084 0.5 -0.617065
   rotation -0.48978614029103495 -0.15329904009109155 -0.8582592505099848 2.73794
+  recognitionColors [0.807843 0.72549 0.498039]
+  model "garbage"
   children [
   DEF S Shape {
       appearance PBRAppearance {
@@ -298,6 +312,8 @@ Solid {
 Solid {
   translation -2.72446 0.5 2.92715
   rotation -0.48978614029103495 -0.15329904009109155 -0.8582592505099848 2.73794
+  recognitionColors [0.807843 0.72549 0.498039]
+  model "garbage"
   children [
   DEF S Shape {
       appearance PBRAppearance {
@@ -319,6 +335,8 @@ Solid {
 Solid {
   translation 4.55848 0.5 1.19828
   rotation -0.48978614029103495 -0.15329904009109155 -0.8582592505099848 2.73794
+  recognitionColors [0.807843 0.72549 0.498039]
+  model "garbage"
   children [
   DEF S Shape {
       appearance PBRAppearance {
@@ -340,6 +358,8 @@ Solid {
 Solid {
   translation -3.77788 0.5 1.48989
   rotation -0.48978614029103495 -0.15329904009109155 -0.8582592505099848 2.73794
+  recognitionColors [0.807843 0.72549 0.498039]
+  model "garbage"
   children [
   DEF S Shape {
       appearance PBRAppearance {
