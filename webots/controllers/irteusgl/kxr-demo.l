@@ -1,11 +1,13 @@
 ;;
-;; Wed Jun  2 12:02:39 2021
+;; Thu Jun  3 18:50:41 2021
 ;; Generated for
 ;; https://github.com/agent-system/lecture2021/webots/controllers/irteusgl/kxr-demo.l
 ;;
 (load "webotslib.l")
 (setq time_step 32)
 (defvar *init* nil)
+(defvar *swing* nil)
+(defun isnan (v) (and (< v 0) (> v 0)))
 (defun my_step nil
    (when (= -1 (wb_robot_step time_step)) (wb_robot_cleanup) (exit)))
 (defun send+ (&rest args)
@@ -28,37 +30,11 @@
     (send self :set-joint-angle :rleg-knee-p knee-angle)
     (send self :set-joint-angle :lleg-ankle-p (- (/ knee-angle 2.0)))
     (send self :set-joint-angle :rleg-ankle-p (- (/ knee-angle 2.0))))
-   (:read-webots
-    nil
-    (dolist
-       (j (send self :joint-list))
-       (unless
-          (eq :wheel (send j :get :joint-type))
-          (send
-             j
-             :joint-angle
-             (rad2deg (wb_position_sensor_get_value (get j :sensor)))))))
    (:set-joint-angle
     (j angle)
     (when
        (and (find-method self j) (send self j))
        (send self j :joint-angle angle))))
-(defun avlist-print-header-line (f robo)
-   (format f "#~A" (car j-name-list))
-   (dolist (jn (cdr j-name-list)) (format f ",~A" jn))
-   (format f "n"))
-(defun avlist-time-format (msec)
-   (format nil "~2d:~2d:~3d" (/ msec 60000) (/ msec 1000) (msec)))
-(defun avlist-print-time-vector (f time name v)
-   (format f "~A" (car j-name-list))
-   (dolist (jn (cdr j-name-list)) (format f ",~A" jn))
-   (format f "n"))
-(defun avlist-to-motion-file (avl fname)
-   (setq
-      j-name-list (mapcar
-                     #'(lambda (n) (string-downcase (string n)))
-                     (send *robot* :joint-list :name)))
-   (with-open-file (f fname :direction :output)))
 (defun set-joint-angle (j angle) (send *robot* :set-joint-angle j angle))
 (defun send-webots nil
    (dolist
@@ -74,7 +50,44 @@
           (wb_motor_set_position
            (get j :device)
            (deg2rad (send j :joint-angle)))))))
-(defun read-webots nil (send *robot* :read-webots))
+(defun read-webots nil
+   (dolist
+      (j (send *robot* :joint-list))
+      (unless
+         (eq :wheel (send j :get :joint-type))
+         (send
+            j
+            :joint-angle
+            (rad2deg (wb_position_sensor_get_value (get j :sensor))))))
+   (when
+      (> *gyro* 0)
+      (setq *gyro-vec* (cout-float-vector (wb_gyro_get_values *gyro*) 3))
+      (format t ";; *gyro*=~A *gyro-vec*=~A~%" *gyro* *gyro-vec*))
+   (when
+      (> *acc* 0)
+      (setq
+         *acc-vec* (cout-float-vector
+                    (wb_accelerometer_get_values *acc*)
+                    3))
+      (format t ";; *acc*=~A *acc-vec*=~A~%" *acc* *acc-vec*))
+   (when
+      (> *imu* 0)
+      (setq
+         *imu-vec* (cout-float-vector
+                    (wb_inertial_unit_get_roll_pitch_yaw *imu*)
+                    3))
+      (format t ";; *imu*=~A *imu-vec*=~A~%" *imu* *imu-vec*))
+   (when
+      (> *compass* 0)
+      (setq
+         *compass-vec* (cout-float-vector
+                        (wb_compass_get_values *compass*)
+                        3))
+      (format
+         t
+         ";; *compass*=~A *compass-vec*=~A~%"
+         *compass*
+         *compass-vec*)))
 (defun recognition-step (camera)
    (when
       (> camera 0)
@@ -100,7 +113,7 @@
                 wbcamerarecognitionobject))
             (format
                t
-               "*** Model of object ~d: ~A~%"
+               "*** Model of object ~d: <~A>~%"
                i
                (cout-string (send (elt *robjs* i) :get+ 'model)))
             (format
@@ -145,128 +158,20 @@
                       (send (elt *robjs* i) :get+ 'colors)
                       (* (byte-size :double) 3 j))
                    3)))))))
-(defun webots-init nil
-   (let*
-      ((n_devices (wb_robot_get_number_of_devices))
-       (robot-type (wb_robot_get_type))
-       dev2
-       name
-       dev-sym
-       (dev 0)
-       type-sym
-       type
-       dev-symbols
-       type-symbols
-       (robot-name (string-upcase (wb_robot_get_name)))
-       (robot (intern robot-name)))
-      (when
-         (= wb_node_differential_wheels robot-type)
-         (setq type-sym (webots-node-type-symbol robot-type))
-         (setf (get type-sym :value) (symbol-value type-sym))
-         (format
-            t
-            "--- Differetial wheels name=~A, type-sym=~A~%"
-            robot
-            type-sym)
-         (dolist
-            (n '("-BOTH" "-LEFT" "-RIGHT"))
-            (setq name (concatenate string robot-name n))
-            (setq dev-sym (intern name))
-            (setf (get dev-sym :device) dev)
-            (setf
-               (get type-sym :device-names)
-               (push name (get type-sym :device-names)))
-            (setf
-               (get type-sym :device-symbols)
-               (push dev-sym (get type-sym :device-symbols)))
-            (incf dev))
-         (setf
-            (get type-sym :device-names)
-            (reverse (get type-sym :device-names)))
-         (setf
-            (get type-sym :device-symbols)
-            (reverse (get type-sym :device-symbols))))
-      (dotimes
-         (i n_devices)
-         (setq dev (wb_robot_get_device_by_index i))
-         (setq name (fstring-to-string (wb_device_get_name dev)))
-         (setq dev2 (wb_robot_get_device name))
-         (setq type (wb_device_get_type dev))
-         (setq type-sym (webots-node-type-symbol type))
-         (setq dev-sym (intern (string-upcase name)))
-         (setf (get dev-sym :device-name) name)
-         (setf (get dev-sym :device) dev)
-         (setf (get dev-sym :device-type) type)
-         (setf (get dev-sym :device-type-symbol) type-sym)
-         (format
-            t
-            "dev-sym=~A(~A) type=~A(~A) dev=~A(~A in ~A)~%"
-            dev-sym
-            name
-            type
-            type-sym
-            dev
-            i
-            n_devices)
-         (setf
-            (get type-sym :device-names)
-            (cons name (get type-sym :device-names)))
-         (setf
-            (get type-sym :device-symbols)
-            (cons dev-sym (get type-sym :device-symbols)))
-         (setf (get type-sym :value) (symbol-value type-sym))
-         (push dev-sym dev-symbols)
-         (pushnew type-sym type-symbols))
-      (dolist
-         (typ type-symbols)
-         (setf (get typ :device-names) (reverse (get typ :device-names)))
-         (setf
-            (get typ :device-symbols)
-            (reverse (get typ :device-symbols)))
-         (setf (get robot typ) (get typ :device-symbols)))
-      (setf (get robot :device-types) type-symbols)
-      (setf (get robot :device-symbols) (reverse dev-symbols))
-      (setq *webots-camera-symbols* (get 'wb_node_camera :device-symbols))
-      (setq
-         *webots-all-motor-symbols* (append
-                                       (get
-                                          'wb_node_differential_wheels
-                                          :device-symbols)
-                                       (get
-                                          'wb_node_rotational_motor
-                                          :device-symbols)
-                                       (get
-                                          'wb_node_linear_motor
-                                          :device-symbols)
-                                       (get 'wb_node_servo :device-symbols)))
-      (when
-         (> (setq *imu* (wb_robot_get_device "inertial unit")) 0)
-         (wb_inertial_unit_enable *imu* time_step)
-         (format t ";; inertial unit *imu*=~A enabled~%" *imu*))
-      (when
-         (> (setq *gps* (wb_robot_get_device "gps")) 0)
-         (wb_gps_enable *gps* time_step)
-         (format t ";; gps *gpy*=~A enabled~%" *gps*))
-      (when
-         (> (setq *compass* (wb_robot_get_device "compass")) 0)
-         (wb_compass_enable *compass* time_step)
-         (format t ";; compass *compass*=~A enabled~%" *compass*))
-      (when
-         (> (setq *gyro* (wb_robot_get_device "gyro")) 0)
-         (wb_gyro_enable *gyro* time_step)
-         (format t ";; gyro *gyro*=~A enabled~%" *gyro*))
-      (when
-         (> (setq *acc* (wb_robot_get_device "accelerometer")) 0)
-         (wb_accelerometer_enable *acc* time_step)
-         (format t ";; accelerometer *acc*=~A enabled~%" *acc*))))
 (setq *pan* 0.0 *tilt* 0.0)
 (defun head-swing nil
    (when
-      (> (incf *pan* 3.0) 360)
-      (setq *pan* 0)
-      (if (> (incf *tilt* 90.0) 360) (setq *tilt* 0)))
-   (send *robot* :head-neck-y :joint-angle (* 80 (sin (deg2rad *pan*))))
-   (send! *robot* :head-neck-p :joint-angle (* -40 (sin (deg2rad *tilt*)))))
+      *swing*
+      (when
+         (> (incf *pan* 3.0) 360)
+         (setq *pan* 0)
+         (if (> (incf *tilt* 90.0) 360) (setq *tilt* 0)))
+      (send *robot* :head-neck-y :joint-angle (* 80 (sin (deg2rad *pan*))))
+      (send!
+       *robot*
+       :head-neck-p
+       :joint-angle
+       (* -40 (sin (deg2rad *tilt*))))))
 (defun read-keyboard nil
    (setq new_key (wb_keyboard_get_key))
    (when
@@ -304,6 +209,12 @@
          ((memq new_key (list 67 99)) (send! *robot* :to-car))
          ((memq new_key (list 72 104)) (send! *robot* :to-humanoid))
          ((memq new_key (list 82 114)) (send! *robot* :reset-pose))
+         ((or
+             (eq new_key 83)
+             (and
+                (= (logand 65535 new_key) 83)
+                (= (logand 65536 new_key) 65536)))
+          (if *swing* (setq *swing* nil) (setq *swing* t)))
          ((= new_key 32)
           (set-joint-angle :larm-shoulder-r 90.0)
           (set-joint-angle :rarm-shoulder-r -90.0)
@@ -368,6 +279,31 @@
          "camera1 width=~A height=~A~%"
          *camera1-width*
          *camera1-height*))
+   (when
+      (> (setq *gyro* (wb_robot_get_device "imu_gyrometer_topic gyro")) 0)
+      (format t ";; *gyro*=~A~%" *gyro*)
+      (wb_gyro_enable *gyro* time_step))
+   (when
+      (>
+         (setq
+            *acc* (wb_robot_get_device "imu_gyrometer_topic accelerometer"))
+         0)
+      (format t ";; *acc*=~A~%" *acc*)
+      (wb_accelerometer_enable *acc* time_step))
+   (when
+      (>
+         (setq
+            *imu* (wb_robot_get_device "imu_gyrometer_topic inertialunit"))
+         0)
+      (format t ";; *imu-vec*=~A~%" *imu*)
+      (wb_inertial_unit_enable *imu* time_step))
+   (when
+      (>
+         (setq
+            *compass* (wb_robot_get_device "imu_gyrometer_topic compass"))
+         0)
+      (format t ";; *compass*=~A~%" *compass*)
+      (wb_compass_enable *compass* time_step))
    (set-joint-angle :larm-shoulder-r 90.0)
    (set-joint-angle :rarm-shoulder-r -90.0)
    (send-webots)
