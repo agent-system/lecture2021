@@ -170,7 +170,7 @@
 	;;  ( :integer :integer)
 
 (defforeign wb_robot_mutex_new webotslib
-	"wb_robot_mutex_new" () (:string))
+	"wb_robot_mutex_new" () :integer)
 	;;  ()
 
 (defforeign wb_robot_mutex_lock webotslib
@@ -1053,7 +1053,7 @@
 	;;  ( :short)
 
 (defforeign wb_microphone_get_sample_data webotslib
-	"wb_microphone_get_sample_data" () (:string))
+	"wb_microphone_get_sample_data" () :integer)
 	;;  ( :short)
 
 (defforeign wb_microphone_get_sample_size webotslib
@@ -1293,7 +1293,7 @@
 	(azimuth :double))
 
 (defforeign wb_radio_message_new webotslib
-	"wb_radio_message_new" () (:string))
+	"wb_radio_message_new" () :integer)
 	;;  ( :integer :char * :char *)
 
 (defforeign wb_radio_message_delete webotslib
@@ -1429,7 +1429,7 @@
 	;;  ( :short)
 
 (defforeign wb_receiver_get_data webotslib
-	"wb_receiver_get_data" () (:string))
+	"wb_receiver_get_data" () :integer)
 	;;  ( :short)
 
 (defforeign wb_receiver_get_signal_strength webotslib
@@ -1441,7 +1441,7 @@
 	;;  ( :short)
 
 (defforeign wb_remote_control_custom_function webotslib
-	"wb_remote_control_custom_function" () (:string))
+	"wb_remote_control_custom_function" () :integer)
 	;;  ( :integer)
 
 (defforeign wbr_robot_battery_sensor_set_value webotslib
@@ -1575,7 +1575,7 @@
 	(wbr_robot_step :integer))
 
 (defforeign wb_robot_window_custom_function webotslib
-	"wb_robot_window_custom_function" () (:string))
+	"wb_robot_window_custom_function" () :integer)
 	;;  ( :integer)
 
 (defforeign wb_robot_wwi_send webotslib
