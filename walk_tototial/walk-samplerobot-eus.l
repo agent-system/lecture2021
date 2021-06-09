@@ -1,5 +1,6 @@
 (load "package://hrpsys_ros_bridge/euslisp/samplerobot-interface.l")
-(load "../webots/controllers/irteusgl/walking-control.l")
+;;(load "../webots/controllers/irteusgl/walking-control.l")
+(load "walking-control.l")
 (samplerobot-init)
 (setq *robot* *sr*)
 (send *ri* :angle-vector (send *robot* :reset-pose))
