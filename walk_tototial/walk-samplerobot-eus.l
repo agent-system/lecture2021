@@ -1,0 +1,17 @@
+(load "package://hrpsys_ros_bridge/euslisp/samplerobot-interface.l")
+(load "../webots/controllers/irteusgl/walking-control.l")
+(samplerobot-init)
+(setq *robot* *sr*)
+(send *ri* :angle-vector (send *robot* :reset-pose))
+(send *ri* :wait-interpolation)
+(defun send-webots () (send *ri* :angle-vector (send *robot* :angle-vector) time_step :default-controller 0 :min-time 0.0))
+(setq time_step 30)
+(go-pos 0.1 0 0)
+(defun main ()
+  (do-until-key
+   (walking-control (* 1e-3 time_step))
+   (send *irtviewer* :draw-objects)
+   (x::window-main-one)
+   (unix:usleep (* time_step 1000))))
+
+(main)
