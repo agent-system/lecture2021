@@ -1,5 +1,5 @@
 ;;
-;; Thu Jun  3 18:50:41 2021
+;; Tue Jun  8 23:02:56 2021
 ;; Generated for
 ;; https://github.com/agent-system/lecture2021/webots/controllers/irteusgl/kxr-demo.l
 ;;
@@ -317,6 +317,9 @@
    (recognition-step *camera0*)
    (recognition-step *camera1*)
    (head-swing)
+   (when
+      (fboundp 'walking-control)
+      (walking-control (* 0.001 time_step)))
    (read-keyboard)
    (send *irtviewer* :draw-objects)
    (x::window-main-one)
