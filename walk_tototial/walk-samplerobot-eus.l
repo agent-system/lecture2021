@@ -7,6 +7,7 @@
 (defun send-webots () (send *ri* :angle-vector (send *robot* :angle-vector) time_step :default-controller 0 :min-time 0.0))
 (setq time_step 30)
 (go-pos 0.1 0 0)
+(objects *robot*)
 (defun main ()
   (do-until-key
    (walking-control (* 1e-3 time_step))
