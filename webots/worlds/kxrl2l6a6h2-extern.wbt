@@ -5,6 +5,7 @@ WorldInfo {
   ]
   title "kxrl2l6a6h2 demo"
   basicTimeStep 16
+  CFM  0.001   # default 0.00001
   defaultDamping Damping {
     linear 0.5
     angular 0.5
@@ -28,6 +29,8 @@ tileSize 1 1
 Solid {
   name "ball192"
   translation -0.681386 0.2 -1.42502
+  recognitionColors [ 0 0.8 0 ]
+  model "ball"
   children [
     Shape {
       appearance DEF DARK_BROWN PBRAppearance {
@@ -155,6 +158,8 @@ OilBarrel {
 Solid {
   name "ball193"
   translation -1.79525 0.2 -1.59097
+  recognitionColors [ 0 0.8 0 ]
+  model "ball"
   children [
     Shape {
       appearance DEF DARK_BROWN PBRAppearance {
@@ -282,6 +287,8 @@ OilBarrel {
 Solid {
   name "ball194"
   translation 1.95698 0.2 -0.283049
+  recognitionColors [ 0 0.8 0 ]
+  model "ball"
   children [
     Shape {
       appearance DEF DARK_BROWN PBRAppearance {
@@ -407,7 +414,7 @@ OilBarrel {
 }
 
 kxrl2l6a6h2 {
-  translation 0.0 0.5 0.0
+  translation 0.4 0.5 0.0
   rotation 1.000000 0.000000 0.0 -1.57 
   controller "<extern>"
   controllerArgs ""
