@@ -87,7 +87,7 @@
 
 (defforeign wb_robot_get_urdf webotslib
 	"wb_robot_get_urdf" () (:string))
-	;;  ( :string)
+	;;  ( :char *)
 
 (defforeign wb_robot_get_name webotslib
 	"wb_robot_get_name" () (:string))
@@ -103,7 +103,7 @@
 
 (defforeign wb_robot_set_custom_data webotslib
 	"wb_robot_set_custom_data" () :integer)
-	;;  ( :string)
+	;;  ( :char *)
 
 (defforeign wb_robot_get_mode webotslib
 	"wb_robot_get_mode" () WbRobotMode)
@@ -111,7 +111,7 @@
 
 (defforeign wb_robot_set_mode webotslib
 	"wb_robot_set_mode" () :integer)
-	;;  ( WbRobotMode :string)
+	;;  ( WbRobotMode :char *)
 
 (defforeign wb_robot_get_synchronization webotslib
 	"wb_robot_get_synchronization" () :integer)
@@ -135,7 +135,7 @@
 
 (defforeign wb_robot_get_device webotslib
 	"wb_robot_get_device" () :integer)
-	;;  ( :string)
+	;;  ( :char *)
 
 (defforeign wb_robot_get_number_of_devices webotslib
 	"wb_robot_get_number_of_devices" () :integer)
@@ -199,7 +199,7 @@
 
 (defforeign wb_robot_set_data webotslib
 	"wb_robot_set_data" () :integer)
-	;;  ( :string)
+	;;  ( :char *)
 
 (defcenum WbNodeType
 	:WB_NODE_NO_NODE
@@ -293,245 +293,245 @@
 
 (defforeign wb_accelerometer_enable webotslib
 	"wb_accelerometer_enable" () :integer)
-	;;  ( :integer :integer)
+	;;  ( :short :integer)
 
 (defforeign wb_accelerometer_disable webotslib
 	"wb_accelerometer_disable" () :integer)
-	;;  ( :integer)
+	;;  ( :short)
 
 (defforeign wb_accelerometer_get_sampling_period webotslib
 	"wb_accelerometer_get_sampling_period" () :integer)
-	;;  ( :integer)
+	;;  ( :short)
 
 (defforeign wb_accelerometer_get_lookup_table_size webotslib
 	"wb_accelerometer_get_lookup_table_size" () :integer)
-	;;  ( :integer)
+	;;  ( :short)
 
 (defforeign wb_accelerometer_get_lookup_table webotslib
 	"wb_accelerometer_get_lookup_table" () :integer)
-	;;  ( :integer)
+	;;  ( :short)
 
 (defforeign wb_accelerometer_get_values webotslib
 	"wb_accelerometer_get_values" () :integer)
-	;;  ( :integer)
+	;;  ( :short)
 
 (defforeign wb_brake_set_damping_constant webotslib
 	"wb_brake_set_damping_constant" () :integer)
-	;;  ( :integer :float)
+	;;  ( :short :double)
 
 (defforeign wb_brake_get_type webotslib
 	"wb_brake_get_type" () WbJointType)
-	;;  ( :integer)
+	;;  ( :short)
 
 (defforeign wb_brake_get_motor webotslib
 	"wb_brake_get_motor" () :integer)
-	;;  ( :integer)
+	;;  ( :short)
 
 (defforeign wb_brake_get_position_sensor webotslib
 	"wb_brake_get_position_sensor" () :integer)
-	;;  ( :integer)
+	;;  ( :short)
 
 (defforeign wb_camera_enable webotslib
 	"wb_camera_enable" () :integer)
-	;;  ( :integer :integer)
+	;;  ( :short :integer)
 
 (defforeign wb_camera_disable webotslib
 	"wb_camera_disable" () :integer)
-	;;  ( :integer)
+	;;  ( :short)
 
 (defforeign wb_camera_get_sampling_period webotslib
 	"wb_camera_get_sampling_period" () :integer)
-	;;  ( :integer)
+	;;  ( :short)
 
 (defforeign wb_camera_get_image webotslib
-	"wb_camera_get_image" () (:string))
-	;;  ( :integer)
+	"wb_camera_get_image" () (:foreign-string))
+	;;  ( :short)
 
 (defforeign wb_camera_get_width webotslib
 	"wb_camera_get_width" () :integer)
-	;;  ( :integer)
+	;;  ( :short)
 
 (defforeign wb_camera_get_height webotslib
 	"wb_camera_get_height" () :integer)
-	;;  ( :integer)
+	;;  ( :short)
 
 (defforeign wb_camera_get_fov webotslib
 	"wb_camera_get_fov" () :float)
-	;;  ( :integer)
+	;;  ( :short)
 
 (defforeign wb_camera_get_max_fov webotslib
 	"wb_camera_get_max_fov" () :float)
-	;;  ( :integer)
+	;;  ( :short)
 
 (defforeign wb_camera_get_min_fov webotslib
 	"wb_camera_get_min_fov" () :float)
-	;;  ( :integer)
+	;;  ( :short)
 
 (defforeign wb_camera_set_fov webotslib
 	"wb_camera_set_fov" () :integer)
-	;;  ( :integer :float)
+	;;  ( :short :double)
 
 (defforeign wb_camera_get_exposure webotslib
 	"wb_camera_get_exposure" () :float)
-	;;  ( :integer)
+	;;  ( :short)
 
 (defforeign wb_camera_set_exposure webotslib
 	"wb_camera_set_exposure" () :integer)
-	;;  ( :integer :float)
+	;;  ( :short :double)
 
 (defforeign wb_camera_get_focal_length webotslib
 	"wb_camera_get_focal_length" () :float)
-	;;  ( :integer)
+	;;  ( :short)
 
 (defforeign wb_camera_get_focal_distance webotslib
 	"wb_camera_get_focal_distance" () :float)
-	;;  ( :integer)
+	;;  ( :short)
 
 (defforeign wb_camera_get_max_focal_distance webotslib
 	"wb_camera_get_max_focal_distance" () :float)
-	;;  ( :integer)
+	;;  ( :short)
 
 (defforeign wb_camera_get_min_focal_distance webotslib
 	"wb_camera_get_min_focal_distance" () :float)
-	;;  ( :integer)
+	;;  ( :short)
 
 (defforeign wb_camera_set_focal_distance webotslib
 	"wb_camera_set_focal_distance" () :integer)
-	;;  ( :integer :float)
+	;;  ( :short :double)
 
 (defforeign wb_camera_get_near webotslib
 	"wb_camera_get_near" () :float)
-	;;  ( :integer)
+	;;  ( :short)
 
 (defforeign wb_camera_save_image webotslib
 	"wb_camera_save_image" () :integer)
-	;;  ( :integer :string :integer)
+	;;  ( :short :char * :integer)
 
 (defforeign wb_camera_has_recognition webotslib
 	"wb_camera_has_recognition" () :integer)
-	;;  ( :integer)
+	;;  ( :short)
 
 (defforeign wb_camera_recognition_enable webotslib
 	"wb_camera_recognition_enable" () :integer)
-	;;  ( :integer :integer)
+	;;  ( :short :integer)
 
 (defforeign wb_camera_recognition_disable webotslib
 	"wb_camera_recognition_disable" () :integer)
-	;;  ( :integer)
+	;;  ( :short)
 
 (defforeign wb_camera_recognition_get_sampling_period webotslib
 	"wb_camera_recognition_get_sampling_period" () :integer)
-	;;  ( :integer)
+	;;  ( :short)
 
 (defforeign wb_camera_recognition_get_number_of_objects webotslib
 	"wb_camera_recognition_get_number_of_objects" () :integer)
-	;;  ( :integer)
+	;;  ( :short)
 
 (defforeign wb_camera_recognition_get_objects webotslib
 	"wb_camera_recognition_get_objects" () :integer)
-	;;  ( :integer)
+	;;  ( :short)
 
 (defforeign wb_camera_recognition_has_segmentation webotslib
 	"wb_camera_recognition_has_segmentation" () :integer)
-	;;  ( :integer)
+	;;  ( :short)
 
 (defforeign wb_camera_recognition_enable_segmentation webotslib
 	"wb_camera_recognition_enable_segmentation" () :integer)
-	;;  ( :integer)
+	;;  ( :short)
 
 (defforeign wb_camera_recognition_disable_segmentation webotslib
 	"wb_camera_recognition_disable_segmentation" () :integer)
-	;;  ( :integer)
+	;;  ( :short)
 
 (defforeign wb_camera_recognition_is_segmentation_enabled webotslib
 	"wb_camera_recognition_is_segmentation_enabled" () :integer)
-	;;  ( :integer)
+	;;  ( :short)
 
 (defforeign wb_camera_recognition_get_segmentation_image webotslib
-	"wb_camera_recognition_get_segmentation_image" () (:string))
-	;;  ( :integer)
+	"wb_camera_recognition_get_segmentation_image" () (:foreign-string))
+	;;  ( :short)
 
 (defforeign wb_camera_recognition_save_segmentation_image webotslib
 	"wb_camera_recognition_save_segmentation_image" () :integer)
-	;;  ( :integer :string :integer)
+	;;  ( :short :char * :integer)
 
 (defforeign wb_compass_enable webotslib
 	"wb_compass_enable" () :integer)
-	;;  ( :integer :integer)
+	;;  ( :short :integer)
 
 (defforeign wb_compass_disable webotslib
 	"wb_compass_disable" () :integer)
-	;;  ( :integer)
+	;;  ( :short)
 
 (defforeign wb_compass_get_sampling_period webotslib
 	"wb_compass_get_sampling_period" () :integer)
-	;;  ( :integer)
+	;;  ( :short)
 
 (defforeign wb_compass_get_lookup_table_size webotslib
 	"wb_compass_get_lookup_table_size" () :integer)
-	;;  ( :integer)
+	;;  ( :short)
 
 (defforeign wb_compass_get_lookup_table webotslib
 	"wb_compass_get_lookup_table" () :integer)
-	;;  ( :integer)
+	;;  ( :short)
 
 (defforeign wb_compass_get_values webotslib
 	"wb_compass_get_values" () :integer)
-	;;  ( :integer)
+	;;  ( :short)
 
 (defforeign wb_connector_enable_presence webotslib
 	"wb_connector_enable_presence" () :integer)
-	;;  ( :integer :integer)
+	;;  ( :short :integer)
 
 (defforeign wb_connector_disable_presence webotslib
 	"wb_connector_disable_presence" () :integer)
-	;;  ( :integer)
+	;;  ( :short)
 
 (defforeign wb_connector_get_presence_sampling_period webotslib
 	"wb_connector_get_presence_sampling_period" () :integer)
-	;;  ( :integer)
+	;;  ( :short)
 
 (defforeign wb_connector_get_presence webotslib
 	"wb_connector_get_presence" () :integer)
-	;;  ( :integer)
+	;;  ( :short)
 
 (defforeign wb_connector_lock webotslib
 	"wb_connector_lock" () :integer)
-	;;  ( :integer)
+	;;  ( :short)
 
 (defforeign wb_connector_unlock webotslib
 	"wb_connector_unlock" () :integer)
-	;;  ( :integer)
+	;;  ( :short)
 
 (defforeign wb_connector_is_locked webotslib
 	"wb_connector_is_locked" () :integer)
-	;;  ( :integer)
+	;;  ( :short)
 (defconstant WB_STDOUT 0)
 (defconstant WB_STDERR 1)
 
 (defforeign wb_console_print webotslib
 	"wb_console_print" () :integer)
-	;;  ( :string :integer)
+	;;  ( :char * :integer)
 
 (defforeign wb_device_get_name webotslib
 	"wb_device_get_name" () (:string))
-	;;  ( :integer)
+	;;  ( :short)
 
 (defforeign wb_device_get_model webotslib
 	"wb_device_get_model" () (:string))
-	;;  ( :integer)
+	;;  ( :short)
 
 (defforeign wb_device_get_node_type webotslib
 	"wb_device_get_node_type" () WbNodeType)
-	;;  ( :integer)
+	;;  ( :short)
 
 (defforeign wb_device_get_type webotslib
 	"wb_device_get_type" () WbNodeType)
-	;;  ( :integer)
+	;;  ( :short)
 
 (defforeign wb_differential_wheels_set_speed webotslib
 	"wb_differential_wheels_set_speed" () :integer)
-	;;  ( :float :float)
+	;;  ( :double :double)
 
 (defforeign wb_differential_wheels_get_left_speed webotslib
 	"wb_differential_wheels_get_left_speed" () :float)
@@ -571,75 +571,75 @@
 
 (defforeign wb_differential_wheels_set_encoders webotslib
 	"wb_differential_wheels_set_encoders" () :integer)
-	;;  ( :float :float)
+	;;  ( :double :double)
 
 (defforeign wb_display_get_width webotslib
 	"wb_display_get_width" () :integer)
-	;;  ( :integer)
+	;;  ( :short)
 
 (defforeign wb_display_get_height webotslib
 	"wb_display_get_height" () :integer)
-	;;  ( :integer)
+	;;  ( :short)
 
 (defforeign wb_display_set_color webotslib
 	"wb_display_set_color" () :integer)
-	;;  ( :integer :integer)
+	;;  ( :short :integer)
 
 (defforeign wb_display_set_alpha webotslib
 	"wb_display_set_alpha" () :integer)
-	;;  ( :integer :float)
+	;;  ( :short :double)
 
 (defforeign wb_display_set_opacity webotslib
 	"wb_display_set_opacity" () :integer)
-	;;  ( :integer :float)
+	;;  ( :short :double)
 
 (defforeign wb_display_set_font webotslib
 	"wb_display_set_font" () :integer)
-	;;  ( :integer :string :integer :integer)
+	;;  ( :short :char * :integer :integer)
 
 (defforeign wb_display_attach_camera webotslib
 	"wb_display_attach_camera" () :integer)
-	;;  ( :integer :integer)
+	;;  ( :short :short)
 
 (defforeign wb_display_detach_camera webotslib
 	"wb_display_detach_camera" () :integer)
-	;;  ( :integer)
+	;;  ( :short)
 
 (defforeign wb_display_draw_pixel webotslib
 	"wb_display_draw_pixel" () :integer)
-	;;  ( :integer :integer :integer)
+	;;  ( :short :integer :integer)
 
 (defforeign wb_display_draw_line webotslib
 	"wb_display_draw_line" () :integer)
-	;;  ( :integer :integer :integer :integer :integer)
+	;;  ( :short :integer :integer :integer :integer)
 
 (defforeign wb_display_draw_rectangle webotslib
 	"wb_display_draw_rectangle" () :integer)
-	;;  ( :integer :integer :integer :integer :integer)
+	;;  ( :short :integer :integer :integer :integer)
 
 (defforeign wb_display_draw_oval webotslib
 	"wb_display_draw_oval" () :integer)
-	;;  ( :integer :integer :integer :integer :integer)
+	;;  ( :short :integer :integer :integer :integer)
 
 (defforeign wb_display_draw_polygon webotslib
 	"wb_display_draw_polygon" () :integer)
-	;;  ( :integer :integer :integer :integer)
+	;;  ( :short :integer :integer :integer)
 
 (defforeign wb_display_draw_text webotslib
 	"wb_display_draw_text" () :integer)
-	;;  ( :integer :string :integer :integer)
+	;;  ( :short :char * :integer :integer)
 
 (defforeign wb_display_fill_rectangle webotslib
 	"wb_display_fill_rectangle" () :integer)
-	;;  ( :integer :integer :integer :integer :integer)
+	;;  ( :short :integer :integer :integer :integer)
 
 (defforeign wb_display_fill_oval webotslib
 	"wb_display_fill_oval" () :integer)
-	;;  ( :integer :integer :integer :integer :integer)
+	;;  ( :short :integer :integer :integer :integer)
 
 (defforeign wb_display_fill_polygon webotslib
 	"wb_display_fill_polygon" () :integer)
-	;;  ( :integer :integer :integer :integer)
+	;;  ( :short :integer :integer :integer)
 (defconstant WB_IMAGE_RGB 3)
 (defconstant WB_IMAGE_RGBA 4)
 (defconstant WB_IMAGE_ARGB 5)
@@ -648,63 +648,63 @@
 
 (defforeign wb_display_image_new webotslib
 	"wb_display_image_new" () :integer)
-	;;  ( :integer :integer :integer :integer :integer)
+	;;  ( :short :integer :integer :integer :integer)
 
 (defforeign wb_display_image_copy webotslib
 	"wb_display_image_copy" () :integer)
-	;;  ( :integer :integer :integer :integer :integer)
+	;;  ( :short :integer :integer :integer :integer)
 
 (defforeign wb_display_image_load webotslib
 	"wb_display_image_load" () :integer)
-	;;  ( :integer :string)
+	;;  ( :short :char *)
 
 (defforeign wb_display_image_delete webotslib
 	"wb_display_image_delete" () :integer)
-	;;  ( :integer :integer)
+	;;  ( :short :integer)
 
 (defforeign wb_display_image_paste webotslib
 	"wb_display_image_paste" () :integer)
-	;;  ( :integer :integer :integer :integer :integer)
+	;;  ( :short :integer :integer :integer :integer)
 
 (defforeign wb_display_image_save webotslib
 	"wb_display_image_save" () :integer)
-	;;  ( :integer :integer :string)
+	;;  ( :short :integer :char *)
 
 (defforeign wb_distance_sensor_enable webotslib
 	"wb_distance_sensor_enable" () :integer)
-	;;  ( :integer :integer)
+	;;  ( :short :integer)
 
 (defforeign wb_distance_sensor_disable webotslib
 	"wb_distance_sensor_disable" () :integer)
-	;;  ( :integer)
+	;;  ( :short)
 
 (defforeign wb_distance_sensor_get_sampling_period webotslib
 	"wb_distance_sensor_get_sampling_period" () :integer)
-	;;  ( :integer)
+	;;  ( :short)
 
 (defforeign wb_distance_sensor_get_value webotslib
 	"wb_distance_sensor_get_value" () :float)
-	;;  ( :integer)
+	;;  ( :short)
 
 (defforeign wb_distance_sensor_get_max_value webotslib
 	"wb_distance_sensor_get_max_value" () :float)
-	;;  ( :integer)
+	;;  ( :short)
 
 (defforeign wb_distance_sensor_get_min_value webotslib
 	"wb_distance_sensor_get_min_value" () :float)
-	;;  ( :integer)
+	;;  ( :short)
 
 (defforeign wb_distance_sensor_get_aperture webotslib
 	"wb_distance_sensor_get_aperture" () :float)
-	;;  ( :integer)
+	;;  ( :short)
 
 (defforeign wb_distance_sensor_get_lookup_table_size webotslib
 	"wb_distance_sensor_get_lookup_table_size" () :integer)
-	;;  ( :integer)
+	;;  ( :short)
 
 (defforeign wb_distance_sensor_get_lookup_table webotslib
 	"wb_distance_sensor_get_lookup_table" () :integer)
-	;;  ( :integer)
+	;;  ( :short)
 
 (defcenum WbDistanceSensorType
 	(:WB_DISTANCE_SENSOR_GENERIC 0)
@@ -714,56 +714,56 @@
 
 (defforeign wb_distance_sensor_get_type webotslib
 	"wb_distance_sensor_get_type" () WbDistanceSensorType)
-	;;  ( :integer)
+	;;  ( :short)
 (defconstant WB_CHANNEL_BROADCAST -1)
 
 (defforeign wb_emitter_send webotslib
 	"wb_emitter_send" () :integer)
-	;;  ( :integer :integer :integer)
+	;;  ( :short :integer :integer)
 
 (defforeign wb_emitter_get_buffer_size webotslib
 	"wb_emitter_get_buffer_size" () :integer)
-	;;  ( :integer)
+	;;  ( :short)
 
 (defforeign wb_emitter_set_channel webotslib
 	"wb_emitter_set_channel" () :integer)
-	;;  ( :integer :integer)
+	;;  ( :short :integer)
 
 (defforeign wb_emitter_get_channel webotslib
 	"wb_emitter_get_channel" () :integer)
-	;;  ( :integer)
+	;;  ( :short)
 
 (defforeign wb_emitter_get_range webotslib
 	"wb_emitter_get_range" () :float)
-	;;  ( :integer)
+	;;  ( :short)
 
 (defforeign wb_emitter_set_range webotslib
 	"wb_emitter_set_range" () :integer)
-	;;  ( :integer :float)
+	;;  ( :short :double)
 
 (defforeign wb_gps_enable webotslib
 	"wb_gps_enable" () :integer)
-	;;  ( :integer :integer)
+	;;  ( :short :integer)
 
 (defforeign wb_gps_disable webotslib
 	"wb_gps_disable" () :integer)
-	;;  ( :integer)
+	;;  ( :short)
 
 (defforeign wb_gps_get_sampling_period webotslib
 	"wb_gps_get_sampling_period" () :integer)
-	;;  ( :integer)
+	;;  ( :short)
 
 (defforeign wb_gps_get_speed webotslib
 	"wb_gps_get_speed" () :float)
-	;;  ( :integer)
+	;;  ( :short)
 
 (defforeign wb_gps_get_values webotslib
 	"wb_gps_get_values" () :integer)
-	;;  ( :integer)
+	;;  ( :short)
 
 (defforeign wb_gps_convert_to_degrees_minutes_seconds webotslib
 	"wb_gps_convert_to_degrees_minutes_seconds" () (:string))
-	;;  ( :float)
+	;;  ( :double)
 
 (defcenum WbGpsCoordinateSystem
 	(:WB_GPS_LOCAL_COORDINATE 0)
@@ -771,55 +771,55 @@
 
 (defforeign wb_gps_get_coordinate_system webotslib
 	"wb_gps_get_coordinate_system" () WbGpsCoordinateSystem)
-	;;  ( :integer)
+	;;  ( :short)
 
 (defforeign wb_gyro_enable webotslib
 	"wb_gyro_enable" () :integer)
-	;;  ( :integer :integer)
+	;;  ( :short :integer)
 
 (defforeign wb_gyro_disable webotslib
 	"wb_gyro_disable" () :integer)
-	;;  ( :integer)
+	;;  ( :short)
 
 (defforeign wb_gyro_get_sampling_period webotslib
 	"wb_gyro_get_sampling_period" () :integer)
-	;;  ( :integer)
+	;;  ( :short)
 
 (defforeign wb_gyro_get_lookup_table_size webotslib
 	"wb_gyro_get_lookup_table_size" () :integer)
-	;;  ( :integer)
+	;;  ( :short)
 
 (defforeign wb_gyro_get_lookup_table webotslib
 	"wb_gyro_get_lookup_table" () :integer)
-	;;  ( :integer)
+	;;  ( :short)
 
 (defforeign wb_gyro_get_values webotslib
 	"wb_gyro_get_values" () :integer)
-	;;  ( :integer)
+	;;  ( :short)
 
 (defforeign wb_inertial_unit_enable webotslib
 	"wb_inertial_unit_enable" () :integer)
-	;;  ( :integer :integer)
+	;;  ( :short :integer)
 
 (defforeign wb_inertial_unit_disable webotslib
 	"wb_inertial_unit_disable" () :integer)
-	;;  ( :integer)
+	;;  ( :short)
 
 (defforeign wb_inertial_unit_get_sampling_period webotslib
 	"wb_inertial_unit_get_sampling_period" () :integer)
-	;;  ( :integer)
+	;;  ( :short)
 
 (defforeign wb_inertial_unit_get_noise webotslib
 	"wb_inertial_unit_get_noise" () :float)
-	;;  ( :integer)
+	;;  ( :short)
 
 (defforeign wb_inertial_unit_get_roll_pitch_yaw webotslib
 	"wb_inertial_unit_get_roll_pitch_yaw" () :integer)
-	;;  ( :integer)
+	;;  ( :short)
 
 (defforeign wb_inertial_unit_get_quaternion webotslib
 	"wb_inertial_unit_get_quaternion" () :integer)
-	;;  ( :integer)
+	;;  ( :short)
 
 (defforeign wb_joystick_enable webotslib
 	"wb_joystick_enable" () :integer)
@@ -867,15 +867,15 @@
 
 (defforeign wb_joystick_set_constant_force_duration webotslib
 	"wb_joystick_set_constant_force_duration" () :integer)
-	;;  ( :float)
+	;;  ( :double)
 
 (defforeign wb_joystick_set_auto_centering_gain webotslib
 	"wb_joystick_set_auto_centering_gain" () :integer)
-	;;  ( :float)
+	;;  ( :double)
 
 (defforeign wb_joystick_set_resistance_gain webotslib
 	"wb_joystick_set_resistance_gain" () :integer)
-	;;  ( :float)
+	;;  ( :double)
 
 (defforeign wb_joystick_set_force_axis webotslib
 	"wb_joystick_set_force_axis" () :integer)
@@ -919,95 +919,95 @@
 
 (defforeign wb_led_set webotslib
 	"wb_led_set" () :integer)
-	;;  ( :integer :integer)
+	;;  ( :short :integer)
 
 (defforeign wb_led_get webotslib
 	"wb_led_get" () :integer)
-	;;  ( :integer)
+	;;  ( :short)
 
 (defforeign wb_lidar_enable webotslib
 	"wb_lidar_enable" () :integer)
-	;;  ( :integer :integer)
+	;;  ( :short :integer)
 
 (defforeign wb_lidar_enable_point_cloud webotslib
 	"wb_lidar_enable_point_cloud" () :integer)
-	;;  ( :integer)
+	;;  ( :short)
 
 (defforeign wb_lidar_disable webotslib
 	"wb_lidar_disable" () :integer)
-	;;  ( :integer)
+	;;  ( :short)
 
 (defforeign wb_lidar_disable_point_cloud webotslib
 	"wb_lidar_disable_point_cloud" () :integer)
-	;;  ( :integer)
+	;;  ( :short)
 
 (defforeign wb_lidar_get_sampling_period webotslib
 	"wb_lidar_get_sampling_period" () :integer)
-	;;  ( :integer)
+	;;  ( :short)
 
 (defforeign wb_lidar_is_point_cloud_enabled webotslib
 	"wb_lidar_is_point_cloud_enabled" () :integer)
-	;;  ( :integer)
+	;;  ( :short)
 
 (defforeign wb_lidar_get_range_image webotslib
 	"wb_lidar_get_range_image" () :integer)
-	;;  ( :integer)
+	;;  ( :short)
 
 (defforeign wb_lidar_get_layer_range_image webotslib
 	"wb_lidar_get_layer_range_image" () :integer)
-	;;  ( :integer :integer)
+	;;  ( :short :integer)
 
 (defforeign wb_lidar_get_point_cloud webotslib
 	"wb_lidar_get_point_cloud" () :integer)
-	;;  ( :integer)
+	;;  ( :short)
 
 (defforeign wb_lidar_get_layer_point_cloud webotslib
 	"wb_lidar_get_layer_point_cloud" () :integer)
-	;;  ( :integer :integer)
+	;;  ( :short :integer)
 
 (defforeign wb_lidar_get_number_of_points webotslib
 	"wb_lidar_get_number_of_points" () :integer)
-	;;  ( :integer)
+	;;  ( :short)
 
 (defforeign wb_lidar_get_horizontal_resolution webotslib
 	"wb_lidar_get_horizontal_resolution" () :integer)
-	;;  ( :integer)
+	;;  ( :short)
 
 (defforeign wb_lidar_get_number_of_layers webotslib
 	"wb_lidar_get_number_of_layers" () :integer)
-	;;  ( :integer)
+	;;  ( :short)
 
 (defforeign wb_lidar_get_min_frequency webotslib
 	"wb_lidar_get_min_frequency" () :float)
-	;;  ( :integer)
+	;;  ( :short)
 
 (defforeign wb_lidar_get_max_frequency webotslib
 	"wb_lidar_get_max_frequency" () :float)
-	;;  ( :integer)
+	;;  ( :short)
 
 (defforeign wb_lidar_get_frequency webotslib
 	"wb_lidar_get_frequency" () :float)
-	;;  ( :integer)
+	;;  ( :short)
 
 (defforeign wb_lidar_set_frequency webotslib
 	"wb_lidar_set_frequency" () :integer)
-	;;  ( :integer :float)
+	;;  ( :short :double)
 
 (defforeign wb_lidar_get_fov webotslib
 	"wb_lidar_get_fov" () :float)
-	;;  ( :integer)
+	;;  ( :short)
 
 (defforeign wb_lidar_get_vertical_fov webotslib
 	"wb_lidar_get_vertical_fov" () :float)
-	;;  ( :integer)
+	;;  ( :short)
 
 (defforeign wb_lidar_get_min_range webotslib
 	"wb_lidar_get_min_range" () :float)
-	;;  ( :integer)
+	;;  ( :short)
 
 (defforeign wb_lidar_get_max_range webotslib
 	"wb_lidar_get_max_range" () :float)
-	;;  ( :integer)
+	;;  ( :short)
 
 (defcstruct WbLidarPoint
 	(x :float)
@@ -1018,163 +1018,163 @@
 
 (defforeign wb_light_sensor_enable webotslib
 	"wb_light_sensor_enable" () :integer)
-	;;  ( :integer :integer)
+	;;  ( :short :integer)
 
 (defforeign wb_light_sensor_disable webotslib
 	"wb_light_sensor_disable" () :integer)
-	;;  ( :integer)
+	;;  ( :short)
 
 (defforeign wb_light_sensor_get_sampling_period webotslib
 	"wb_light_sensor_get_sampling_period" () :integer)
-	;;  ( :integer)
+	;;  ( :short)
 
 (defforeign wb_light_sensor_get_lookup_table_size webotslib
 	"wb_light_sensor_get_lookup_table_size" () :integer)
-	;;  ( :integer)
+	;;  ( :short)
 
 (defforeign wb_light_sensor_get_lookup_table webotslib
 	"wb_light_sensor_get_lookup_table" () :integer)
-	;;  ( :integer)
+	;;  ( :short)
 
 (defforeign wb_light_sensor_get_value webotslib
 	"wb_light_sensor_get_value" () :float)
-	;;  ( :integer)
+	;;  ( :short)
 
 (defforeign wb_microphone_enable webotslib
 	"wb_microphone_enable" () :integer)
-	;;  ( :integer :integer)
+	;;  ( :short :integer)
 
 (defforeign wb_microphone_disable webotslib
 	"wb_microphone_disable" () :integer)
-	;;  ( :integer)
+	;;  ( :short)
 
 (defforeign wb_microphone_get_sampling_period webotslib
 	"wb_microphone_get_sampling_period" () :integer)
-	;;  ( :integer)
+	;;  ( :short)
 
 (defforeign wb_microphone_get_sample_data webotslib
 	"wb_microphone_get_sample_data" () (:string))
-	;;  ( :integer)
+	;;  ( :short)
 
 (defforeign wb_microphone_get_sample_size webotslib
 	"wb_microphone_get_sample_size" () :integer)
-	;;  ( :integer)
+	;;  ( :short)
 
 (defforeign wb_motor_set_position webotslib
 	"wb_motor_set_position" () :integer)
-	;;  ( :integer :float)
+	;;  ( :short :double)
 
 (defforeign wb_motor_set_acceleration webotslib
 	"wb_motor_set_acceleration" () :integer)
-	;;  ( :integer :float)
+	;;  ( :short :double)
 
 (defforeign wb_motor_set_velocity webotslib
 	"wb_motor_set_velocity" () :integer)
-	;;  ( :integer :float)
+	;;  ( :short :double)
 
 (defforeign wb_motor_set_force webotslib
 	"wb_motor_set_force" () :integer)
-	;;  ( :integer :float)
+	;;  ( :short :double)
 
 (defforeign wb_motor_set_torque webotslib
 	"wb_motor_set_torque" () :integer)
-	;;  ( :integer :float)
+	;;  ( :short :double)
 
 (defforeign wb_motor_set_available_force webotslib
 	"wb_motor_set_available_force" () :integer)
-	;;  ( :integer :float)
+	;;  ( :short :double)
 
 (defforeign wb_motor_set_available_torque webotslib
 	"wb_motor_set_available_torque" () :integer)
-	;;  ( :integer :float)
+	;;  ( :short :double)
 
 (defforeign wb_motor_set_control_pid webotslib
 	"wb_motor_set_control_pid" () :integer)
-	;;  ( :integer :float :float :float)
+	;;  ( :short :double :double :double)
 
 (defforeign wb_motor_enable_force_feedback webotslib
 	"wb_motor_enable_force_feedback" () :integer)
-	;;  ( :integer :integer)
+	;;  ( :short :integer)
 
 (defforeign wb_motor_disable_force_feedback webotslib
 	"wb_motor_disable_force_feedback" () :integer)
-	;;  ( :integer)
+	;;  ( :short)
 
 (defforeign wb_motor_get_force_feedback_sampling_period webotslib
 	"wb_motor_get_force_feedback_sampling_period" () :integer)
-	;;  ( :integer)
+	;;  ( :short)
 
 (defforeign wb_motor_get_force_feedback webotslib
 	"wb_motor_get_force_feedback" () :float)
-	;;  ( :integer)
+	;;  ( :short)
 
 (defforeign wb_motor_enable_torque_feedback webotslib
 	"wb_motor_enable_torque_feedback" () :integer)
-	;;  ( :integer :integer)
+	;;  ( :short :integer)
 
 (defforeign wb_motor_disable_torque_feedback webotslib
 	"wb_motor_disable_torque_feedback" () :integer)
-	;;  ( :integer)
+	;;  ( :short)
 
 (defforeign wb_motor_get_torque_feedback_sampling_period webotslib
 	"wb_motor_get_torque_feedback_sampling_period" () :integer)
-	;;  ( :integer)
+	;;  ( :short)
 
 (defforeign wb_motor_get_torque_feedback webotslib
 	"wb_motor_get_torque_feedback" () :float)
-	;;  ( :integer)
+	;;  ( :short)
 
 (defforeign wb_motor_get_type webotslib
 	"wb_motor_get_type" () WbJointType)
-	;;  ( :integer)
+	;;  ( :short)
 
 (defforeign wb_motor_get_target_position webotslib
 	"wb_motor_get_target_position" () :float)
-	;;  ( :integer)
+	;;  ( :short)
 
 (defforeign wb_motor_get_min_position webotslib
 	"wb_motor_get_min_position" () :float)
-	;;  ( :integer)
+	;;  ( :short)
 
 (defforeign wb_motor_get_max_position webotslib
 	"wb_motor_get_max_position" () :float)
-	;;  ( :integer)
+	;;  ( :short)
 
 (defforeign wb_motor_get_velocity webotslib
 	"wb_motor_get_velocity" () :float)
-	;;  ( :integer)
+	;;  ( :short)
 
 (defforeign wb_motor_get_max_velocity webotslib
 	"wb_motor_get_max_velocity" () :float)
-	;;  ( :integer)
+	;;  ( :short)
 
 (defforeign wb_motor_get_acceleration webotslib
 	"wb_motor_get_acceleration" () :float)
-	;;  ( :integer)
+	;;  ( :short)
 
 (defforeign wb_motor_get_available_force webotslib
 	"wb_motor_get_available_force" () :float)
-	;;  ( :integer)
+	;;  ( :short)
 
 (defforeign wb_motor_get_max_force webotslib
 	"wb_motor_get_max_force" () :float)
-	;;  ( :integer)
+	;;  ( :short)
 
 (defforeign wb_motor_get_available_torque webotslib
 	"wb_motor_get_available_torque" () :float)
-	;;  ( :integer)
+	;;  ( :short)
 
 (defforeign wb_motor_get_max_torque webotslib
 	"wb_motor_get_max_torque" () :float)
-	;;  ( :integer)
+	;;  ( :short)
 
 (defforeign wb_motor_get_brake webotslib
 	"wb_motor_get_brake" () :integer)
-	;;  ( :integer)
+	;;  ( :short)
 
 (defforeign wb_motor_get_position_sensor webotslib
 	"wb_motor_get_position_sensor" () :integer)
-	;;  ( :integer)
+	;;  ( :short)
 
 (defforeign wb_mouse_enable webotslib
 	"wb_mouse_enable" () :integer)
@@ -1208,93 +1208,93 @@
 	(left :integer)
 	(middle :integer)
 	(right :integer)
-	(u :float)
-	(v :float)
-	(x :float)
-	(y :float)
-	(z :float))
+	(u :double)
+	(v :double)
+	(x :double)
+	(y :double)
+	(z :double))
 
 (defforeign wb_pen_write webotslib
 	"wb_pen_write" () :integer)
-	;;  ( :integer :integer)
+	;;  ( :short :integer)
 
 (defforeign wb_pen_set_ink_color webotslib
 	"wb_pen_set_ink_color" () :integer)
-	;;  ( :integer :integer :float)
+	;;  ( :short :integer :double)
 
 (defforeign wb_position_sensor_enable webotslib
 	"wb_position_sensor_enable" () :integer)
-	;;  ( :integer :integer)
+	;;  ( :short :integer)
 
 (defforeign wb_position_sensor_disable webotslib
 	"wb_position_sensor_disable" () :integer)
-	;;  ( :integer)
+	;;  ( :short)
 
 (defforeign wb_position_sensor_get_sampling_period webotslib
 	"wb_position_sensor_get_sampling_period" () :integer)
-	;;  ( :integer)
+	;;  ( :short)
 
 (defforeign wb_position_sensor_get_value webotslib
 	"wb_position_sensor_get_value" () :float)
-	;;  ( :integer)
+	;;  ( :short)
 
 (defforeign wb_position_sensor_get_type webotslib
 	"wb_position_sensor_get_type" () WbJointType)
-	;;  ( :integer)
+	;;  ( :short)
 
 (defforeign wb_position_sensor_get_motor webotslib
 	"wb_position_sensor_get_motor" () :integer)
-	;;  ( :integer)
+	;;  ( :short)
 
 (defforeign wb_position_sensor_get_brake webotslib
 	"wb_position_sensor_get_brake" () :integer)
-	;;  ( :integer)
+	;;  ( :short)
 
 (defforeign wb_radar_enable webotslib
 	"wb_radar_enable" () :integer)
-	;;  ( :integer :integer)
+	;;  ( :short :integer)
 
 (defforeign wb_radar_disable webotslib
 	"wb_radar_disable" () :integer)
-	;;  ( :integer)
+	;;  ( :short)
 
 (defforeign wb_radar_get_sampling_period webotslib
 	"wb_radar_get_sampling_period" () :integer)
-	;;  ( :integer)
+	;;  ( :short)
 
 (defforeign wb_radar_get_number_of_targets webotslib
 	"wb_radar_get_number_of_targets" () :integer)
-	;;  ( :integer)
+	;;  ( :short)
 
 (defforeign wb_radar_get_targets webotslib
 	"wb_radar_get_targets" () :integer)
-	;;  ( :integer)
+	;;  ( :short)
 
 (defforeign wb_radar_get_min_range webotslib
 	"wb_radar_get_min_range" () :float)
-	;;  ( :integer)
+	;;  ( :short)
 
 (defforeign wb_radar_get_max_range webotslib
 	"wb_radar_get_max_range" () :float)
-	;;  ( :integer)
+	;;  ( :short)
 
 (defforeign wb_radar_get_horizontal_fov webotslib
 	"wb_radar_get_horizontal_fov" () :float)
-	;;  ( :integer)
+	;;  ( :short)
 
 (defforeign wb_radar_get_vertical_fov webotslib
 	"wb_radar_get_vertical_fov" () :float)
-	;;  ( :integer)
+	;;  ( :short)
 
 (defcstruct WbRadarTarget
-	(distance :float)
-	(received_power :float)
-	(speed :float)
-	(azimuth :float))
+	(distance :double)
+	(received_power :double)
+	(speed :double)
+	(azimuth :double))
 
 (defforeign wb_radio_message_new webotslib
 	"wb_radio_message_new" () (:string))
-	;;  ( :integer :string :string)
+	;;  ( :integer :char * :char *)
 
 (defforeign wb_radio_message_delete webotslib
 	"wb_radio_message_delete" () :integer)
@@ -1314,63 +1314,63 @@
 
 (defforeign wb_radio_enable webotslib
 	"wb_radio_enable" () :integer)
-	;;  ( :integer :integer)
+	;;  ( :short :integer)
 
 (defforeign wb_radio_disable webotslib
 	"wb_radio_disable" () :integer)
-	;;  ( :integer)
+	;;  ( :short)
 
 (defforeign wb_radio_set_address webotslib
 	"wb_radio_set_address" () :integer)
-	;;  ( :integer :string)
+	;;  ( :short :char *)
 
 (defforeign wb_radio_get_address webotslib
 	"wb_radio_get_address" () (:string))
-	;;  ( :integer)
+	;;  ( :short)
 
 (defforeign wb_radio_set_frequency webotslib
 	"wb_radio_set_frequency" () :integer)
-	;;  ( :integer :float)
+	;;  ( :short :double)
 
 (defforeign wb_radio_get_frequency webotslib
 	"wb_radio_get_frequency" () :float)
-	;;  ( :integer)
+	;;  ( :short)
 
 (defforeign wb_radio_set_channel webotslib
 	"wb_radio_set_channel" () :integer)
-	;;  ( :integer :integer)
+	;;  ( :short :integer)
 
 (defforeign wb_radio_get_channel webotslib
 	"wb_radio_get_channel" () :integer)
-	;;  ( :integer)
+	;;  ( :short)
 
 (defforeign wb_radio_set_bitrate webotslib
 	"wb_radio_set_bitrate" () :integer)
-	;;  ( :integer :integer)
+	;;  ( :short :integer)
 
 (defforeign wb_radio_get_bitrate webotslib
 	"wb_radio_get_bitrate" () :integer)
-	;;  ( :integer)
+	;;  ( :short)
 
 (defforeign wb_radio_set_rx_sensitivity webotslib
 	"wb_radio_set_rx_sensitivity" () :integer)
-	;;  ( :integer :float)
+	;;  ( :short :double)
 
 (defforeign wb_radio_get_rx_sensitivity webotslib
 	"wb_radio_get_rx_sensitivity" () :float)
-	;;  ( :integer)
+	;;  ( :short)
 
 (defforeign wb_radio_set_tx_power webotslib
 	"wb_radio_set_tx_power" () :integer)
-	;;  ( :integer :float)
+	;;  ( :short :double)
 
 (defforeign wb_radio_get_tx_power webotslib
 	"wb_radio_get_tx_power" () :float)
-	;;  ( :integer)
+	;;  ( :short)
 
 (defforeign wb_radio_set_callback webotslib
 	"wb_radio_set_callback" () :integer)
-	;;  ( :integer :integer)
+	;;  ( :short :integer)
 
 (defforeign wb_radio_event_get_radio webotslib
 	"wb_radio_event_get_radio" () :integer)
@@ -1394,51 +1394,185 @@
 
 (defforeign wb_radio_send webotslib
 	"wb_radio_send" () :integer)
-	;;  ( :integer :integer :float)
+	;;  ( :short :integer :double)
 
 (defforeign wb_receiver_enable webotslib
 	"wb_receiver_enable" () :integer)
-	;;  ( :integer :integer)
+	;;  ( :short :integer)
 
 (defforeign wb_receiver_disable webotslib
 	"wb_receiver_disable" () :integer)
-	;;  ( :integer)
+	;;  ( :short)
 
 (defforeign wb_receiver_get_sampling_period webotslib
 	"wb_receiver_get_sampling_period" () :integer)
-	;;  ( :integer)
+	;;  ( :short)
 
 (defforeign wb_receiver_set_channel webotslib
 	"wb_receiver_set_channel" () :integer)
-	;;  ( :integer :integer)
+	;;  ( :short :integer)
 
 (defforeign wb_receiver_get_channel webotslib
 	"wb_receiver_get_channel" () :integer)
-	;;  ( :integer)
+	;;  ( :short)
 
 (defforeign wb_receiver_get_queue_length webotslib
 	"wb_receiver_get_queue_length" () :integer)
-	;;  ( :integer)
+	;;  ( :short)
 
 (defforeign wb_receiver_next_packet webotslib
 	"wb_receiver_next_packet" () :integer)
-	;;  ( :integer)
+	;;  ( :short)
 
 (defforeign wb_receiver_get_data_size webotslib
 	"wb_receiver_get_data_size" () :integer)
-	;;  ( :integer)
+	;;  ( :short)
 
 (defforeign wb_receiver_get_data webotslib
 	"wb_receiver_get_data" () (:string))
-	;;  ( :integer)
+	;;  ( :short)
 
 (defforeign wb_receiver_get_signal_strength webotslib
 	"wb_receiver_get_signal_strength" () :float)
-	;;  ( :integer)
+	;;  ( :short)
 
 (defforeign wb_receiver_get_emitter_direction webotslib
 	"wb_receiver_get_emitter_direction" () :integer)
+	;;  ( :short)
+
+(defforeign wb_remote_control_custom_function webotslib
+	"wb_remote_control_custom_function" () (:string))
 	;;  ( :integer)
+
+(defforeign wbr_robot_battery_sensor_set_value webotslib
+	"wbr_robot_battery_sensor_set_value" () :integer)
+	;;  ( :double)
+
+(defforeign wbr_differential_wheels_set_encoders webotslib
+	"wbr_differential_wheels_set_encoders" () :integer)
+	;;  ( :double :double)
+
+(defforeign wbr_accelerometer_set_values webotslib
+	"wbr_accelerometer_set_values" () :integer)
+	;;  ( :short :integer)
+
+(defforeign wbr_camera_recognition_set_object webotslib
+	"wbr_camera_recognition_set_object" () :integer)
+	;;  ( :short :integer :integer)
+
+(defforeign wbr_compass_set_values webotslib
+	"wbr_compass_set_values" () :integer)
+	;;  ( :short :integer)
+
+(defforeign wbr_distance_sensor_set_value webotslib
+	"wbr_distance_sensor_set_value" () :integer)
+	;;  ( :short :double)
+
+(defforeign wbr_gps_set_values webotslib
+	"wbr_gps_set_values" () :integer)
+	;;  ( :short :integer)
+
+(defforeign wbr_gps_set_speed webotslib
+	"wbr_gps_set_speed" () :integer)
+	;;  ( :short :double)
+
+(defforeign wbr_gyro_set_values webotslib
+	"wbr_gyro_set_values" () :integer)
+	;;  ( :short :integer)
+
+(defforeign wbr_light_sensor_set_value webotslib
+	"wbr_light_sensor_set_value" () :integer)
+	;;  ( :short :double)
+
+(defforeign wbr_microphone_set_buffer webotslib
+	"wbr_microphone_set_buffer" () :integer)
+	;;  ( :short :integer :integer)
+
+(defforeign wbr_motor_set_force_feedback webotslib
+	"wbr_motor_set_force_feedback" () :integer)
+	;;  ( :short :double)
+
+(defforeign wbr_motor_set_torque_feedback webotslib
+	"wbr_motor_set_torque_feedback" () :integer)
+	;;  ( :short :double)
+
+(defforeign wbr_position_sensor_set_value webotslib
+	"wbr_position_sensor_set_value" () :integer)
+	;;  ( :short :double)
+
+(defforeign wbr_radar_set_targets webotslib
+	"wbr_radar_set_targets" () :integer)
+	;;  ( :short :integer :integer)
+
+(defforeign wbr_touch_sensor_set_value webotslib
+	"wbr_touch_sensor_set_value" () :integer)
+	;;  ( :short :double)
+
+(defforeign wbr_touch_sensor_set_values webotslib
+	"wbr_touch_sensor_set_values" () :integer)
+	;;  ( :short :integer)
+
+(defforeign wbr_display_save_image webotslib
+	"wbr_display_save_image" () :integer)
+	;;  ( :short :integer :integer :integer :integer)
+
+(defforeign wbr_camera_set_image webotslib
+	"wbr_camera_set_image" () :integer)
+	;;  ( :short :integer)
+
+(defforeign wbr_camera_get_image_buffer webotslib
+	"wbr_camera_get_image_buffer" () (:foreign-string))
+	;;  ( :short)
+
+(defcstruct WbrInterface
+	(mandatory :integer)
+	(wbr_custom_function :integer)
+	(wbr_robot_battery_set_sampling_period :integer)
+	(wbr_differential_wheels_encoders_set_sampling_period :integer)
+	(wbr_differential_wheels_set_speed :integer)
+	(wbr_differential_wheels_set_encoders :integer)
+	(wbr_set_sampling_period :integer)
+	(wbr_camera_set_fov :integer)
+	(wbr_camera_set_exposure :integer)
+	(wbr_camera_set_focal_distance :integer)
+	(wbr_led_set :integer)
+	(wbr_pen_set_ink_color :integer)
+	(wbr_pen_write :integer)
+	(wbr_speaker_emit_sample :integer)
+	(wbr_motor_set_force_sampling_period :integer)
+	(wbr_motor_set_torque_sampling_period :integer)
+	(wbr_motor_set_position :integer)
+	(wbr_motor_set_acceleration :integer)
+	(wbr_motor_set_velocity :integer)
+	(wbr_motor_set_force :integer)
+	(wbr_motor_set_torque :integer)
+	(wbr_motor_set_available_force :integer)
+	(wbr_motor_set_available_torque :integer)
+	(wbr_motor_set_control_pid :integer)
+	(wbr_display_set_color :integer)
+	(wbr_display_set_alpha :integer)
+	(wbr_display_set_opacity :integer)
+	(wbr_display_draw_pixel :integer)
+	(wbr_display_draw_line :integer)
+	(wbr_display_draw_rectangle :integer)
+	(wbr_display_draw_oval :integer)
+	(wbr_display_draw_polygon :integer)
+	(wbr_display_draw_text :integer)
+	(wbr_display_fill_rectangle :integer)
+	(wbr_display_fill_oval :integer)
+	(wbr_display_fill_polygon :integer)
+	(wbr_display_image_new :integer)
+	(wbr_display_image_copy :integer)
+	(wbr_display_image_delete :integer)
+	(wbr_display_image_paste :integer)
+	(wbr_display_image_save :integer))
+
+(defcstruct WbrInterface_mandatory
+	(wbr_start :integer)
+	(wbr_stop :integer)
+	(wbr_has_failed :integer)
+	(wbr_stop_actuators :integer)
+	(wbr_robot_step :integer))
 
 (defforeign wb_robot_window_custom_function webotslib
 	"wb_robot_window_custom_function" () (:string))
@@ -1446,7 +1580,7 @@
 
 (defforeign wb_robot_wwi_send webotslib
 	"wb_robot_wwi_send" () :integer)
-	;;  ( :string :integer)
+	;;  ( :char * :integer)
 
 (defforeign wb_robot_wwi_receive webotslib
 	"wb_robot_wwi_receive" () (:string))
@@ -1454,63 +1588,63 @@
 
 (defforeign wb_skin_set_bone_orientation webotslib
 	"wb_skin_set_bone_orientation" () :integer)
-	;;  ( :integer :integer :integer :integer)
+	;;  ( :short :integer :integer :integer)
 
 (defforeign wb_skin_set_bone_position webotslib
 	"wb_skin_set_bone_position" () :integer)
-	;;  ( :integer :integer :integer :integer)
+	;;  ( :short :integer :integer :integer)
 
 (defforeign wb_skin_get_bone_count webotslib
 	"wb_skin_get_bone_count" () :integer)
-	;;  ( :integer)
+	;;  ( :short)
 
 (defforeign wb_skin_get_bone_name webotslib
 	"wb_skin_get_bone_name" () (:string))
-	;;  ( :integer :integer)
+	;;  ( :short :integer)
 
 (defforeign wb_skin_get_bone_orientation webotslib
 	"wb_skin_get_bone_orientation" () :integer)
-	;;  ( :integer :integer :integer)
+	;;  ( :short :integer :integer)
 
 (defforeign wb_skin_get_bone_position webotslib
 	"wb_skin_get_bone_position" () :integer)
-	;;  ( :integer :integer :integer)
+	;;  ( :short :integer :integer)
 
 (defforeign wb_speaker_play_sound webotslib
 	"wb_speaker_play_sound" () :integer)
-	;;  ( :integer :integer :string :float :float :float :integer)
+	;;  ( :short :short :char * :double :double :double :integer)
 
 (defforeign wb_speaker_stop webotslib
 	"wb_speaker_stop" () :integer)
-	;;  ( :integer :string)
+	;;  ( :short :char *)
 
 (defforeign wb_speaker_is_sound_playing webotslib
 	"wb_speaker_is_sound_playing" () :integer)
-	;;  ( :integer :string)
+	;;  ( :short :char *)
 
 (defforeign wb_speaker_set_engine webotslib
 	"wb_speaker_set_engine" () :integer)
-	;;  ( :integer :string)
+	;;  ( :short :char *)
 
 (defforeign wb_speaker_set_language webotslib
 	"wb_speaker_set_language" () :integer)
-	;;  ( :integer :string)
+	;;  ( :short :char *)
 
 (defforeign wb_speaker_get_engine webotslib
 	"wb_speaker_get_engine" () (:string))
-	;;  ( :integer)
+	;;  ( :short)
 
 (defforeign wb_speaker_get_language webotslib
 	"wb_speaker_get_language" () (:string))
-	;;  ( :integer)
+	;;  ( :short)
 
 (defforeign wb_speaker_speak webotslib
 	"wb_speaker_speak" () :integer)
-	;;  ( :integer :string :float)
+	;;  ( :short :char * :double)
 
 (defforeign wb_speaker_is_speaking webotslib
 	"wb_speaker_is_speaking" () :integer)
-	;;  ( :integer)
+	;;  ( :short)
 
 (defcenum WbFieldType
 	(:WB_NO_FIELD #x00)
@@ -1541,11 +1675,11 @@
 
 (defforeign wb_supervisor_world_load webotslib
 	"wb_supervisor_world_load" () :integer)
-	;;  ( :string)
+	;;  ( :char *)
 
 (defforeign wb_supervisor_world_save webotslib
 	"wb_supervisor_world_save" () :integer)
-	;;  ( :string)
+	;;  ( :char *)
 
 (defforeign wb_supervisor_world_reload webotslib
 	"wb_supervisor_world_reload" () :integer)
@@ -1573,15 +1707,15 @@
 
 (defforeign wb_supervisor_set_label webotslib
 	"wb_supervisor_set_label" () :integer)
-	;;  ( :integer :string :float :float :float :integer :float :string)
+	;;  ( :integer :char * :double :double :double :integer :double :char *)
 
 (defforeign wb_supervisor_export_image webotslib
 	"wb_supervisor_export_image" () :integer)
-	;;  ( :string :integer)
+	;;  ( :char * :integer)
 
 (defforeign wb_supervisor_movie_start_recording webotslib
 	"wb_supervisor_movie_start_recording" () :integer)
-	;;  ( :string :integer :integer :integer :integer :integer :integer)
+	;;  ( :char * :integer :integer :integer :integer :integer :integer)
 
 (defforeign wb_supervisor_movie_stop_recording webotslib
 	"wb_supervisor_movie_stop_recording" () :integer)
@@ -1597,7 +1731,7 @@
 
 (defforeign wb_supervisor_animation_start_recording webotslib
 	"wb_supervisor_animation_start_recording" () :integer)
-	;;  ( :string)
+	;;  ( :char *)
 
 (defforeign wb_supervisor_animation_stop_recording webotslib
 	"wb_supervisor_animation_stop_recording" () :integer)
@@ -1621,15 +1755,15 @@
 
 (defforeign wb_supervisor_node_get_from_device webotslib
 	"wb_supervisor_node_get_from_device" () :integer)
-	;;  ( :integer)
+	;;  ( :short)
 
 (defforeign wb_supervisor_node_get_from_def webotslib
 	"wb_supervisor_node_get_from_def" () :integer)
-	;;  ( :string)
+	;;  ( :char *)
 
 (defforeign wb_supervisor_node_get_from_proto_def webotslib
 	"wb_supervisor_node_get_from_proto_def" () :integer)
-	;;  ( :integer :string)
+	;;  ( :integer :char *)
 
 (defforeign wb_supervisor_node_get_parent_node webotslib
 	"wb_supervisor_node_get_parent_node" () :integer)
@@ -1645,11 +1779,11 @@
 
 (defforeign wb_supervisor_node_get_field webotslib
 	"wb_supervisor_node_get_field" () :integer)
-	;;  ( :integer :string)
+	;;  ( :integer :char *)
 
 (defforeign wb_supervisor_node_get_proto_field webotslib
 	"wb_supervisor_node_get_proto_field" () :integer)
-	;;  ( :integer :string)
+	;;  ( :integer :char *)
 
 (defforeign wb_supervisor_node_remove webotslib
 	"wb_supervisor_node_remove" () :integer)
@@ -1829,7 +1963,7 @@
 
 (defforeign wb_supervisor_field_set_sf_float webotslib
 	"wb_supervisor_field_set_sf_float" () :integer)
-	;;  ( :integer :float)
+	;;  ( :integer :double)
 
 (defforeign wb_supervisor_field_set_sf_vec2f webotslib
 	"wb_supervisor_field_set_sf_vec2f" () :integer)
@@ -1849,7 +1983,7 @@
 
 (defforeign wb_supervisor_field_set_sf_string webotslib
 	"wb_supervisor_field_set_sf_string" () :integer)
-	;;  ( :integer :string)
+	;;  ( :integer :char *)
 
 (defforeign wb_supervisor_field_set_mf_bool webotslib
 	"wb_supervisor_field_set_mf_bool" () :integer)
@@ -1861,7 +1995,7 @@
 
 (defforeign wb_supervisor_field_set_mf_float webotslib
 	"wb_supervisor_field_set_mf_float" () :integer)
-	;;  ( :integer :integer :float)
+	;;  ( :integer :integer :double)
 
 (defforeign wb_supervisor_field_set_mf_vec2f webotslib
 	"wb_supervisor_field_set_mf_vec2f" () :integer)
@@ -1881,7 +2015,7 @@
 
 (defforeign wb_supervisor_field_set_mf_string webotslib
 	"wb_supervisor_field_set_mf_string" () :integer)
-	;;  ( :integer :integer :string)
+	;;  ( :integer :integer :char *)
 
 (defforeign wb_supervisor_field_insert_mf_bool webotslib
 	"wb_supervisor_field_insert_mf_bool" () :integer)
@@ -1893,7 +2027,7 @@
 
 (defforeign wb_supervisor_field_insert_mf_float webotslib
 	"wb_supervisor_field_insert_mf_float" () :integer)
-	;;  ( :integer :integer :float)
+	;;  ( :integer :integer :double)
 
 (defforeign wb_supervisor_field_insert_mf_vec2f webotslib
 	"wb_supervisor_field_insert_mf_vec2f" () :integer)
@@ -1913,7 +2047,7 @@
 
 (defforeign wb_supervisor_field_insert_mf_string webotslib
 	"wb_supervisor_field_insert_mf_string" () :integer)
-	;;  ( :integer :integer :string)
+	;;  ( :integer :integer :char *)
 
 (defforeign wb_supervisor_field_remove_mf webotslib
 	"wb_supervisor_field_remove_mf" () :integer)
@@ -1921,11 +2055,11 @@
 
 (defforeign wb_supervisor_field_import_mf_node webotslib
 	"wb_supervisor_field_import_mf_node" () :integer)
-	;;  ( :integer :integer :string)
+	;;  ( :integer :integer :char *)
 
 (defforeign wb_supervisor_field_import_mf_node_from_string webotslib
 	"wb_supervisor_field_import_mf_node_from_string" () :integer)
-	;;  ( :integer :integer :string)
+	;;  ( :integer :integer :char *)
 
 (defforeign wb_supervisor_field_remove_sf webotslib
 	"wb_supervisor_field_remove_sf" () :integer)
@@ -1933,11 +2067,11 @@
 
 (defforeign wb_supervisor_field_import_sf_node webotslib
 	"wb_supervisor_field_import_sf_node" () :integer)
-	;;  ( :integer :string)
+	;;  ( :integer :char *)
 
 (defforeign wb_supervisor_field_import_sf_node_from_string webotslib
 	"wb_supervisor_field_import_sf_node_from_string" () :integer)
-	;;  ( :integer :string)
+	;;  ( :integer :char *)
 
 (defforeign wb_supervisor_virtual_reality_headset_is_used webotslib
 	"wb_supervisor_virtual_reality_headset_is_used" () :integer)
@@ -1957,11 +2091,11 @@
 
 (defforeign wb_supervisor_load_world webotslib
 	"wb_supervisor_load_world" () :integer)
-	;;  ( :string)
+	;;  ( :char *)
 
 (defforeign wb_supervisor_save_world webotslib
 	"wb_supervisor_save_world" () :integer)
-	;;  ( :string)
+	;;  ( :char *)
 
 (defforeign wb_supervisor_field_remove_mf_node webotslib
 	"wb_supervisor_field_remove_mf_node" () :integer)
@@ -1983,7 +2117,7 @@
 
 (defforeign wb_supervisor_start_movie webotslib
 	"wb_supervisor_start_movie" () :integer)
-	;;  ( :string :integer :integer :integer :integer :integer :integer)
+	;;  ( :char * :integer :integer :integer :integer :integer :integer)
 
 (defforeign wb_supervisor_stop_movie webotslib
 	"wb_supervisor_stop_movie" () :integer)
@@ -1995,31 +2129,31 @@
 
 (defforeign wb_touch_sensor_enable webotslib
 	"wb_touch_sensor_enable" () :integer)
-	;;  ( :integer :integer)
+	;;  ( :short :integer)
 
 (defforeign wb_touch_sensor_disable webotslib
 	"wb_touch_sensor_disable" () :integer)
-	;;  ( :integer)
+	;;  ( :short)
 
 (defforeign wb_touch_sensor_get_sampling_period webotslib
 	"wb_touch_sensor_get_sampling_period" () :integer)
-	;;  ( :integer)
+	;;  ( :short)
 
 (defforeign wb_touch_sensor_get_lookup_table_size webotslib
 	"wb_touch_sensor_get_lookup_table_size" () :integer)
-	;;  ( :integer)
+	;;  ( :short)
 
 (defforeign wb_touch_sensor_get_lookup_table webotslib
 	"wb_touch_sensor_get_lookup_table" () :integer)
-	;;  ( :integer)
+	;;  ( :short)
 
 (defforeign wb_touch_sensor_get_value webotslib
 	"wb_touch_sensor_get_value" () :float)
-	;;  ( :integer)
+	;;  ( :short)
 
 (defforeign wb_touch_sensor_get_values webotslib
 	"wb_touch_sensor_get_values" () :integer)
-	;;  ( :integer)
+	;;  ( :short)
 
 (defcenum WbTouchSensorType
 	(:WB_TOUCH_SENSOR_BUMPER 0)
@@ -2028,11 +2162,11 @@
 
 (defforeign wb_touch_sensor_get_type webotslib
 	"wb_touch_sensor_get_type" () WbTouchSensorType)
-	;;  ( :integer)
+	;;  ( :short)
 
 (defforeign wbu_motion_new webotslib
 	"wbu_motion_new" () :integer)
-	;;  ( :string)
+	;;  ( :char *)
 
 (defforeign wbu_motion_delete webotslib
 	"wbu_motion_delete" () :integer)
@@ -2072,11 +2206,11 @@
 
 (defforeign wbu_system_getenv webotslib
 	"wbu_system_getenv" () (:string))
-	;;  ( :string)
+	;;  ( :char *)
 
 (defforeign wbu_system_short_path webotslib
 	"wbu_system_short_path" () (:string))
-	;;  ( :string)
+	;;  ( :char *)
 
 (defforeign wbu_system_webots_tmp_path webotslib
 	"wbu_system_webots_tmp_path" () (:string))
@@ -2098,13 +2232,97 @@
     (dotimes (i len) (setf (elt str i) (elt fstr i)))
     str))
 ;;;
-(defun cout-string (fstr size)
+(defun cout-fstring (fstr size)
   (sys:poke
    (+ 2 (* 4 size)) ;; length + 2;; bgra8
    (+ (sys::address fstr) 8) ;; address
    :long)
   fstr)
+;;;
+(defmethod cstruct
+  (:get-alist
+   ()
+   ;; slotlst = (slot-info-0 ... slot-info-n)
+   ;; slot-info-i= (id type count element-size index total-byte-count)
+   ;; total-byte-count = count * element-size
+   ;; index(i) = index(i-1) + total-byte-count(i-1)
+   (mapcar
+    #'(lambda (s) (cons (car s) (send self :get+ (car s))))
+    (send (class self) :slotlist)))
+  (:get+
+   (slot-id &aux (cnt (elt (send (class self) :slot slot-id) 2))
+	    lst)
+   (cond
+    ((= cnt 1) (send self :get slot-id))
+    (t (dotimes (i cnt) (push (send self :get slot-id i) lst))
+       (reverse lst))))
+  (:set+
+   (val slot-id)
+   (let* ((slt (send (class self) :slot slot-id))
+	  (typ (elt slt 1)) (cnt (elt slt 2))
+	  (esize (elt slt 3)) (offset (elt slt 4))
+	  (tsize (elt slt 5))
+	  )
+     (if (> cnt 1)
+	 (dotimes (i cnt)
+	   (sys:poke (elt val i) self (+ offset (* i esize)) typ))
+       (if (numberp val) 
+	   (sys:poke val self offset typ)
+	 (sys:poke (elt val 0) self offset typ)))
+     val))
+  )
 
+(defun cout-value (adr offset typ &optional (len 1) (r (instantiate vector len)))
+  (cond
+   ((= len 1)
+    #+:x86_64
+    (sys:peek (+ adr offset) typ)
+    #-:x86_64
+    (sys:peek (+ adr offset) typ))
+   (t (dotimes (i len) (setf (elt r i)
+			     #+:x86_64
+			     (sys:peek (+ adr offset (* (byte-size typ) i)) typ)
+			     #-:x86_64
+			     (sys:peek (+ adr offset (* (byte-size typ) i)) typ)
+			     ))
+      r)))
+(defun cout-cstruct (addr cls)
+  (let* ((str (instantiate cls))
+	 (slt (send cls :slotlist)))
+    (dolist (s slt)
+      (send str :set+ (cout-value addr (elt s 4) (elt s 1) (elt s 2)) (elt s 0)))
+    str))
+(defun cout-string (addr)
+  (let (ret c (i 0))
+    (while (not (= 0 (setq c (sys:peek (+ addr i) :byte))))
+      (incf i) (push c ret))
+    (coerce (reverse ret) string)))
+;;;
+#|
+typedef struct {
+  int id;
+  double position[3];
+  double orientation[4];
+  double size[2];
+  int position_on_image[2];
+  int size_on_image[2];
+  int number_of_colors;
+  double *colors;
+  char *model;
+} WbCameraRecognitionObject;
+|#
+(defcstruct WbCameraRecognitionObject
+  (id :integer)
+  (position :double 3)
+  (orientation :double 4)
+  (size :double 2)
+  (position_on_image :integer 2)
+  (size_on_image :integer 2)
+  (number_of_colors :integer)
+  (colors :double *)
+  (model :char *)
+  )
+;;;
 (defun wb_camera_image_get_alfa (im camera_width m n)
  (elt im (+ 3 (* 4 (+ (* n camera_width) m)))))
 (defun wb_camera_image_get_byte (im camera_width m n &optional (offset 0))
@@ -2134,13 +2352,13 @@
 (defun webots-camera-fstring (camera)
   (let* ((w (wb_camera_get_width camera))
          (h (wb_camera_get_height camera)))
-    (cout-string (wb_camera_get_image camera) (* 4 w h))))
+    (cout-fstring (wb_camera_get_image camera) (* 4 w h))))
 
 (defun webots-camera-image (camera
                             &optional str)
   (let* ((w (wb_camera_get_width camera))
          (h (wb_camera_get_height camera))
-         (fs (cout-string (wb_camera_get_image camera) (* 4 w h))))
+         (fs (cout-fstring (wb_camera_get_image camera) (* 4 w h))))
     (unless str (setq str (make-string (* 3 w h))))
     (do* ((y 0 (+ 1 y)) (wy (* y w) (* y w)))
          ((>= y h))

@@ -1,0 +1,42 @@
+<launch>
+  <group ns="kxrl4_urdf" >
+    <include file="$(find opencv_apps)/launch/hsv_color_filter.launch">
+      <arg name="node_name" value="hsv_filter_trash" />
+      <arg name="image" value="m5_camera/M5_CAMERA_25305_27_camera/image" />
+      <arg name="h_limit_min" value="110" />
+      <arg name="h_limit_max" value="130" />
+      <arg name="s_limit_min" value="27" />
+      <arg name="s_limit_max" value="256" />
+      <arg name="v_limit_min" value="27" />
+      <arg name="v_limit_max" value="256" />
+      <arg name="debug_view" value="true" />
+      <arg name="queue_size" value="1" />
+    </include>
+    <include file="$(find opencv_apps)/launch/contour_moments.launch" >
+      <arg name="node_name" value="trash_moments" />
+      <arg name="image" value="hsv_filter_trash/image" />
+      <arg name="debug_view" value="false" />
+      <arg name="queue_size" value="1" />
+    </include>
+  </group>
+  <group ns="kxrl4_urdf" >
+    <include file="$(find opencv_apps)/launch/hsv_color_filter.launch">
+      <arg name="node_name" value="hsv_filter_goal" />
+      <arg name="image" value="m5_camera/M5_CAMERA_25305_27_camera/image" />
+      <arg name="h_limit_min" value="230" />
+      <arg name="h_limit_max" value="250" />
+      <arg name="s_limit_min" value="80" />
+      <arg name="s_limit_max" value="255" />
+      <arg name="v_limit_min" value="180" />
+      <arg name="v_limit_max" value="220" />
+      <arg name="debug_view" value="true" />
+      <arg name="queue_size" value="1" />
+    </include>
+    <include file="$(find opencv_apps)/launch/contour_moments.launch" >
+      <arg name="node_name" value="goal_moments" />
+      <arg name="image" value="hsv_filter_goal/image" />
+      <arg name="debug_view" value="false" />
+      <arg name="queue_size" value="1" />
+    </include>
+  </group>
+</launch>

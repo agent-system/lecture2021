@@ -1,4 +1,4 @@
-#VRML_SIM R2021a utf8
+#VRML_SIM R2019b utf8
 # license: Copyright Cyberbotics Ltd. Licensed for use only with Webots.
 # license url: https://cyberbotics.com/webots_assets_license
 # A black and white soccer ball with customizable radius and mass.
@@ -18,15 +18,6 @@ PROTO RobocupSoccerBall [
     %{ s = 10 * fields.radius.value }%
     scale %{=s}% %{=s}% %{=s}%
     children [
-                                  contactMaterial "body"
-                                  immersionProperties [
-                                    DEF IMMERSION_PROP_BIG_SEGMENT ImmersionProperties {
-                                      fluidName "fluid"
-                                      referenceArea "xyz-projection"
-                                      dragForceCoefficients 1.8 0.95 0.75
-                                      viscousResistanceTorqueCoefficient 5
-                                    }
-
       Shape {
         appearance PBRAppearance {
           baseColor 0 0 0

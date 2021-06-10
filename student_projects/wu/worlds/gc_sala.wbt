@@ -1,0 +1,300 @@
+#VRML_SIM R2021a utf8
+WorldInfo {
+  title "garb_collect"
+  basicTimeStep 4
+  coordinateSystem "NUE"
+  contactProperties [
+    ContactProperties {
+      material1 "leg"
+      material2 "floor"
+      coulombFriction [
+        5
+      ]
+    }
+    ContactProperties {
+      material1 "body"
+      material2 "floor"
+      coulombFriction [
+        0.2
+      ]
+    }
+    ContactProperties {
+      material1 "garb"
+      material2 "floor"
+    }
+  ]
+}
+Viewpoint {
+  orientation 0.3377671616565844 -0.8757510025929116 -0.3449253918805703 4.5771378711376425
+  position 5.346722723136965 7.354379994315776 0.20054863252867194
+}
+TexturedBackground {
+}
+TexturedBackgroundLight {
+}
+DEF WATER Fluid {
+  translation 0 -0.125 0
+  children [
+    DEF WATER_BOX Shape {
+      appearance PBRAppearance {
+        baseColor 0.7254901960784313 0.8705882352941177 1
+        transparency 0.7
+        roughness 0.2
+        metalness 0
+      }
+      geometry Box {
+        size 12 0.25 8
+      }
+    }
+  ]
+  boundingObject USE WATER_BOX
+  locked TRUE
+}
+DEF AQUARIUM Solid {
+  translation 0 0.1 0
+  children [
+    DEF SIDES_GROUP Group {
+      children [
+        Transform {
+          translation 0 0 4
+          children [
+            DEF GLASS_SHAPE1 Shape {
+              appearance DEF GLASS_APPEARANCE PBRAppearance {
+                baseColor 1 0.6 0.6
+                roughness 1
+                metalness 0
+              }
+              geometry Box {
+                size 12 0.7 0.02
+              }
+            }
+          ]
+        }
+        Transform {
+          translation 0 0 -4
+          children [
+            USE GLASS_SHAPE1
+          ]
+        }
+        Transform {
+          translation -6 0 0
+          rotation 0 1 0 1.5708
+          children [
+            DEF GLASS_SHAPE2 Shape {
+              appearance USE GLASS_APPEARANCE
+              geometry Box {
+                size 8 0.7 0.02
+              }
+            }
+          ]
+        }
+        Transform {
+          translation 6 0 0
+          rotation 0 1 0 1.5708
+          children [
+            USE GLASS_SHAPE2
+          ]
+        }
+      ]
+    }
+  ]
+  name "aquarium"
+  boundingObject USE SIDES_GROUP
+  locked TRUE
+}
+DEF FLOOR Solid {
+  children [
+    DEF GND Group {
+      children [
+        Transform {
+          translation -4.42876 -0.25 0
+          children [
+            Shape {
+              appearance DEF GROUND_APPEARANCE PBRAppearance {
+                baseColorMap ImageTexture {
+                  url [
+                    "textures/texture_grid.png"
+                  ]
+                }
+                roughness 1
+                metalness 0
+              }
+              geometry Box {
+                size 3.14249 0.001 8
+              }
+            }
+          ]
+        }
+        Transform {
+          rotation 0 0 1 0.087266
+          children [
+            Shape {
+              appearance USE GROUND_APPEARANCE
+              geometry Box {
+                size 5.73686 0.001 8
+              }
+            }
+          ]
+        }
+        Transform {
+          translation 4.42876 0.25 0
+          children [
+            Shape {
+              appearance USE GROUND_APPEARANCE
+              geometry Box {
+                size 3.14249 0.01 8
+              }
+            }
+          ]
+        }
+      ]
+    }
+  ]
+  name "ground"
+  contactMaterial "floor"
+  boundingObject USE GND
+  locked TRUE
+}
+Salamander {
+  translation -3 0 -3
+  rotation 0 1 0 -3.1415853071795863
+  camera_fieldOfView 2
+  camera_width 320
+  camera_height 320
+}
+DEF BOX Solid {
+  translation -2.18732 1.9984e-14 -1.48867
+  rotation 0 1 0 1.5708
+  children [
+    DEF S_Box Shape {
+      appearance DEF LIGHT_BROWN PBRAppearance {
+        baseColor 0 1 0
+        roughness 1.1102230246251565e-16
+        metalness 0
+      }
+      geometry Box {
+        size 0.2 0.1 0.2
+      }
+    }
+  ]
+  name "box"
+  immersionProperties [
+    ImmersionProperties {
+      fluidName "fluid"
+      dragForceCoefficients 0.1 0 0
+      dragTorqueCoefficients 0.001 0 0
+      viscousResistanceTorqueCoefficient 0.005
+    }
+  ]
+  boundingObject USE S_Box
+  physics Physics {
+    density 500
+    damping Damping {
+      linear 0.5
+      angular 0.5
+    }
+  }
+  recognitionColors [
+    0 0 0
+  ]
+}
+DEF BOX Solid {
+  translation -3.1583 1.9984e-14 0.0132329
+  rotation 0 1 0 1.5708
+  children [
+    DEF S_Box Shape {
+      appearance DEF LIGHT_BROWN PBRAppearance {
+        baseColor 0 1 0
+        roughness 1.1102230246251565e-16
+        metalness 0
+      }
+      geometry Box {
+        size 0.2 0.1 0.2
+      }
+    }
+  ]
+  name "box(1)"
+  immersionProperties [
+    ImmersionProperties {
+      fluidName "fluid"
+      dragForceCoefficients 0.1 0 0
+      dragTorqueCoefficients 0.001 0 0
+      viscousResistanceTorqueCoefficient 0.005
+    }
+  ]
+  boundingObject USE S_Box
+  physics Physics {
+    density 500
+    damping Damping {
+      linear 0.5
+      angular 0.5
+    }
+  }
+  recognitionColors [
+    0 0 0
+  ]
+}
+DEF BOX Solid {
+  translation -3.22594 1.9984e-14 0.621199
+  rotation 0 1 0 1.5708
+  children [
+    DEF S_Box Shape {
+      appearance DEF LIGHT_BROWN PBRAppearance {
+        baseColor 0 1 0
+        roughness 1.1102230246251565e-16
+        metalness 0
+      }
+      geometry Box {
+        size 0.2 0.1 0.2
+      }
+    }
+  ]
+  name "box(2)"
+  immersionProperties [
+    ImmersionProperties {
+      fluidName "fluid"
+      dragForceCoefficients 0.1 0 0
+      dragTorqueCoefficients 0.001 0 0
+      viscousResistanceTorqueCoefficient 0.005
+    }
+  ]
+  boundingObject USE S_Box
+  physics Physics {
+    density 500
+    damping Damping {
+      linear 0.5
+      angular 0.5
+    }
+  }
+  recognitionColors [
+    0 0 0
+  ]
+}
+Garbage {
+  translation -2.60425 0 -0.765773
+  name "garb1"
+}
+Garbage {
+  translation -2.26974 1.77636e-15 2.13785
+  name "garb2"
+}
+Garbage {
+  translation -3.78421 8.88178e-16 -0.87247
+  name "garb3"
+}
+Garbage {
+  translation -2.32898 3.10862e-14 -2.02961
+  name "garb4"
+}
+Garbage {
+  translation -3.55494 -5.24025e-14 -2.9409
+  name "garb5"
+}
+Garbage {
+  translation -3.69578 -8.88178e-16 1.50459
+  name "garb6"
+}
+Garbage {
+  translation -1.86238 1.77636e-15 0.824496
+  name "garb7"
+}
