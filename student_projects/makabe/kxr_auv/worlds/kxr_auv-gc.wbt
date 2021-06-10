@@ -530,8 +530,8 @@ OilBarrel {
 }
 
 KXR_AUV_FULLBODY {
-  translation 0.0 0.5 0.0
-  rotation 1.000000 0.000000 0.0 -1.57 
+  translation -3.0 0.0 0.0
+  rotation 1.0 0.0 1.0 3.1415
   controller "irteusgl"
   controllerArgs "kxr-demo.l"
   synchronization FALSE
