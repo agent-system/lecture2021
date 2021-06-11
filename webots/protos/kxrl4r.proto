@@ -14,6 +14,7 @@ PROTO kxrl4r [
   field  SFBool      supervisor      FALSE     # Is `Robot.supervisor`.
   field  SFBool      synchronization TRUE      # Is `Robot.synchronization`.
   field  SFBool      selfCollision   FALSE     # Is `Robot.selfCollision`.
+  field  MFNode      immersionProperties   []     # Is `Robot.immersionProperties`.
   field  MFNode      extensionSlot   []        # Is `Robot.extensionSlot`.
 ]
 {
@@ -845,14 +846,7 @@ PROTO kxrl4r [
                 ]
                 name "head-neck-p"
                 contactMaterial "body"
-                immersionProperties [ 
-                  ImmersionProperties {
-                  fluidName "fluid"
-                  dragForceCoefficients 0.1 0 0
-                  dragTorqueCoefficients 0.001 0 0
-                  viscousResistanceTorqueCoefficient 0.005
-                  }
-                ]
+                immersionProperties IS immersionProperties
                 boundingObject Group {
                   children [
                     Transform {
@@ -933,14 +927,7 @@ PROTO kxrl4r [
           ]
           name "head-neck-y"
           contactMaterial "body"
-          immersionProperties [ 
-            ImmersionProperties {
-            fluidName "fluid"
-            dragForceCoefficients 0.1 0 0
-            dragTorqueCoefficients 0.001 0 0
-            viscousResistanceTorqueCoefficient 0.005
-            }
-          ]
+          immersionProperties IS immersionProperties
           boundingObject Group {
             children [
               Transform {
@@ -1250,14 +1237,7 @@ PROTO kxrl4r [
                 ]
                 name "larm-shoulder-w"
                 contactMaterial "body"
-                immersionProperties [ 
-                  ImmersionProperties {
-                  fluidName "fluid"
-                  dragForceCoefficients 0.1 0 0
-                  dragTorqueCoefficients 0.001 0 0
-                  viscousResistanceTorqueCoefficient 0.005
-                  }
-                ]
+                immersionProperties IS immersionProperties
                 boundingObject Transform {
                   translation 0.000000 0.056500 -0.021000
                   rotation 0.000000 1.000000 0.000000 0.000000
@@ -1286,14 +1266,7 @@ PROTO kxrl4r [
           ]
           name "larm-shoulder-y"
           contactMaterial "body"
-          immersionProperties [ 
-            ImmersionProperties {
-            fluidName "fluid"
-            dragForceCoefficients 0.1 0 0
-            dragTorqueCoefficients 0.001 0 0
-            viscousResistanceTorqueCoefficient 0.005
-            }
-          ]
+          immersionProperties IS immersionProperties
           boundingObject Group {
             children [
               Transform {
@@ -1635,14 +1608,7 @@ PROTO kxrl4r [
                 ]
                 name "lleg-crotch-w"
                 contactMaterial "body"
-                immersionProperties [ 
-                  ImmersionProperties {
-                  fluidName "fluid"
-                  dragForceCoefficients 0.1 0 0
-                  dragTorqueCoefficients 0.001 0 0
-                  viscousResistanceTorqueCoefficient 0.005
-                  }
-                ]
+                immersionProperties IS immersionProperties
                 boundingObject Transform {
                   translation 0.000000 0.056500 -0.021000
                   rotation 0.000000 1.000000 0.000000 0.000000
@@ -1671,14 +1637,7 @@ PROTO kxrl4r [
           ]
           name "lleg-crotch-y"
           contactMaterial "body"
-          immersionProperties [ 
-            ImmersionProperties {
-            fluidName "fluid"
-            dragForceCoefficients 0.1 0 0
-            dragTorqueCoefficients 0.001 0 0
-            viscousResistanceTorqueCoefficient 0.005
-            }
-          ]
+          immersionProperties IS immersionProperties
           boundingObject Group {
             children [
               Transform {
@@ -2020,14 +1979,7 @@ PROTO kxrl4r [
                 ]
                 name "rarm-shoulder-w"
                 contactMaterial "body"
-                immersionProperties [ 
-                  ImmersionProperties {
-                  fluidName "fluid"
-                  dragForceCoefficients 0.1 0 0
-                  dragTorqueCoefficients 0.001 0 0
-                  viscousResistanceTorqueCoefficient 0.005
-                  }
-                ]
+                immersionProperties IS immersionProperties
                 boundingObject Transform {
                   translation 0.000000 -0.056500 -0.021000
                   rotation 0.000000 1.000000 0.000000 0.000000
@@ -2056,14 +2008,7 @@ PROTO kxrl4r [
           ]
           name "rarm-shoulder-y"
           contactMaterial "body"
-          immersionProperties [ 
-            ImmersionProperties {
-            fluidName "fluid"
-            dragForceCoefficients 0.1 0 0
-            dragTorqueCoefficients 0.001 0 0
-            viscousResistanceTorqueCoefficient 0.005
-            }
-          ]
+          immersionProperties IS immersionProperties
           boundingObject Group {
             children [
               Transform {
@@ -2405,14 +2350,7 @@ PROTO kxrl4r [
                 ]
                 name "rleg-crotch-w"
                 contactMaterial "body"
-                immersionProperties [ 
-                  ImmersionProperties {
-                  fluidName "fluid"
-                  dragForceCoefficients 0.1 0 0
-                  dragTorqueCoefficients 0.001 0 0
-                  viscousResistanceTorqueCoefficient 0.005
-                  }
-                ]
+                immersionProperties IS immersionProperties
                 boundingObject Transform {
                   translation 0.000000 -0.056500 -0.021000
                   rotation 0.000000 1.000000 0.000000 0.000000
@@ -2441,14 +2379,7 @@ PROTO kxrl4r [
           ]
           name "rleg-crotch-y"
           contactMaterial "body"
-          immersionProperties [ 
-            ImmersionProperties {
-            fluidName "fluid"
-            dragForceCoefficients 0.1 0 0
-            dragTorqueCoefficients 0.001 0 0
-            viscousResistanceTorqueCoefficient 0.005
-            }
-          ]
+          immersionProperties IS immersionProperties
           boundingObject Group {
             children [
               Transform {
@@ -2558,12 +2489,16 @@ PROTO kxrl4r [
       Solid {
         translation -0.041800 0.029000 0.023500
         rotation 0.707107 0.707107 -0.000000 3.141590
+        physics Physics { density 10 }
         children [
           Accelerometer {
             name "imu_gyrometer_topic accelerometer"
           }
           Gyro {
             name "imu_gyrometer_topic gyro"
+          }
+          InertialUnit {
+            name "imu_gyrometer_topic inertialunit"
           }
           Compass {
             name "imu_gyrometer_topic compass"
@@ -2577,12 +2512,16 @@ PROTO kxrl4r [
       Solid {
         translation -0.041800 0.029000 0.023500
         rotation 0.707107 0.707107 -0.000000 3.141590
+        physics Physics { density 10 }
         children [
           Accelerometer {
             name "imu_gsensor_topic accelerometer"
           }
           Gyro {
             name "imu_gsensor_topic gyro"
+          }
+          InertialUnit {
+            name "imu_gsensor_topic inertialunit"
           }
           Compass {
             name "imu_gsensor_topic compass"
@@ -2599,14 +2538,7 @@ PROTO kxrl4r [
     ]
     name IS name 
     contactMaterial "body"
-    immersionProperties [ 
-      ImmersionProperties {
-      fluidName "fluid"
-      dragForceCoefficients 0.1 0 0
-      dragTorqueCoefficients 0.001 0 0
-      viscousResistanceTorqueCoefficient 0.005
-      }
-    ]
+    immersionProperties IS immersionProperties
     boundingObject Group {
       children [
         Transform {

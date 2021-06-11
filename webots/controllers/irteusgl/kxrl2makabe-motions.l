@@ -2,6 +2,7 @@
 ;;;	motions for kxrl2makabe
 ;;;
 (load "kxrl2makabe.l")
+(load "walking-control.l")
 (defmethod kxrl2makabe-robot
   (:car-angle-vector
    nil
@@ -113,8 +114,22 @@
    )
   (:forward
    (vel)
-   (when (get self :car-pose)
+   (cond
+    ((get self :car-pose)
      (send self :lleg-knee-w :joint-angle vel)
      (send self :rleg-knee-w :joint-angle vel)
-     ))
+     )
+    (t
+     (go-pos (* 0.001 vel) 0.0 0.0))     
+    ))
+  (:turn
+   (deg) 
+   (cond
+    ((get self :car-pose)
+     (send self :lleg-knee-w :joint-angle deg)
+     (send self :rleg-knee-w :joint-angle (- deg))
+     )
+    (t
+     (go-pos 0.0 0.0 (* 0.001 deg)))
+    ))
   )

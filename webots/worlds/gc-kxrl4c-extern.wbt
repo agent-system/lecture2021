@@ -4,7 +4,9 @@ WorldInfo {
     "generated from eus2webots"
   ]
   title "kxrl4c demo"
-  basicTimeStep 16
+  basicTimeStep 1
+  CFM  1.000000e-04   # default 0.00001
+  ERP  0.2   # default 0.2
   defaultDamping Damping {
     linear 0.5
     angular 0.5
@@ -14,9 +16,12 @@ WorldInfo {
      ContactProperties {
       material1 "body"
       material2 "floor"
-      coulombFriction [ 0.5 ]
+      coulombFriction [ 0.995 ]
+      bounce 0.05
+      forceDependentSlip [ 0.005 ]
     }
   ]
+
 }
 Viewpoint {
   fieldOfView 1.1
@@ -149,7 +154,7 @@ DEF WATER Fluid {
 }
 
 Solid {
-  translation 3.80578 0.5 -2.46236
+  translation 3.05741 0.5 2.89432
   rotation -0.48978614029103495 -0.15329904009109155 -0.8582592505099848 2.73794
   recognitionColors [0.807843 0.72549 0.498039]
   model "garbage"
@@ -172,7 +177,7 @@ Solid {
   physics Physics { density 500
     damping Damping { linear 0.5 angular 0.5 } } } 
 Solid {
-  translation -4.20378 0.5 -0.943903
+  translation -1.682 0.5 0.492333
   rotation -0.48978614029103495 -0.15329904009109155 -0.8582592505099848 2.73794
   recognitionColors [0.807843 0.72549 0.498039]
   model "garbage"
@@ -195,7 +200,7 @@ Solid {
   physics Physics { density 500
     damping Damping { linear 0.5 angular 0.5 } } } 
 Solid {
-  translation 0.163626 0.5 -2.30656
+  translation -4.88329 0.5 0.299874
   rotation -0.48978614029103495 -0.15329904009109155 -0.8582592505099848 2.73794
   recognitionColors [0.807843 0.72549 0.498039]
   model "garbage"
@@ -218,7 +223,7 @@ Solid {
   physics Physics { density 500
     damping Damping { linear 0.5 angular 0.5 } } } 
 Solid {
-  translation -0.093292 0.5 1.00813
+  translation -0.701002 0.5 1.63915
   rotation -0.48978614029103495 -0.15329904009109155 -0.8582592505099848 2.73794
   recognitionColors [0.807843 0.72549 0.498039]
   model "garbage"
@@ -241,7 +246,7 @@ Solid {
   physics Physics { density 500
     damping Damping { linear 0.5 angular 0.5 } } } 
 Solid {
-  translation 0.986451 0.5 0.795453
+  translation -4.94438 0.5 1.91277
   rotation -0.48978614029103495 -0.15329904009109155 -0.8582592505099848 2.73794
   recognitionColors [0.807843 0.72549 0.498039]
   model "garbage"
@@ -264,7 +269,7 @@ Solid {
   physics Physics { density 500
     damping Damping { linear 0.5 angular 0.5 } } } 
 Solid {
-  translation -1.64256 0.5 1.42928
+  translation 4.11131 0.5 2.58314
   rotation -0.48978614029103495 -0.15329904009109155 -0.8582592505099848 2.73794
   recognitionColors [0.807843 0.72549 0.498039]
   model "garbage"
@@ -287,7 +292,7 @@ Solid {
   physics Physics { density 500
     damping Damping { linear 0.5 angular 0.5 } } } 
 Solid {
-  translation -1.06609 0.5 -0.286664
+  translation -3.88944 0.5 2.8717
   rotation -0.48978614029103495 -0.15329904009109155 -0.8582592505099848 2.73794
   recognitionColors [0.807843 0.72549 0.498039]
   model "garbage"
@@ -310,7 +315,7 @@ Solid {
   physics Physics { density 500
     damping Damping { linear 0.5 angular 0.5 } } } 
 Solid {
-  translation -4.10397 0.5 -0.444056
+  translation 1.50336 0.5 2.48287
   rotation -0.48978614029103495 -0.15329904009109155 -0.8582592505099848 2.73794
   recognitionColors [0.807843 0.72549 0.498039]
   model "garbage"
@@ -333,7 +338,7 @@ Solid {
   physics Physics { density 500
     damping Damping { linear 0.5 angular 0.5 } } } 
 Solid {
-  translation -0.942141 0.5 -0.466862
+  translation 2.07418 0.5 0.911787
   rotation -0.48978614029103495 -0.15329904009109155 -0.8582592505099848 2.73794
   recognitionColors [0.807843 0.72549 0.498039]
   model "garbage"
@@ -356,7 +361,7 @@ Solid {
   physics Physics { density 500
     damping Damping { linear 0.5 angular 0.5 } } } 
 Solid {
-  translation 3.2383 0.5 1.3403
+  translation -3.03275 0.5 1.67632
   rotation -0.48978614029103495 -0.15329904009109155 -0.8582592505099848 2.73794
   recognitionColors [0.807843 0.72549 0.498039]
   model "garbage"
@@ -381,6 +386,14 @@ Solid {
 kxrl4c {
   translation -3.0 0.5 0.0
   rotation 1.000000 0.000000 0.0 -1.57 
+  immersionProperties [ 
+                  ImmersionProperties {
+                  fluidName "fluid"
+                  dragForceCoefficients 0.1 0 0
+                  dragTorqueCoefficients 0.001 0 0
+                  viscousResistanceTorqueCoefficient 0.005
+                  }
+                ]
   controller "<extern>"
   controllerArgs ""
   synchronization FALSE

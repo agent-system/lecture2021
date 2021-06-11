@@ -1,0 +1,494 @@
+#VRML_SIM R2021a utf8
+WorldInfo {
+  info [
+    "generated from eus2webots"
+  ]
+  title "kxrl2t3 demo"
+  basicTimeStep 16
+  CFM  1.000000e-04   # default 0.00001
+  ERP  0.2   # default 0.2
+  defaultDamping Damping {
+    linear 0.5
+    angular 0.5
+  }
+  coordinateSystem "NUE" 
+}
+Viewpoint {
+  fieldOfView 1.1
+  position 2.0 1.5 1.5
+  orientation  -0.363187 0.913335 0.184159 1.1
+}
+
+TexturedBackground {
+}
+TexturedBackgroundLight {
+}
+DEF AQUARIUM Solid {
+  translation 0 0.1 0
+  children [
+    DEF SIDES_GROUP Group {
+      children [
+        Transform {
+          translation 0 0 4
+          children [
+            DEF GLASS_SHAPE1 Shape {
+              appearance DEF GLASS_APPEARANCE PBRAppearance {
+                baseColor 1 0.6 0.6
+                roughness 1
+                metalness 0
+              }
+              geometry Box {
+                size 12 0.7 0.02
+              }
+            }
+          ]
+        }
+        Transform {
+          translation 0 0 -4
+          children [
+            USE GLASS_SHAPE1
+          ]
+        }
+        Transform {
+          translation -6 0 0
+          rotation 0 1 0 1.5708
+          children [
+            DEF GLASS_SHAPE2 Shape {
+              appearance USE GLASS_APPEARANCE
+              geometry Box {
+                size 8 0.7 0.02
+              }
+            }
+          ]
+        }
+        Transform {
+          translation 6 0 0
+          rotation 0 1 0 1.5708
+          children [
+            USE GLASS_SHAPE2
+          ]
+        }
+      ]
+    }
+  ]
+  name "aquarium"
+  boundingObject USE SIDES_GROUP
+  locked TRUE
+}
+DEF WATER Fluid {
+  translation 0 -0.125 0
+  name "fluid"
+  children [
+    DEF WATER_BOX Shape {
+      appearance PBRAppearance {
+        baseColor 0.7254901960784313 0.8705882352941177 1
+        transparency 0.7  roughness 0.2  metalness 0 }
+      geometry Box { size 12 0.25 8 }
+    }
+  ]
+  boundingObject USE WATER_BOX
+  locked TRUE
+}
+
+Solid {
+  name "ball393"
+  translation -1.21136 0.2 0.825917
+  recognitionColors [ 0 0.8 0 ]
+  model "ball"
+  children [
+    Shape {
+      appearance DEF DARK_BROWN PBRAppearance {
+        baseColor 0.1 0.9 0.1
+        roughness 0.01
+        metalness 0
+      }
+      geometry DEF BALL_GEOM Sphere {
+        radius 0.1
+        subdivision 3
+      }
+    }
+  ]
+  immersionProperties [
+    ImmersionProperties {
+      fluidName "fluid"
+      dragForceCoefficients 0.1 0 0
+      dragTorqueCoefficients 0.001 0 0
+      viscousResistanceTorqueCoefficient 0.005 } ]
+  boundingObject USE BALL_GEOM
+  physics Physics {
+    density 300
+    damping Damping {
+      linear 0.5
+      angular 0.5
+    }
+  }  
+}
+
+Can {
+  name "can393"
+  translation -1.74482 0.2 1.44614
+  immersionProperties [
+    ImmersionProperties {
+      fluidName "fluid"
+      dragForceCoefficients 0.1 0 0
+      dragTorqueCoefficients 0.001 0 0
+      viscousResistanceTorqueCoefficient 0.005 } ]
+  physics Physics {
+    density 500
+    damping Damping {
+      linear 0.5
+      angular 0.5
+    }
+  }  
+  
+}
+
+Apple {
+  name "apple393"
+  translation -0.301111 0.2 1.95658
+  immersionProperties [
+    ImmersionProperties {
+      fluidName "fluid"
+      dragForceCoefficients 0.1 0 0
+      dragTorqueCoefficients 0.001 0 0
+      viscousResistanceTorqueCoefficient 0.005 } ]
+  physics Physics {
+    density 500
+    damping Damping {
+      linear 0.5
+      angular 0.5
+    }
+  }  
+  
+}
+
+JamJar {
+  name "jamjar393"
+  translation -0.731203 0.2 0.204557
+  immersionProperties [
+    ImmersionProperties {
+      fluidName "fluid"
+      dragForceCoefficients 0.1 0 0
+      dragTorqueCoefficients 0.001 0 0
+      viscousResistanceTorqueCoefficient 0.005 } ]
+  physics Physics {
+    density 500
+    damping Damping {
+      linear 0.5
+      angular 0.5
+    }
+  }  
+  
+}
+
+BiscuitBox {
+  name "biscuitbox393"
+  translation -0.426846 0.2 1.20754
+  immersionProperties [
+    ImmersionProperties {
+      fluidName "fluid"
+      dragForceCoefficients 0.1 0 0
+      dragTorqueCoefficients 0.001 0 0
+      viscousResistanceTorqueCoefficient 0.005 } ]
+  physics Physics {
+    density 500
+    damping Damping {
+      linear 0.5
+      angular 0.5
+    }
+  }  
+  
+}
+
+OilBarrel {
+  name "oilbarrel393"
+  translation 0.383286 0.2 -1.28823
+  immersionProperties [
+    ImmersionProperties {
+      fluidName "fluid"
+      dragForceCoefficients 0.1 0 0
+      dragTorqueCoefficients 0.001 0 0
+      viscousResistanceTorqueCoefficient 0.005 } ]
+  physics Physics {
+    density 500
+    damping Damping {
+      linear 0.5
+      angular 0.5
+    }
+  }  
+  radius 0.1 height 0.233333
+}
+
+Solid {
+  name "ball394"
+  translation 1.81224 0.2 1.30189
+  recognitionColors [ 0 0.8 0 ]
+  model "ball"
+  children [
+    Shape {
+      appearance DEF DARK_BROWN PBRAppearance {
+        baseColor 0.1 0.9 0.1
+        roughness 0.01
+        metalness 0
+      }
+      geometry DEF BALL_GEOM Sphere {
+        radius 0.1
+        subdivision 3
+      }
+    }
+  ]
+  immersionProperties [
+    ImmersionProperties {
+      fluidName "fluid"
+      dragForceCoefficients 0.1 0 0
+      dragTorqueCoefficients 0.001 0 0
+      viscousResistanceTorqueCoefficient 0.005 } ]
+  boundingObject USE BALL_GEOM
+  physics Physics {
+    density 300
+    damping Damping {
+      linear 0.5
+      angular 0.5
+    }
+  }  
+}
+
+Can {
+  name "can394"
+  translation 1.96512 0.2 0.295227
+  immersionProperties [
+    ImmersionProperties {
+      fluidName "fluid"
+      dragForceCoefficients 0.1 0 0
+      dragTorqueCoefficients 0.001 0 0
+      viscousResistanceTorqueCoefficient 0.005 } ]
+  physics Physics {
+    density 500
+    damping Damping {
+      linear 0.5
+      angular 0.5
+    }
+  }  
+  
+}
+
+Apple {
+  name "apple394"
+  translation 0.280741 0.2 0.98158
+  immersionProperties [
+    ImmersionProperties {
+      fluidName "fluid"
+      dragForceCoefficients 0.1 0 0
+      dragTorqueCoefficients 0.001 0 0
+      viscousResistanceTorqueCoefficient 0.005 } ]
+  physics Physics {
+    density 500
+    damping Damping {
+      linear 0.5
+      angular 0.5
+    }
+  }  
+  
+}
+
+JamJar {
+  name "jamjar394"
+  translation -1.08277 0.2 1.3927
+  immersionProperties [
+    ImmersionProperties {
+      fluidName "fluid"
+      dragForceCoefficients 0.1 0 0
+      dragTorqueCoefficients 0.001 0 0
+      viscousResistanceTorqueCoefficient 0.005 } ]
+  physics Physics {
+    density 500
+    damping Damping {
+      linear 0.5
+      angular 0.5
+    }
+  }  
+  
+}
+
+BiscuitBox {
+  name "biscuitbox394"
+  translation -1.29951 0.2 0.148885
+  immersionProperties [
+    ImmersionProperties {
+      fluidName "fluid"
+      dragForceCoefficients 0.1 0 0
+      dragTorqueCoefficients 0.001 0 0
+      viscousResistanceTorqueCoefficient 0.005 } ]
+  physics Physics {
+    density 500
+    damping Damping {
+      linear 0.5
+      angular 0.5
+    }
+  }  
+  
+}
+
+OilBarrel {
+  name "oilbarrel394"
+  translation -1.19314 0.2 0.636583
+  immersionProperties [
+    ImmersionProperties {
+      fluidName "fluid"
+      dragForceCoefficients 0.1 0 0
+      dragTorqueCoefficients 0.001 0 0
+      viscousResistanceTorqueCoefficient 0.005 } ]
+  physics Physics {
+    density 500
+    damping Damping {
+      linear 0.5
+      angular 0.5
+    }
+  }  
+  radius 0.1 height 0.233333
+}
+
+Solid {
+  name "ball395"
+  translation -1.80332 0.2 -1.67822
+  recognitionColors [ 0 0.8 0 ]
+  model "ball"
+  children [
+    Shape {
+      appearance DEF DARK_BROWN PBRAppearance {
+        baseColor 0.1 0.9 0.1
+        roughness 0.01
+        metalness 0
+      }
+      geometry DEF BALL_GEOM Sphere {
+        radius 0.1
+        subdivision 3
+      }
+    }
+  ]
+  immersionProperties [
+    ImmersionProperties {
+      fluidName "fluid"
+      dragForceCoefficients 0.1 0 0
+      dragTorqueCoefficients 0.001 0 0
+      viscousResistanceTorqueCoefficient 0.005 } ]
+  boundingObject USE BALL_GEOM
+  physics Physics {
+    density 300
+    damping Damping {
+      linear 0.5
+      angular 0.5
+    }
+  }  
+}
+
+Can {
+  name "can395"
+  translation 1.08888 0.2 0.366424
+  immersionProperties [
+    ImmersionProperties {
+      fluidName "fluid"
+      dragForceCoefficients 0.1 0 0
+      dragTorqueCoefficients 0.001 0 0
+      viscousResistanceTorqueCoefficient 0.005 } ]
+  physics Physics {
+    density 500
+    damping Damping {
+      linear 0.5
+      angular 0.5
+    }
+  }  
+  
+}
+
+Apple {
+  name "apple395"
+  translation 1.97182 0.2 0.046343
+  immersionProperties [
+    ImmersionProperties {
+      fluidName "fluid"
+      dragForceCoefficients 0.1 0 0
+      dragTorqueCoefficients 0.001 0 0
+      viscousResistanceTorqueCoefficient 0.005 } ]
+  physics Physics {
+    density 500
+    damping Damping {
+      linear 0.5
+      angular 0.5
+    }
+  }  
+  
+}
+
+JamJar {
+  name "jamjar395"
+  translation -1.44939 0.2 1.4559
+  immersionProperties [
+    ImmersionProperties {
+      fluidName "fluid"
+      dragForceCoefficients 0.1 0 0
+      dragTorqueCoefficients 0.001 0 0
+      viscousResistanceTorqueCoefficient 0.005 } ]
+  physics Physics {
+    density 500
+    damping Damping {
+      linear 0.5
+      angular 0.5
+    }
+  }  
+  
+}
+
+BiscuitBox {
+  name "biscuitbox395"
+  translation -0.711263 0.2 -0.632296
+  immersionProperties [
+    ImmersionProperties {
+      fluidName "fluid"
+      dragForceCoefficients 0.1 0 0
+      dragTorqueCoefficients 0.001 0 0
+      viscousResistanceTorqueCoefficient 0.005 } ]
+  physics Physics {
+    density 500
+    damping Damping {
+      linear 0.5
+      angular 0.5
+    }
+  }  
+  
+}
+
+OilBarrel {
+  name "oilbarrel395"
+  translation -0.370546 0.2 0.110781
+  immersionProperties [
+    ImmersionProperties {
+      fluidName "fluid"
+      dragForceCoefficients 0.1 0 0
+      dragTorqueCoefficients 0.001 0 0
+      viscousResistanceTorqueCoefficient 0.005 } ]
+  physics Physics {
+    density 500
+    damping Damping {
+      linear 0.5
+      angular 0.5
+    }
+  }  
+  radius 0.1 height 0.233333
+}
+
+kxrl2t3 {
+  translation 0.0 0.5 0.0
+  rotation 1.000000 0.000000 0.0 -1.57 
+  immersionProperties [ 
+                  ImmersionProperties {
+                  fluidName "fluid"
+                  dragForceCoefficients 0.1 0 0
+                  dragTorqueCoefficients 0.001 0 0
+                  viscousResistanceTorqueCoefficient 0.005
+                  }
+                ]
+  controller "hello_world_demo"
+  controllerArgs ""
+  synchronization FALSE
+}

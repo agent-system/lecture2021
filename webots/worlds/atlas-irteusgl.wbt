@@ -1,0 +1,46 @@
+#VRML_SIM V6.0 utf8
+WorldInfo {
+  info [
+    "Atlas sample"
+    "Author: fabien.rohrer@cyberbotics.com"
+    "Date: 11th March 2013"
+  ]
+  CFM 1e-07
+  ERP 0.8
+  basicTimeStep 8
+  displayRefresh 4
+  lineScale 0.25
+}
+Viewpoint {
+  orientation 0.0756716 -0.977882 -0.19499 4.1373
+  position 3.66599 2.76218 -2.26935
+}
+Background {
+  skyColor [
+    0.4 0.7 1
+  ]
+}
+DirectionalLight {
+  ambientIntensity 1.4
+  direction -0.8 -1 0.6
+  intensity 0.9
+  castShadows TRUE
+}
+DirectionalLight {
+  ambientIntensity 1.4
+  direction 0.8 -1 -0.1
+  intensity 0.3
+}
+SphericalSkyDome {
+}
+Floor {
+  size 1000 1000
+  scale 1000 1000
+  texture [
+    "textures/parquetry.png"
+  ]
+}
+Atlas {
+   controller "irteusgl"
+   controllerArgs "atlas_demo.l (main)"
+}

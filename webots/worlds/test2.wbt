@@ -1,0 +1,49 @@
+#VRML V2.0 utf8
+
+# Produced by EusLisp 9.26(41c497d b3d64f0f) for Linux64 created on ubuntu(Tue Nov 26 23:17:49 PST 2019)
+# Date: Fri Dec 27 18:04:05 2019
+
+
+WorldInfo {
+	  info [
+	  "This is a model of a Kondo KHR-2HV robot executing movement files."
+	  "The movement are executed from the original Kondo files."
+	  "After the introduction, you will be able to control the robot with the ke	yboard (follow the instructions in Webots Console)."
+	  "Author: Laurent Lessieux"
+	  ]
+	  title "Kondo KHR-2HV"
+	  ERP 0.5
+	  physicsDisableLinearThreshold 0.05
+	  physicsDisableAngularThreshold 0.05
+	  contactProperties [
+	  ContactProperties {
+	  material1 "floor"
+	  material2 "khr2"
+	  coulombFriction [
+	  0.995
+	  ]
+	  bounce 0.05
+	  forceDependentSlip [
+	  0.005
+	  ]
+	  }
+	  ]
+	  }
+
+Viewpoint {
+	  position    1.0 1.0 0.835
+	  orientation 0.5770 0.5775 0.5775 2.0935
+}
+
+#Floor {
+#  tileSize 1 1
+#}
+
+#Khr2hv {
+#  translation -0.0605689 0.22 0.619011
+#  contactMaterial "khr2"
+#}
+
+kxrl2w2l5a3h2 {
+  translation -0.0605689 0.22 0.619011
+}

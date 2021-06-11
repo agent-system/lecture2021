@@ -1,0 +1,69 @@
+#VRML_SIM V6.0 utf8
+WorldInfo {
+  info [
+    "Simulation of the Robocup Standard Platform League"
+    "Author: Yvan Bourquin"
+  ]
+  title "Robocup"
+  basicTimeStep 40
+}
+Viewpoint {
+  orientation 0.350717 0.907719 0.230312 4.96923
+  position -4.94376 4.55944 2.9486
+  follow "ball"
+}
+Background {
+  skyColor [
+    0.678431 0.847059 0.901961
+  ]
+}
+DirectionalLight {
+  ambientIntensity 1.6
+  direction -0.5 -2 -0.5
+  intensity 0.3
+}
+DirectionalLight {
+  ambientIntensity 1.6
+  direction 0.5 -0.5 0.5
+  intensity 0.5
+}
+SoccerField2013 {
+}
+Walls2013 {
+}
+Goal2013 {
+  translation 4.5 0 0
+}
+Goal2013 {
+  translation -4.5 0 0
+  rotation 0 1 0 3.14159
+}
+DEF BALL Ball {
+  translation 1.7 0.0325 0
+}
+#DEF GOAL_KEEPER Nao_H21_V40 {
+DEF PLAYER Nao_H25_V40 {
+  translation 4 0.33 0
+  rotation 0 0.707107 0.707107 3.1416
+#  color 0.8 0.8 0.8   # gray
+# color 0.94 0.41 0.01  # orange
+  color 0 0 1    #blue
+  bottomCameraWindowPosition 0 0.3
+  controller "roseus"
+  controllerArgs "nao_demo.l (main-keeper)"
+  waistBand TRUE
+  waistBandColor 0.9 0.5 0.5 # pink
+  channel 1
+}
+#DEF PLAYER Nao_H21_V40 {
+DEF PLAYER Nao_H25_V40 {
+  translation 0 0.33 0
+#color 0.94 0.41 0.01  # orange
+  color 0 0 1    #blue
+  color 0.8 0.8 0.8  #gray
+   controller "roseus"
+   controllerArgs "nao_demo.l (main-player)"
+#  controllerArgs "9560"
+#  topCameraWindowPosition 0 0.7
+#  waistBand TRUE
+}

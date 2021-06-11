@@ -1,0 +1,256 @@
+#VRML_SIM V6.0 utf8
+WorldInfo {
+  info [
+    "The model of the Alice robot"
+    "Author: Simon Blanchoud"
+    "Date: 01 SEP 2006"
+  ]
+  title "Alice"
+  basicTimeStep 8
+  lineScale 0.05
+  contactProperties [
+    ContactProperties {
+      material1 "wheel_material"
+      coulombFriction 0.595
+    }
+    ContactProperties {
+      material1 "body_material"
+      coulombFriction 0.05
+    }
+  ]
+}
+Viewpoint {
+  orientation 0.540503 0.733621 0.411893 4.65657
+  position -0.0507427 0.105671 0.0156944
+}
+PointLight {
+  ambientIntensity 0.5
+  intensity 0.5
+  location 0.14 0.6 -0.55
+  castShadows TRUE
+}
+PointLight {
+  ambientIntensity 0.5
+  intensity 0.5
+  location -0.43 0.6 0.5
+}
+Background {
+  skyColor [
+    0.4 0.7 1
+  ]
+}
+DEF ground Solid {
+  translation 0 -0.0001 0
+  children [
+    Shape {
+      appearance Appearance {
+        material Material {
+          diffuseColor 1 1 1
+          specularColor 0.196078 0.196078 0.196078
+        }
+        texture ImageTexture {
+          url [
+            "textures/lightwood.png"
+          ]
+        }
+        textureTransform TextureTransform {
+          center 0.46 0
+          rotation -0.32
+          translation -1.01 0
+        }
+      }
+      geometry DEF ground_geo IndexedFaceSet {
+        coord Coordinate {
+          point [
+            -1 0 -1
+            -1 0 1
+            1 0 1
+            1 0 -1
+          ]
+        }
+        texCoord TextureCoordinate {
+          point [
+            0 0
+            0 5
+            5 5
+            5 0
+          ]
+        }
+        coordIndex [
+          0, 1, 2, 3, -1
+        ]
+        texCoordIndex [
+          0, 1, 2, 3, -1
+        ]
+      }
+    }
+  ]
+  boundingObject Transform {
+    translation 0 -0.01 0
+    children [
+      Box {
+        size 2 0.02 2
+      }
+    ]
+  }
+}
+DEF short_rock_1 Solid {
+  translation -0.2 0.05 0.683174
+  rotation 0 1 0 0.5
+  children [
+    Shape {
+      appearance Appearance {
+        material Material {
+          diffuseColor 1 1 1
+        }
+        texture ImageTexture {
+          url [
+            "textures/stone-2.png"
+          ]
+        }
+      }
+      geometry DEF short_brick_1_geometry Box {
+        size 0.1 0.1 0.1
+      }
+    }
+  ]
+  name "short brick"
+  boundingObject USE short_brick_1_geometry
+}
+DEF short_rock_2 Solid {
+  translation -0.75 0.05 -0.35
+  rotation 0 1 0 4.96782
+  children [
+    Shape {
+      appearance Appearance {
+        material Material {
+          diffuseColor 1 1 1
+        }
+        texture ImageTexture {
+          url [
+            "textures/stone-2.png"
+          ]
+        }
+      }
+      geometry DEF short_brick_1_geometry Box {
+        size 0.1 0.1 0.1
+      }
+    }
+  ]
+  name "short brick"
+  boundingObject USE short_brick_1_geometry
+}
+DEF short_rock_3 Solid {
+  translation 0.5 0.05 0.35471
+  rotation 0 1 0 5.36782
+  children [
+    Shape {
+      appearance Appearance {
+        material Material {
+          diffuseColor 1 1 1
+        }
+        texture ImageTexture {
+          url [
+            "textures/stone-2.png"
+          ]
+        }
+      }
+      geometry DEF short_brick_1_geometry Box {
+        size 0.1 0.1 0.1
+      }
+    }
+  ]
+  name "short brick"
+  boundingObject USE short_brick_1_geometry
+}
+DEF short_rock_4 Solid {
+  translation -0.3 0.05 -0.36
+  rotation 0 1 0 5.36782
+  children [
+    Shape {
+      appearance Appearance {
+        material Material {
+          diffuseColor 1 1 1
+        }
+        texture ImageTexture {
+          url [
+            "textures/stone-2.png"
+          ]
+        }
+      }
+      geometry DEF short_brick_1_geometry Box {
+        size 0.1 0.1 0.1
+      }
+    }
+  ]
+  name "short brick"
+  boundingObject USE short_brick_1_geometry
+}
+DEF short_rock_5 Solid {
+  translation -0.65 0.05 0.66
+  rotation 0 1 0 5.36782
+  children [
+    Shape {
+      appearance Appearance {
+        material Material {
+          diffuseColor 1 1 1
+        }
+        texture ImageTexture {
+          url [
+            "textures/stone-2.png"
+          ]
+        }
+      }
+      geometry DEF short_brick_1_geometry Box {
+        size 0.1 0.1 0.1
+      }
+    }
+  ]
+  name "short brick"
+  boundingObject USE short_brick_1_geometry
+}
+Solid {
+  translation 1 0.05 0
+  children [
+    DEF WALL_SHAPE Shape {
+      appearance DEF WALL_APPEARANCE Appearance {
+        material Material {
+          diffuseColor 1 0.501961 0.25098
+        }
+      }
+      geometry Box {
+        size 0.02 0.1 2
+      }
+    }
+  ]
+  boundingObject USE WALL_SHAPE
+}
+Solid {
+  translation -1 0.05 0
+  children [
+    USE WALL_SHAPE
+  ]
+  boundingObject USE WALL_SHAPE
+}
+Solid {
+  translation 0 0.05 1
+  rotation 0 1 0 1.5708
+  children [
+    USE WALL_SHAPE
+  ]
+  boundingObject USE WALL_SHAPE
+}
+Solid {
+  translation 0 0.05 -1
+  rotation 0 1 0 1.5708
+  children [
+    USE WALL_SHAPE
+  ]
+  boundingObject USE WALL_SHAPE
+}
+Alice {
+  translation 0 0.00984514 0
+#  controller "braitenberg"
+  controller "irteusgl"
+  controllerArgs "motor_demo.l (main)"
+}

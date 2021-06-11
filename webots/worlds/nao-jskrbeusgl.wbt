@@ -1,0 +1,633 @@
+#VRML_SIM V6.0 utf8
+WorldInfo {
+  info [
+    "Nao robot in a flat with landmarks"
+    "Olivier Michel <Olivier.Michel@cyberbotics.com>"
+    "Date: 8 July 2008"
+  ]
+  title "NaoQi for Webots demo"
+  basicTimeStep 40
+  runRealTime TRUE
+}
+Viewpoint {
+  orientation -0.0592565 0.980954 0.184983 2.348
+  position 1.41783 1.04992 -1.16598
+}
+Background {
+  skyColor [
+    0.435294 0.4 0.317647
+  ]
+}
+PointLight {
+  ambientIntensity 0.2
+  attenuation 0.2 0.2 0.2
+  location 1 1.5 1
+  castShadows TRUE
+}
+PointLight {
+  ambientIntensity 0.2
+  attenuation 0.2 0.2 0.2
+  location -1 1.5 0.4
+}
+PointLight {
+  ambientIntensity 0.2
+  attenuation 0.2 0.2 0.2
+  location 0 1.5 -1.5
+}
+DEF FLOOR Solid {
+  children [
+    Shape {
+      appearance Appearance {
+        material Material {
+          ambientIntensity 1
+        }
+        texture ImageTexture {
+          url [
+            "textures/lightwood.png"
+          ]
+        }
+        textureTransform TextureTransform {
+          center 0.46 0
+          rotation -0.32
+          translation -1.01 0
+        }
+      }
+      geometry DEF ground_geo IndexedFaceSet {
+        coord Coordinate {
+          point [
+            -2 0 -2
+            -2 0 2
+            2 0 2
+            2 0 -2
+          ]
+        }
+        texCoord TextureCoordinate {
+          point [
+            0 0
+            0 5
+            5 5
+            5 0
+          ]
+        }
+        coordIndex [
+          0, 1, 2, 3, -1
+        ]
+        texCoordIndex [
+          0, 1, 2, 3, -1
+        ]
+      }
+    }
+  ]
+  boundingObject Group {
+    children [
+      IndexedFaceSet {
+        coord Coordinate {
+          point [
+            3 0 2
+            3 0 -2
+            -3 0 -2
+            -3 0 2
+          ]
+        }
+        coordIndex [
+          0, 1, 2, 3
+        ]
+      }
+    ]
+  }
+  locked TRUE
+}
+DEF WALL1 Solid {
+  translation 2 0.5 0
+  children [
+    DEF WALL_SHAPE Shape {
+      appearance DEF WALL_APP Appearance {
+        material Material {
+          diffuseColor 0.380392 0.505882 0.411765
+        }
+      }
+      geometry Box {
+        size 0.15 1 4
+      }
+    }
+  ]
+  boundingObject USE WALL_SHAPE
+}
+DEF WALL2 Solid {
+  translation 0 0.5 2
+  rotation 0 1 0 1.5708
+  children [
+    USE WALL_SHAPE
+  ]
+  boundingObject USE WALL_SHAPE
+}
+DEF WALL3 Solid {
+  translation -2 0.5 0
+  children [
+    USE WALL_SHAPE
+  ]
+  boundingObject USE WALL_SHAPE
+}
+DEF WALL4 Solid {
+  translation 0 0.5 -2
+  rotation 0 1 0 1.5708
+  children [
+    USE WALL_SHAPE
+  ]
+  boundingObject USE WALL_SHAPE
+}
+DEF MIDDLE_WALL Solid {
+  translation -0.55 0.5 0.5
+  children [
+    DEF WALL_SHAPE Shape {
+      appearance USE WALL_APP
+      geometry Box {
+        size 0.1 1 3
+      }
+    }
+  ]
+  boundingObject USE WALL_SHAPE
+}
+DEF LOGO Transform {
+  translation -1.9 0.5 0
+  rotation 0 1 0 1.57
+  scale 0.5 0.25 0.5
+  children [
+    Shape {
+      appearance Appearance {
+        material Material {
+          diffuseColor 1 1 1
+        }
+        texture DEF TEXTURE ImageTexture {
+          url [
+            "textures/logo.png"
+          ]
+        }
+      }
+      geometry IndexedFaceSet {
+        coord Coordinate {
+          point [
+            0 0 0
+            0.5 0 0
+            0.5 0.5 0
+            0 0.5 0
+          ]
+        }
+        texCoord TextureCoordinate {
+          point [
+            0 0
+            1 0
+            1 1
+            0 1
+          ]
+        }
+        coordIndex [
+          0, 1, 2, 3, -1
+        ]
+        texCoordIndex [
+          0, 1, 2, 3, -1
+        ]
+      }
+    }
+  ]
+}
+DEF MARK_64 Transform {
+  translation -0.48 0.5 0.2
+  rotation 0 1 0 1.57
+  scale 0.5 0.5 0.5
+  children [
+    Shape {
+      appearance Appearance {
+        material Material {
+          diffuseColor 1 1 1
+        }
+        texture DEF TEXTURE ImageTexture {
+          url [
+            "textures/64.jpg"
+          ]
+        }
+      }
+      geometry IndexedFaceSet {
+        coord Coordinate {
+          point [
+            0 0 0
+            0.5 0 0
+            0.5 0.5 0
+            0 0.5 0
+          ]
+        }
+        texCoord TextureCoordinate {
+          point [
+            0 0
+            1 0
+            1 1
+            0 1
+          ]
+        }
+        coordIndex [
+          0, 1, 2, 3, -1
+        ]
+        texCoordIndex [
+          0, 1, 2, 3, -1
+        ]
+      }
+    }
+  ]
+}
+DEF MARK_68 Transform {
+  translation -0.62 0.5 0.2
+  rotation 0 1 0 -1.57
+  scale 0.5 0.5 0.5
+  children [
+    Shape {
+      appearance Appearance {
+        material Material {
+          diffuseColor 1 1 1
+        }
+        texture DEF TEXTURE ImageTexture {
+          url [
+            "textures/68.jpg"
+          ]
+        }
+      }
+      geometry IndexedFaceSet {
+        coord Coordinate {
+          point [
+            0 0 0
+            0.5 0 0
+            0.5 0.5 0
+            0 0.5 0
+          ]
+        }
+        texCoord TextureCoordinate {
+          point [
+            0 0
+            1 0
+            1 1
+            0 1
+          ]
+        }
+        coordIndex [
+          0, 1, 2, 3, -1
+        ]
+        texCoordIndex [
+          0, 1, 2, 3, -1
+        ]
+      }
+    }
+  ]
+}
+DEF MARK_80 Transform {
+  translation -1.9 0.5 -1
+  rotation 0 1 0 1.57
+  scale 0.5 0.5 0.5
+  children [
+    Shape {
+      appearance Appearance {
+        material Material {
+          diffuseColor 1 1 1
+        }
+        texture DEF TEXTURE ImageTexture {
+          url [
+            "textures/80.jpg"
+          ]
+        }
+      }
+      geometry IndexedFaceSet {
+        coord Coordinate {
+          point [
+            0 0 0
+            0.5 0 0
+            0.5 0.5 0
+            0 0.5 0
+          ]
+        }
+        texCoord TextureCoordinate {
+          point [
+            0 0
+            1 0
+            1 1
+            0 1
+          ]
+        }
+        coordIndex [
+          0, 1, 2, 3, -1
+        ]
+        texCoordIndex [
+          0, 1, 2, 3, -1
+        ]
+      }
+    }
+  ]
+}
+DEF MARK_107 Transform {
+  translation -1 0.5 -1.9
+  scale 0.5 0.5 0.5
+  children [
+    Shape {
+      appearance Appearance {
+        material Material {
+          diffuseColor 1 1 1
+        }
+        texture DEF TEXTURE ImageTexture {
+          url [
+            "textures/107.jpg"
+          ]
+        }
+      }
+      geometry IndexedFaceSet {
+        coord Coordinate {
+          point [
+            0 0 0
+            0.5 0 0
+            0.5 0.5 0
+            0 0.5 0
+          ]
+        }
+        texCoord TextureCoordinate {
+          point [
+            0 0
+            1 0
+            1 1
+            0 1
+          ]
+        }
+        coordIndex [
+          0, 1, 2, 3, -1
+        ]
+        texCoordIndex [
+          0, 1, 2, 3, -1
+        ]
+      }
+    }
+  ]
+}
+DEF MARK_112 Transform {
+  translation -0.48 0.5 -0.5
+  rotation 0 1 0 1.57
+  scale 0.5 0.5 0.5
+  children [
+    Shape {
+      appearance Appearance {
+        material Material {
+          diffuseColor 1 1 1
+        }
+        texture DEF TEXTURE ImageTexture {
+          url [
+            "textures/112.jpg"
+          ]
+        }
+      }
+      geometry IndexedFaceSet {
+        coord Coordinate {
+          point [
+            0 0 0
+            0.5 0 0
+            0.5 0.5 0
+            0 0.5 0
+          ]
+        }
+        texCoord TextureCoordinate {
+          point [
+            0 0
+            1 0
+            1 1
+            0 1
+          ]
+        }
+        coordIndex [
+          0, 1, 2, 3, -1
+        ]
+        texCoordIndex [
+          0, 1, 2, 3, -1
+        ]
+      }
+    }
+  ]
+}
+DEF MARK_119 Transform {
+  translation -0.48 0.5 1
+  rotation 0 1 0 1.57
+  scale 0.5 0.5 0.5
+  children [
+    Shape {
+      appearance Appearance {
+        material Material {
+          diffuseColor 1 1 1
+        }
+        texture DEF TEXTURE ImageTexture {
+          url [
+            "textures/119.jpg"
+          ]
+        }
+      }
+      geometry IndexedFaceSet {
+        coord Coordinate {
+          point [
+            0 0 0
+            0.5 0 0
+            0.5 0.5 0
+            0 0.5 0
+          ]
+        }
+        texCoord TextureCoordinate {
+          point [
+            0 0
+            1 0
+            1 1
+            0 1
+          ]
+        }
+        coordIndex [
+          0, 1, 2, 3, -1
+        ]
+        texCoordIndex [
+          0, 1, 2, 3, -1
+        ]
+      }
+    }
+  ]
+}
+DEF MARK_131 Transform {
+  translation 0 0.5 -1.9
+  scale 0.5 0.5 0.5
+  children [
+    Shape {
+      appearance Appearance {
+        material Material {
+          diffuseColor 1 1 1
+        }
+        texture DEF TEXTURE ImageTexture {
+          url [
+            "textures/131.jpg"
+          ]
+        }
+      }
+      geometry IndexedFaceSet {
+        coord Coordinate {
+          point [
+            0 0 0
+            0.5 0 0
+            0.5 0.5 0
+            0 0.5 0
+          ]
+        }
+        texCoord TextureCoordinate {
+          point [
+            0 0
+            1 0
+            1 1
+            0 1
+          ]
+        }
+        coordIndex [
+          0, 1, 2, 3, -1
+        ]
+        texCoordIndex [
+          0, 1, 2, 3, -1
+        ]
+      }
+    }
+  ]
+}
+DEF MARK_146 Transform {
+  translation 1.9 0.5 0.5
+  rotation 0 1 0 -1.57
+  scale 0.5 0.5 0.5
+  children [
+    Shape {
+      appearance Appearance {
+        material Material {
+          diffuseColor 1 1 1
+        }
+        texture DEF TEXTURE ImageTexture {
+          url [
+            "textures/146.jpg"
+          ]
+        }
+      }
+      geometry IndexedFaceSet {
+        coord Coordinate {
+          point [
+            0 0 0
+            0.5 0 0
+            0.5 0.5 0
+            0 0.5 0
+          ]
+        }
+        texCoord TextureCoordinate {
+          point [
+            0 0
+            1 0
+            1 1
+            0 1
+          ]
+        }
+        coordIndex [
+          0, 1, 2, 3, -1
+        ]
+        texCoordIndex [
+          0, 1, 2, 3, -1
+        ]
+      }
+    }
+  ]
+}
+DEF MARK_175 Transform {
+  translation 1.9 0.5 -0.8
+  rotation 0 1 0 -1.57
+  scale 0.5 0.5 0.5
+  children [
+    Shape {
+      appearance Appearance {
+        material Material {
+          diffuseColor 1 1 1
+        }
+        texture DEF TEXTURE ImageTexture {
+          url [
+            "textures/175.jpg"
+          ]
+        }
+      }
+      geometry IndexedFaceSet {
+        coord Coordinate {
+          point [
+            0 0 0
+            0.5 0 0
+            0.5 0.5 0
+            0 0.5 0
+          ]
+        }
+        texCoord TextureCoordinate {
+          point [
+            0 0
+            1 0
+            1 1
+            0 1
+          ]
+        }
+        coordIndex [
+          0, 1, 2, 3, -1
+        ]
+        texCoordIndex [
+          0, 1, 2, 3, -1
+        ]
+      }
+    }
+  ]
+}
+DEF MARK_187 Transform {
+  translation 0.5 0.5 1.9
+  rotation 0 1 0 3.14
+  scale 0.5 0.5 0.5
+  children [
+    Shape {
+      appearance Appearance {
+        material Material {
+          diffuseColor 1 1 1
+        }
+        texture DEF TEXTURE ImageTexture {
+          url [
+            "textures/187.jpg"
+          ]
+        }
+      }
+      geometry IndexedFaceSet {
+        coord Coordinate {
+          point [
+            0 0 0
+            0.5 0 0
+            0.5 0.5 0
+            0 0.5 0
+          ]
+        }
+        texCoord TextureCoordinate {
+          point [
+            0 0
+            1 0
+            1 1
+            0 1
+          ]
+        }
+        coordIndex [
+          0, 1, 2, 3, -1
+        ]
+        texCoordIndex [
+          0, 1, 2, 3, -1
+        ]
+      }
+    }
+  ]
+}
+#DEF PLAYER_1 NaoV3R {
+DEF PLAYER_1 Nao_H25_V40 {
+#  translation 0.5 0.33 0
+#  rotation 0 -1 0 1.57 
+   color 0 0 1    #blue
+   controller "jskrbeusgl"
+   controllerArgs "nao_demo.l (main)"
+}
+Ball {
+  translation 0.5 0.1 0.1
+  radius 0.1
+}

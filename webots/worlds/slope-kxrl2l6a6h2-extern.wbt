@@ -4,7 +4,9 @@ WorldInfo {
     "generated from eus2webots"
   ]
   title "kxrl2l6a6h2 demo"
-  basicTimeStep 16
+  basicTimeStep 1
+  CFM  1.000000e-04   # default 0.00001
+  ERP  0.2   # default 0.2
   defaultDamping Damping {
     linear 0.5
     angular 0.5
@@ -14,9 +16,12 @@ WorldInfo {
      ContactProperties {
       material1 "body"
       material2 "floor"
-      coulombFriction [ 0.5 ]
+      coulombFriction [ 0.995 ]
+      bounce 0.05
+      forceDependentSlip [ 0.005 ]
     }
   ]
+
 }
 Viewpoint {
   fieldOfView 1.1
@@ -135,8 +140,10 @@ DEF AQUARIUM Solid {
 }
 
 Solid {
-  name "ball222"
-  translation -1.6378 0.2 -0.201206
+  name "ball234"
+  translation 1.53126 0.2 0.909862
+  recognitionColors [ 0 0.8 0 ]
+  model "ball"
   children [
     Shape {
       appearance DEF DARK_BROWN PBRAppearance {
@@ -167,8 +174,8 @@ Solid {
 }
 
 Can {
-  name "can222"
-  translation 0.193048 0.2 1.09206
+  name "can234"
+  translation -0.151023 0.2 -1.44836
   immersionProperties [
     ImmersionProperties {
       fluidName "fluid"
@@ -186,8 +193,8 @@ Can {
 }
 
 Apple {
-  name "apple222"
-  translation 1.05396 0.2 0.52658
+  name "apple234"
+  translation -0.591629 0.2 0.599475
   immersionProperties [
     ImmersionProperties {
       fluidName "fluid"
@@ -205,8 +212,8 @@ Apple {
 }
 
 JamJar {
-  name "jamjar222"
-  translation -0.140747 0.2 0.044928
+  name "jamjar234"
+  translation -0.11782 0.2 1.81731
   immersionProperties [
     ImmersionProperties {
       fluidName "fluid"
@@ -224,8 +231,8 @@ JamJar {
 }
 
 BiscuitBox {
-  name "biscuitbox222"
-  translation -1.62359 0.2 1.778
+  name "biscuitbox234"
+  translation 0.878726 0.2 1.37993
   immersionProperties [
     ImmersionProperties {
       fluidName "fluid"
@@ -243,8 +250,8 @@ BiscuitBox {
 }
 
 OilBarrel {
-  name "oilbarrel222"
-  translation 0.868268 0.2 -1.37661
+  name "oilbarrel234"
+  translation 1.11339 0.2 -0.54478
   immersionProperties [
     ImmersionProperties {
       fluidName "fluid"
@@ -262,8 +269,10 @@ OilBarrel {
 }
 
 Solid {
-  name "ball223"
-  translation -1.96187 0.2 1.67102
+  name "ball235"
+  translation -0.889459 0.2 0.969105
+  recognitionColors [ 0 0.8 0 ]
+  model "ball"
   children [
     Shape {
       appearance DEF DARK_BROWN PBRAppearance {
@@ -294,8 +303,8 @@ Solid {
 }
 
 Can {
-  name "can223"
-  translation 1.64505 0.2 -1.83111
+  name "can235"
+  translation 1.60927 0.2 0.869366
   immersionProperties [
     ImmersionProperties {
       fluidName "fluid"
@@ -313,8 +322,8 @@ Can {
 }
 
 Apple {
-  name "apple223"
-  translation -0.106764 0.2 -0.978029
+  name "apple235"
+  translation 0.376483 0.2 -0.091689
   immersionProperties [
     ImmersionProperties {
       fluidName "fluid"
@@ -332,8 +341,8 @@ Apple {
 }
 
 JamJar {
-  name "jamjar223"
-  translation -0.617427 0.2 0.870098
+  name "jamjar235"
+  translation 1.52567 0.2 -0.496077
   immersionProperties [
     ImmersionProperties {
       fluidName "fluid"
@@ -351,8 +360,8 @@ JamJar {
 }
 
 BiscuitBox {
-  name "biscuitbox223"
-  translation 0.294441 0.2 0.814307
+  name "biscuitbox235"
+  translation -1.07679 0.2 0.816025
   immersionProperties [
     ImmersionProperties {
       fluidName "fluid"
@@ -370,8 +379,8 @@ BiscuitBox {
 }
 
 OilBarrel {
-  name "oilbarrel223"
-  translation -1.14824 0.2 1.1944
+  name "oilbarrel235"
+  translation 1.38012 0.2 -0.495282
   immersionProperties [
     ImmersionProperties {
       fluidName "fluid"
@@ -389,8 +398,10 @@ OilBarrel {
 }
 
 Solid {
-  name "ball224"
-  translation 1.78783 0.2 1.81257
+  name "ball236"
+  translation 0.635708 0.2 -0.457721
+  recognitionColors [ 0 0.8 0 ]
+  model "ball"
   children [
     Shape {
       appearance DEF DARK_BROWN PBRAppearance {
@@ -421,8 +432,8 @@ Solid {
 }
 
 Can {
-  name "can224"
-  translation -1.08001 0.2 0.588465
+  name "can236"
+  translation -0.728395 0.2 0.81665
   immersionProperties [
     ImmersionProperties {
       fluidName "fluid"
@@ -440,8 +451,8 @@ Can {
 }
 
 Apple {
-  name "apple224"
-  translation 0.974254 0.2 -0.503634
+  name "apple236"
+  translation 1.34779 0.2 -1.57566
   immersionProperties [
     ImmersionProperties {
       fluidName "fluid"
@@ -459,8 +470,8 @@ Apple {
 }
 
 JamJar {
-  name "jamjar224"
-  translation 0.83845 0.2 0.426863
+  name "jamjar236"
+  translation -0.871094 0.2 1.68367
   immersionProperties [
     ImmersionProperties {
       fluidName "fluid"
@@ -478,8 +489,8 @@ JamJar {
 }
 
 BiscuitBox {
-  name "biscuitbox224"
-  translation 1.15507 0.2 1.42331
+  name "biscuitbox236"
+  translation 1.98498 0.2 1.75332
   immersionProperties [
     ImmersionProperties {
       fluidName "fluid"
@@ -497,8 +508,8 @@ BiscuitBox {
 }
 
 OilBarrel {
-  name "oilbarrel224"
-  translation 0.823539 0.2 -1.443
+  name "oilbarrel236"
+  translation 1.96681 0.2 0.546544
   immersionProperties [
     ImmersionProperties {
       fluidName "fluid"
@@ -518,6 +529,14 @@ OilBarrel {
 kxrl2l6a6h2 {
   translation 0.0 0.5 0.0
   rotation 1.000000 0.000000 0.0 -1.57 
+  immersionProperties [ 
+                  ImmersionProperties {
+                  fluidName "fluid"
+                  dragForceCoefficients 0.1 0 0
+                  dragTorqueCoefficients 0.001 0 0
+                  viscousResistanceTorqueCoefficient 0.005
+                  }
+                ]
   controller "<extern>"
   controllerArgs ""
   synchronization FALSE
