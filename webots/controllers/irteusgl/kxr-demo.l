@@ -1,5 +1,5 @@
 ;;
-;; Fri Jun 11 16:50:19 2021
+;; Sat Jun 12 05:59:03 2021
 ;; Generated for
 ;; https://github.com/agent-system/lecture2021/webots/controllers/irteusgl/kxr-demo.l
 ;;
@@ -34,6 +34,29 @@
     (send-webots)
     (send *irtviewer* :draw-objects)
     )
+  )
+(defmethod robot-model
+  (:larm-shoulder-v
+   (v)
+   (setq v (normalize-vector v))
+   (let* ((p (atan2 (elt v 0) (elt v 2)))
+	  (pitch (if (> p 0) (+ p (- pi)) (+ p pi)))
+	  (y (atan2 (elt v 0) (elt v 1)))
+	  (roll (if (> y 0) (- pi/2 y) (+ pi/2 y)))
+	  )
+     (send self :larm-shoulder-p :joint-angle (rad2deg pitch))
+     (send self :larm-shoulder-r :joint-angle (rad2deg roll))
+     (list 'p (rad2deg p) 'y (rad2deg y) 'pitch (rad2deg pitch) 'roll (rad2deg roll))))
+  (:rarm-shoulder-v
+   (v)
+   (setq v (normalize-vector v))
+   (let* ((p (atan2 (elt v 0) (elt v 2)))
+	  (pitch (if (> p 0) (+ p (- pi)) (+ p pi)))
+	  (y (atan2 (elt v 0) (- (elt v 1))))
+	  (roll (if (> y 0) (+ (- pi/2) y) (- (- pi/2) y))))
+     (send self :rarm-shoulder-p :joint-angle (rad2deg pitch))
+     (send self :rarm-shoulder-r :joint-angle (rad2deg roll))
+     (list 'p (rad2deg p) 'y (rad2deg y) 'pitch (rad2deg pitch) 'roll (rad2deg roll))))
   )
 (defmethod robot-model
   (:send-squat
