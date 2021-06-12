@@ -1,5 +1,5 @@
 ;;
-;; Fri Jun 11 15:16:54 2021
+;; Sat Jun 12 19:30:42 2021
 ;; Generated for
 ;; https://github.com/agent-system/lecture2021/webots/projects/kxrl4r2a3g/controllers/irteusgl/kxr-demo.l
 ;;
@@ -16,6 +16,7 @@
 (setq TIME_STEP 32)
 (defvar *init* nil)
 (defvar *swing* nil)
+(defvar *imu-show-state* nil)
 (defun isnan (v) (and  (< v 0) (> v 0)))
 (defun my_step nil
   (when (= -1 (wb_robot_step TIME_STEP))
@@ -34,6 +35,99 @@
     (send-webots)
     (send *irtviewer* :draw-objects)
     )
+  )
+(defvar *butterflystate* nil)
+(defmethod robot-model
+  (:limb-start-orientation
+   (&optional (limb :larm))
+   (let* ((vv (send self :limb-vectors limb)))
+     )
+   )
+  (:larm-shoulder-v
+   (v)
+   (setq v (normalize-vector v))
+   (let* ((p (atan2 (elt v 0) (elt v 2)))
+	  (pitch (if (> p 0) (+ p (- pi)) (+ p pi)))
+	  (y (atan2 (elt v 0) (elt v 1)))
+	  (roll (if (> y 0) (- pi/2 y) (+ pi/2 y)))
+	  )
+     (send self :larm-shoulder-p :joint-angle (rad2deg pitch))
+     (send self :larm-shoulder-r :joint-angle (rad2deg roll))
+     (list 'p (rad2deg p) 'y (rad2deg y) 'pitch (rad2deg pitch) 'roll (rad2deg roll))))
+  (:rarm-shoulder-v
+   (v)
+   (setq v (normalize-vector v))
+   (let* ((p (atan2 (elt v 0) (elt v 2)))
+	  (pitch (if (> p 0) (+ p (- pi)) (+ p pi)))
+	  (y (atan2 (elt v 0) (- (elt v 1))))
+	  (roll (if (> y 0) (+ (- pi/2) y) (- (- pi/2) y))))
+     (send self :rarm-shoulder-p :joint-angle (rad2deg pitch))
+     (send self :rarm-shoulder-r :joint-angle (rad2deg roll))
+     (list 'p (rad2deg p) 'y (rad2deg y) 'pitch (rad2deg pitch) 'roll (rad2deg roll))))
+  (:butterfly-th-phi
+   (th phi)
+   (let ((x (sin (deg2rad th)))
+	 ))
+   )
+  (:butterfly-xyz
+   (&optional (x 0) (y 1) (z 0))
+   (send self :larm-shoulder-v (float-vector x y z))
+   (send self :rarm-shoulder-v (float-vector x (- y) z)))
+  (:butterfly0 () (send self :butterfly-xyz 0 1 0) (setq *butterflystate* 0))
+  (:butterfly1 () (send self :butterfly-xyz -1 1 0) (setq *butterflystate* 1))
+  (:butterfly2 () (send self :butterfly-xyz -2.5 0.5 10.0) (setq *butterflystate* 2))
+  (:butterfly3 () (send self :butterfly-xyz 2.5 0.5 10.0) (setq *butterflystate* 3))
+  (:butterfly4 () (send self :butterfly-xyz 2.5 0.5 -10.0) (setq *butterflystate* 4))
+  (:butterfly5 () (send self :butterfly-xyz -2.5 0.5 -10.0) (setq *butterflystate* 5))
+  (:butterfly
+   ()
+   (case
+    *butterflystate*
+    (0 (send! self :butterfly1))
+    (1 (send! self :butterfly2))
+    (2 (send! self :butterfly3))
+    (3 (send! self :butterfly4))
+    (4 (send! self :butterfly5))
+    (5 (send! self :butterfly1))
+    ((nil t) (send self :butterfly0)))
+   (format t "*butterflystate*=~A~%" *butterflystate*)
+   )
+  (:limb-vectors
+   (&optional (limb :larm))
+   (let* ((ll (send self limb :links))
+	  (vs (send-all ll :worldpos))
+	  (p0 (pop vs)) ret)
+     (dolist (p vs)
+       (push (v- p p0) ret)
+       (setq p0 p))
+     (reverse ret)))
+  )
+(defmethod robot-model
+  (:limb-vectors-length
+   (&optional (limb :larm))   
+   (let ((vs (send self :limb-vectors limb))
+	 (len 0))
+     (dolist (v vs) (incf len (norm v)))
+     len))
+  (:limb-box
+   (&optional (limb :larm))
+   (let* ((ll (send self limb :links))
+	  (p (send (car ll) :worldpos))
+	  (bl (flatten (send-all ll :bodies)))
+	  (bs (send-all bl :box))
+	  (b0 (pop bs)))
+     (dolist (b bs) (setq b0 (send b0 :union b)))
+     b0))
+  (:limb-start-pos
+   (&optional (limb :larm))   
+   (send (car (send self limb :links)) :worldpos))
+  (:limb-end-pos
+   (&optional (limb :larm))   
+   (send self limb :end-coords :worldpos))
+  (:limb-length
+   (&optional (limb :larm))
+   (norm (v- (send self :limb-end-pos limb)
+	     (send self :limb-start-pos limb))))
   )
 (defmethod robot-model
   (:send-squat
@@ -68,19 +162,20 @@
 	    (rad2deg (wb_position_sensor_get_value (get j :sensor)))))
     ;;(format t ";; position=~A , j=~A~%" (wb_position_sensor_get_value (get j :sensor)) j)
     )
-  (when (> *gyro* 0)
-    (setq *gyro-vec* (cout-float-vector (wb_gyro_get_values *gyro*) 3))
-    (format t ";; *gyro*=~A *gyro-vec*=~A~%" *gyro* *gyro-vec*))
-  (when (> *acc* 0)
-    (setq *acc-vec* (cout-float-vector (wb_accelerometer_get_values *acc*) 3))
-    (format t ";; *acc*=~A *acc-vec*=~A~%" *acc* *acc-vec*))
-  (when (> *imu* 0)
-    (setq *imu-vec* (cout-float-vector (wb_inertial_unit_get_roll_pitch_yaw *imu*) 3))
-    (format t ";; *imu*=~A *imu-vec*=~A~%" *imu* *imu-vec*))
-  (when (> *compass* 0)
-    (setq *compass-vec* (cout-float-vector (wb_compass_get_values *compass*) 3))
-    (format t ";; *compass*=~A *compass-vec*=~A~%" *compass* *compass-vec*))
-  )
+  (when *imu-show-state*
+    (when (> *gyro* 0)
+      (setq *gyro-vec* (cout-float-vector (wb_gyro_get_values *gyro*) 3))
+      (format t ";; *gyro*=~A *gyro-vec*=~A~%" *gyro* *gyro-vec*))
+    (when (> *acc* 0)
+      (setq *acc-vec* (cout-float-vector (wb_accelerometer_get_values *acc*) 3))
+      (format t ";; *acc*=~A *acc-vec*=~A~%" *acc* *acc-vec*))
+    (when (> *imu* 0)
+      (setq *imu-vec* (cout-float-vector (wb_inertial_unit_get_roll_pitch_yaw *imu*) 3))
+      (format t ";; *imu*=~A *imu-vec*=~A~%" *imu* *imu-vec*))
+    (when (> *compass* 0)
+      (setq *compass-vec* (cout-float-vector (wb_compass_get_values *compass*) 3))
+      (format t ";; *compass*=~A *compass-vec*=~A~%" *compass* *compass-vec*))
+    ))
 
 (defun recognition-step (camera)
   (when (> camera 0)
@@ -122,58 +217,76 @@
     (send *robot* :head-neck-y :joint-angle (* 80 (sin (deg2rad *pan*))))
     (send! *robot* :head-neck-p :joint-angle (* -40 (sin (deg2rad *tilt*))))
     ))
+(defun char-check (new_key c)
+  (cond
+   ((> c #\z)
+    (= new_key c))
+   ((>= c #\a)
+    (= new_key (+ #\A (- c #\a))))
+   ((and (= (logand #x10000 new_key) #x10000)
+	 (= (logand #xffff new_key) c)))
+   (t (= new_key c))))
+
+(defun key-check (&rest args)
+  (some #'(lambda (c) (char-check new_key c)) args))
+(setq
+ *key-command-table*
+ '(
+   (WB_KEYBOARD_LEFT
+    (set-joint-angle :larm-shoulder-r 90.0)
+    (send! *robot* :turn 30) ;; degree
+    (format t "keyboard left: ~d~%" wb_keyboard_left))
+   (WB_KEYBOARD_RIGHT
+    (set-joint-angle :rarm-shoulder-r -90.0)
+    (send! *robot* :turn -30) ;; degree
+    (format t "keyboard right: ~d~%" wb_keyboard_right))
+   (WB_KEYBOARD_UP (send! *robot* :forward 100))
+   (WB_KEYBOARD_DOWN (send! *robot* :forward -100)) ;; mm
+   (#\? (help-keymap))
+   (#\b (send *robot* :butterfly))
+   (#\d (send! *robot* :send-squat 120)
+    (set-joint-angle :larm-shoulder-p 30.0)
+    (set-joint-angle :rarm-shoulder-p 30.0)
+    (set-joint-angle :larm-shoulder-r 10.0)
+    (set-joint-angle :rarm-shoulder-r -10.0)
+    (send-webots) (format t "keyboard d: ~d~%" wb_keyboard_down))
+   (#\u
+    (set-joint-angle :larm-shoulder-p 0.0)
+    (set-joint-angle :rarm-shoulder-p 0.0)
+    (set-joint-angle :larm-shoulder-r 170.0)
+    (set-joint-angle :rarm-shoulder-r -170.0)
+    (send! *robot* :send-squat 80)
+    (format t "keyboard up: ~d~%" wb_keyboard_up))
+   (#\F (send! *robot* :fly -500))
+   (#\f (send! *robot* :fly 500))
+   (#\C (send! *robot* :to-car))
+   (#\c (send! *robot* :to-humanoid))
+   (#\r (send! *robot* :reset-pose))
+   (#\s (if *swing* (setq *swing* nil) (setq *swing* t)))
+   (#\g (if *imu-show-state* (setq *imu-show-state* nil) (setq *imu-show-state* t)))
+   (#\  (set-joint-angle :larm-shoulder-r 90.0)
+    (set-joint-angle :rarm-shoulder-r -90.0)
+    (format t "keyboard space: i=~d~%" i) (send-webots))
+   ((< new_key #x10000)
+    (format t "keyboard space: i=~d key=~d~%" i new_key))
+   ))
 (defun read-keyboard nil
   (setq new_key (wb_keyboard_get_key))
-  (when (or (> new_key 0) (not (= new_key prev_key)))
-    (cond
-     ((= new_key WB_KEYBOARD_LEFT)
-      (set-joint-angle :larm-shoulder-r 90.0)
-      (send! *robot* :turn 30) ;; degree
-      (format t "keyboard left: ~d~%" wb_keyboard_left))
-     ((= new_key WB_KEYBOARD_RIGHT)
-      (set-joint-angle :rarm-shoulder-r -90.0)
-      (send! *robot* :turn -30) ;; degree
-      (format t "keyboard right: ~d~%" wb_keyboard_right))
-     ((= new_key WB_KEYBOARD_UP)
-      (send! *robot* :forward 100)) ;; mm
-     ((= new_key WB_KEYBOARD_DOWN)
-      (send! *robot* :forward -100)) ;; mm
-     ((memq new_key (list #\d #\D))
-      (send! *robot* :send-squat 120)
-      (set-joint-angle :larm-shoulder-p 30.0)
-      (set-joint-angle :rarm-shoulder-p 30.0)
-      (set-joint-angle :larm-shoulder-r 10.0)
-      (set-joint-angle :rarm-shoulder-r -10.0)
-      (send-webots) (format t "keyboard d: ~d~%" wb_keyboard_down))
-     ((memq new_key (list #\u #\U))
-      (set-joint-angle :larm-shoulder-p 0.0)
-      (set-joint-angle :rarm-shoulder-p 0.0)
-      (set-joint-angle :larm-shoulder-r 170.0)
-      (set-joint-angle :rarm-shoulder-r -170.0)
-      (send! *robot* :send-squat 80)
-      (format t "keyboard up: ~d~%" wb_keyboard_up))
-     ((and (= (logand #xffff new_key) #\F) (= (logand #x10000 new_key) #x10000))
-      (send! *robot* :fly -500))
-     ((= new_key #\F)
-      (send! *robot* :fly 500))
-     ((memq new_key (list #\C #\c))
-      (send! *robot* :to-car))
-     ((memq new_key (list #\H #\h))
-      (send! *robot* :to-humanoid))
-     ((memq new_key (list #\R #\r))
-      (send! *robot* :reset-pose))
-     ((or (eq new_key #\S)
-	  (and (= (logand #xffff new_key) #\S) (= (logand #x10000 new_key) #x10000)))
-      (if *swing* (setq *swing* nil) (setq *swing* t)))
-     ((= new_key #\ )
-      (set-joint-angle :larm-shoulder-r 90.0)
-      (set-joint-angle :rarm-shoulder-r -90.0)
-      (format t "keyboard space: i=~d~%" i)
-      (send-webots))
-     ((< new_key #x10000)
-      (format t "keyboard space: i=~d key=~d~%" i new_key)))
+  (when (and (> new_key 0) (not (= new_key prev_key)))
+    (catch :read-keyboard
+      (dolist (tab *key-command-table*)
+	(when
+	    (or
+	     (and (symbolp (car tab)) (key-check (symbol-value (car tab))))
+	     (and (numberp (car tab)) (key-check (car tab)))
+	     (and (consp (car tab)) (fboundp (car (car tab))) (eval (car tab))))
+	  (dolist (com (cdr tab)) (eval com))
+	  (format t ";; tab=~A~%" tab)
+	  (throw :read-keyboard t)))
+      )
     (setq prev_key new_key))
   )
+(defun help-keymap nil (pprint *key-command-table*))
 
 (defun main-init (&optional fname)
   (wb_robot_init)
@@ -262,5 +375,10 @@
   (pushnew 'main-step *timer-job*))
 (defun itimer-off nil
   (setq *timer-job* (remove 'main-step *timer-job*)))
-;;(main)
-(itimer-on)
+(defun activated-webots-count ()
+  (1- (read (piped-fork "ps augx | grep bin/webots-bin | grep wbt| wc"))))
+(when (> (activated-webots-count) 0)
+  ;;(main)
+  (itimer-on))
+
+
