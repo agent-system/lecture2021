@@ -1,5 +1,5 @@
 ;;
-;; Sun Jun 13 20:46:46 2021
+;; Sun Jun 13 21:54:50 2021
 ;; Generated for
 ;; https://github.com/agent-system/lecture2021/webots/projects/kxrl2t2l6a7h2/controllers/irteusgl/kxr-demo.l
 ;;
@@ -245,10 +245,10 @@
 (setq *pan* 0.0 *tilt* 0.0)
 (defun head-swing nil
   (when *head-swing*
-    (when (> (incf *pan* 3.0) 360)
-      (setq *pan* 0)
-      (if (> (incf *tilt* 90.0) 360) (setq *tilt* 0)))
-    (send *robot* :head-neck-y :joint-angle (* 80 (sin (deg2rad *pan*))))
+    (if (> (incf *pan* 3.0) 360) (setq *pan* 0))
+    (if (> (incf *tilt* 90.0) 360) (setq *tilt* 0))
+    (if (find-method *robot* :head-neck-y)
+	(send *robot* :head-neck-y :joint-angle (* 80 (sin (deg2rad *pan*)))))
     (send! *robot* :head-neck-p :joint-angle (* -40 (sin (deg2rad *tilt*))))
     ))
 (defun char-check (new_key c)
