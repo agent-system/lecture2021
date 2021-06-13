@@ -1,5 +1,5 @@
 ;;
-;; Sat Jun 12 19:30:42 2021
+;; Sun Jun 13 20:46:46 2021
 ;; Generated for
 ;; https://github.com/agent-system/lecture2021/webots/projects/kxrl2t3/controllers/irteusgl/kxr-demo.l
 ;;
@@ -15,7 +15,7 @@
 ;;;
 (setq TIME_STEP 32)
 (defvar *init* nil)
-(defvar *swing* nil)
+(defvar *head-swing* nil)
 (defvar *imu-show-state* nil)
 (defun isnan (v) (and  (< v 0) (> v 0)))
 (defun my_step nil
@@ -36,7 +36,11 @@
     (send *irtviewer* :draw-objects)
     )
   )
-(defvar *butterflystate* nil)
+(defvar *butterfly* nil)
+(defvar *butterfly-phase* 0.0)
+(defvar *flutter* nil)
+(defvar *flutter-range* 30.0)
+(defvar *flutter-phase* 0.0)
 (defmethod robot-model
   (:limb-start-orientation
    (&optional (limb :larm))
@@ -64,34 +68,58 @@
      (send self :rarm-shoulder-p :joint-angle (rad2deg pitch))
      (send self :rarm-shoulder-r :joint-angle (rad2deg roll))
      (list 'p (rad2deg p) 'y (rad2deg y) 'pitch (rad2deg pitch) 'roll (rad2deg roll))))
-  (:butterfly-th-phi
+  (:spherical
+   (dth dphi &optional (axis :z))
+   (let* ((th (deg2rad dth)) (phi (deg2rad dphi)) (s-th (sin th))
+	  (v (float-vector (* s-th (cos phi)) (* s-th (sin phi)) (cos th)))
+	  (r (case
+	      axis
+	      (:x (rotation-matrix pi/2 :y))
+	      (:-x (m* (diagonal #f(-1 1 1)) (rotation-matrix pi/2 :y)))
+	      (:y (rotation-matrix -pi/2 :x))
+	      (:-y (m* (diagonal #f(1 -1 1)) (rotation-matrix -pi/2 :x)))
+	      (:z  (rotation-matrix 0 :x))
+	      (:-z (m* (diagonal #f(1 1 -1)) (rotation-matrix 0 :x)))
+	      (t  (rotation-matrix 0 :x)))))
+     (transform r v)))
+  (:arm-spherical
    (th phi)
-   (let ((x (sin (deg2rad th)))
-	 ))
-   )
-  (:butterfly-xyz
-   (&optional (x 0) (y 1) (z 0))
-   (send self :larm-shoulder-v (float-vector x y z))
-   (send self :rarm-shoulder-v (float-vector x (- y) z)))
-  (:butterfly0 () (send self :butterfly-xyz 0 1 0) (setq *butterflystate* 0))
-  (:butterfly1 () (send self :butterfly-xyz -1 1 0) (setq *butterflystate* 1))
-  (:butterfly2 () (send self :butterfly-xyz -2.5 0.5 10.0) (setq *butterflystate* 2))
-  (:butterfly3 () (send self :butterfly-xyz 2.5 0.5 10.0) (setq *butterflystate* 3))
-  (:butterfly4 () (send self :butterfly-xyz 2.5 0.5 -10.0) (setq *butterflystate* 4))
-  (:butterfly5 () (send self :butterfly-xyz -2.5 0.5 -10.0) (setq *butterflystate* 5))
+   (send self :larm-shoulder-v (send self :spherical th phi :y))
+   (send self :rarm-shoulder-v (send self :spherical th phi :-y)))
+  (:leg-spherical
+   (dth dphi &optional (limb :lleg))
+   (let* ((v (send self :spherical dth dphi :-z))
+	  (p (atan2 (- (elt v 0)) (- (elt v 2))))
+	  (r (atan2 (elt v 1) (- (elt v 2)))))
+     (send self limb :crotch-p :joint-angle (rad2deg p))
+     (send self limb :crotch-r :joint-angle (rad2deg r))
+     ))
+  (:lleg-spherical (dth dphi) (send self :leg-spherical dth dphi :lleg))
+  (:rleg-spherical (dth dphi) (send self :leg-spherical dth dphi :rleg))
+  (:leg-flutter
+   (th)
+   (send self :lleg-spherical th 0)
+   (send self :rleg-spherical (- th) 0))
+  (:flutter
+   (&optional (dphi 30)) ;; deg
+   (when *flutter*
+     (if (> (incf *flutter-phase* (incf dphi)) 360.0) (setq *flutter-phase* 0.0))
+     (send! self :leg-flutter (* *flutter-range* (sin (deg2rad *flutter-phase*))))
+     ))
+  (:butterfly0 () (send self :arm-spherical 0 0))
+  (:butterfly1 () (send self :arm-spherical 45 180))
+  (:butterfly2 () (send self :arm-spherical 80 -110))
+  (:butterfly3 () (send self :arm-spherical 80 -70))
+  (:butterfly4 () (send self :arm-spherical 80 70))
+  (:butterfly5 () (send self :arm-spherical 80 110))
+  (:arm-up () (send! self :butterfly3))
+  (:arm-down () (send! self :butterfly4))
   (:butterfly
-   ()
-   (case
-    *butterflystate*
-    (0 (send! self :butterfly1))
-    (1 (send! self :butterfly2))
-    (2 (send! self :butterfly3))
-    (3 (send! self :butterfly4))
-    (4 (send! self :butterfly5))
-    (5 (send! self :butterfly1))
-    ((nil t) (send self :butterfly0)))
-   (format t "*butterflystate*=~A~%" *butterflystate*)
-   )
+   (&optional (dphi 30)) ;; deg
+   (when *butterfly*
+     (if (> (incf *butterfly-phase* (incf dphi)) 360.0) (setq *butterfly-phase* 0.0))
+     (send! self :arm-spherical 80 *butterfly-phase*)
+     ))
   (:limb-vectors
    (&optional (limb :larm))
    (let* ((ll (send self limb :links))
@@ -130,6 +158,12 @@
 	     (send self :limb-start-pos limb))))
   )
 (defmethod robot-model
+  (:sit
+   (&optional (goal 120) (a (send self :lleg-knee-p :joint-angle)))
+   (if (< a goal) (send! self :send-squat (+ a 15))))
+  (:stand
+   (&optional (goal 20) (a (send self :lleg-knee-p :joint-angle)))
+   (if (> a goal) (send! self :send-squat (- a 15))))
   (:send-squat
    (knee-angle)
    (send self :set-joint-angle :lleg-crotch-p (- (/ knee-angle 2.0)))
@@ -210,7 +244,7 @@
     ))
 (setq *pan* 0.0 *tilt* 0.0)
 (defun head-swing nil
-  (when *swing*
+  (when *head-swing*
     (when (> (incf *pan* 3.0) 360)
       (setq *pan* 0)
       (if (> (incf *tilt* 90.0) 360) (setq *tilt* 0)))
@@ -232,41 +266,34 @@
 (setq
  *key-command-table*
  '(
-   (WB_KEYBOARD_LEFT
-    (set-joint-angle :larm-shoulder-r 90.0)
-    (send! *robot* :turn 30) ;; degree
-    (format t "keyboard left: ~d~%" wb_keyboard_left))
-   (WB_KEYBOARD_RIGHT
-    (set-joint-angle :rarm-shoulder-r -90.0)
-    (send! *robot* :turn -30) ;; degree
-    (format t "keyboard right: ~d~%" wb_keyboard_right))
+   (WB_KEYBOARD_LEFT (send! *robot* :larm-shoulder-v #f(0 1 0)))
+   (WB_KEYBOARD_RIGHT (send! *robot* :rarm-shoulder-v #f(0 -1 0)))
    (WB_KEYBOARD_UP (send! *robot* :forward 100))
    (WB_KEYBOARD_DOWN (send! *robot* :forward -100)) ;; mm
-   (#\? (help-keymap))
-   (#\b (send *robot* :butterfly))
-   (#\d (send! *robot* :send-squat 120)
-    (set-joint-angle :larm-shoulder-p 30.0)
-    (set-joint-angle :rarm-shoulder-p 30.0)
-    (set-joint-angle :larm-shoulder-r 10.0)
-    (set-joint-angle :rarm-shoulder-r -10.0)
-    (send-webots) (format t "keyboard d: ~d~%" wb_keyboard_down))
-   (#\u
-    (set-joint-angle :larm-shoulder-p 0.0)
-    (set-joint-angle :rarm-shoulder-p 0.0)
-    (set-joint-angle :larm-shoulder-r 170.0)
-    (set-joint-angle :rarm-shoulder-r -170.0)
-    (send! *robot* :send-squat 80)
-    (format t "keyboard up: ~d~%" wb_keyboard_up))
-   (#\F (send! *robot* :fly -500))
-   (#\f (send! *robot* :fly 500))
-   (#\C (send! *robot* :to-car))
-   (#\c (send! *robot* :to-humanoid))
-   (#\r (send! *robot* :reset-pose))
-   (#\s (if *swing* (setq *swing* nil) (setq *swing* t)))
-   (#\g (if *imu-show-state* (setq *imu-show-state* nil) (setq *imu-show-state* t)))
-   (#\  (set-joint-angle :larm-shoulder-r 90.0)
-    (set-joint-angle :rarm-shoulder-r -90.0)
-    (format t "keyboard space: i=~d~%" i) (send-webots))
+   ("?" (help-keymap))
+   ("b" (setq *butterfly* (not *butterfly*)))
+   ("C" (send! *robot* :to-car))
+   ("c" (send! *robot* :to-humanoid))
+   ("d" (send! *robot* :arm-down))
+   ("f" (setq *flutter* (not *flutter*)))
+   ("h" (setq *head-swing* (not *head-swing*)))
+   ("i" (setq *imu-show-state* (not *imu-show-state*)))
+   ("J" (send! *robot* :fly -500))
+   ("j" (send! *robot* :fly 500))
+   ("n" (send! *robot* :neutral))
+   ("r" (send! *robot* :reset-pose))
+   ("s" (send! *robot* :sit))
+   ("S" (send! *robot* :stand))
+   ("t" (send! *robot* :turn 30))
+   ("T" (send! *robot* :turn -30))
+   ("u" (send! *robot* :arm-up))
+   (" " (send! *robot* :butterfly0))
+   ("0" (send! *robot* :butterfly0))
+   ("1" (send! *robot* :butterfly1))
+   ("2" (send! *robot* :butterfly2))
+   ("3" (send! *robot* :butterfly3))
+   ("4" (send! *robot* :butterfly4))
+   ("5" (send! *robot* :butterfly5))
    ((< new_key #x10000)
     (format t "keyboard space: i=~d key=~d~%" i new_key))
    ))
@@ -278,6 +305,7 @@
 	(when
 	    (or
 	     (and (symbolp (car tab)) (key-check (symbol-value (car tab))))
+	     (and (stringp (car tab)) (key-check (elt (car tab) 0)))
 	     (and (numberp (car tab)) (key-check (car tab)))
 	     (and (consp (car tab)) (fboundp (car (car tab))) (eval (car tab))))
 	  (dolist (com (cdr tab)) (eval com))
@@ -364,6 +392,8 @@
   (recognition-step *camera1*)
   (head-swing)
   (when (fboundp 'walking-control) (walking-control (* 1e-3 time_step)))
+  (when *butterfly* (send *robot* :butterfly))
+  (when *flutter* (send *robot* :flutter))
   (read-keyboard)
   (send *irtviewer* :draw-objects)
   (x::window-main-one)
