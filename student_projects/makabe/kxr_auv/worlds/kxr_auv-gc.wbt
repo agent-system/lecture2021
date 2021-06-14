@@ -3,7 +3,7 @@ WorldInfo {
   info [
     "generated from eus2webots"
   ]
-  title "kxr_amv demo"
+  title "kxr_auv demo"
   basicTimeStep 16
   defaultDamping Damping {
     linear 0.5
@@ -529,10 +529,13 @@ OilBarrel {
   radius 0.1 height 0.233333
 }
 
-KXR_AUV_FULLBODY {
+#KXR_AUV_FULLBODY {
+#kxr_amv {
+kxr_auv_fullbody_initial {	
   translation -3.0 0.0 0.0
   rotation 1.0 0.0 1.0 3.1415
   controller "irteusgl"
-  controllerArgs "kxr-demo.l"
+  controllerArgs "swimming-demo.l"
   synchronization FALSE
+  #controller "python_demo" 
 }
