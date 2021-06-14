@@ -47,6 +47,9 @@
            (get j :device)
            (deg2rad (send j :joint-angle))))
          (t
+	  (print j)
+	  (print (send j :joint-angle))	  
+	  (print (get j :device))
           (wb_motor_set_position
            (get j :device)
            (deg2rad (send j :joint-angle)))))))
@@ -330,3 +333,4 @@
    (pushnew 'main-step *timer-job*))
 (defun itimer-off nil (setq *timer-job* (remove 'main-step *timer-job*)))
 (itimer-on)
+;(main-init)
