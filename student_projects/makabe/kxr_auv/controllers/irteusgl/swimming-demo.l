@@ -7,6 +7,7 @@
 (setq time_step 32)
 (defvar *init* nil)
 (defvar *swing* nil)
+(setq *phase* 0);;0:right 1:left
 (defun isnan (v) (and (< v 0) (> v 0)))
 (defun my_step nil
   (when (= -1 (wb_robot_step time_step)) (wb_robot_cleanup) (exit)))
@@ -47,9 +48,6 @@
        (get j :device)
        (deg2rad (send j :joint-angle))))
      (t
-      ;; (print j)
-      ;; (print (send j :joint-angle))
-      ;; (print (get j :device))
       (wb_motor_set_position
        (get j :device)
        (deg2rad (send j :joint-angle)))))))
@@ -65,32 +63,33 @@
   (when
       (> *gyro* 0)
     (setq *gyro-vec* (cout-float-vector (wb_gyro_get_values *gyro*) 3))
-    (format t ";; *gyro*=~A *gyro-vec*=~A~%" *gyro* *gyro-vec*))
+    ;;(format t ";; *gyro*=~A *gyro-vec*=~A~%" *gyro* *gyro-vec*)
+    )
   (when
       (> *acc* 0)
     (setq
      *acc-vec* (cout-float-vector
 		(wb_accelerometer_get_values *acc*)
 		3))
-    (format t ";; *acc*=~A *acc-vec*=~A~%" *acc* *acc-vec*))
+    ;;(format t ";; *acc*=~A *acc-vec*=~A~%" *acc* *acc-vec*)
+    )
   (when
       (> *imu* 0)
     (setq
      *imu-vec* (cout-float-vector
 		(wb_inertial_unit_get_roll_pitch_yaw *imu*)
 		3))
-    (format t ";; *imu*=~A *imu-vec*=~A~%" *imu* *imu-vec*))
+    ;;(format t ";; *imu*=~A *imu-vec*=~A~%" *imu* *imu-vec*)
+    )
   (when
       (> *compass* 0)
     (setq
      *compass-vec* (cout-float-vector
 		    (wb_compass_get_values *compass*)
 		    3))
-    (format
-     t
-     ";; *compass*=~A *compass-vec*=~A~%"
-     *compass*
-     *compass-vec*)))
+    ;;(format t ";; *compass*=~A *compass-vec*=~A~%" *compass* *compass-vec*)
+    )
+  )
 (defun recognition-step (camera)
   (when
       (> camera 0)
@@ -181,13 +180,15 @@
       (or (> new_key 0) (not (= new_key prev_key)))
     (cond
      ((= new_key wb_keyboard_left)
-      (set-joint-angle :larm-shoulder-r 90.0)
-      (send! *robot* :turn 500)
-      (format t "keyboard left: ~d~%" wb_keyboard_left))
+      (make-swim-pose :diff 40)
+      (format t "keyboard left: ~d~%" wb_keyboard_left)
+      (send-webots)
+      )
      ((= new_key wb_keyboard_right)
-      (set-joint-angle :rarm-shoulder-r -90.0)
-      (send! *robot* :turn -500)
-      (format t "keyboard right: ~d~%" wb_keyboard_right))
+      (make-swim-pose :diff -40)
+      (format t "keyboard right: ~d~%" wb_keyboard_right)
+      (send-webots)
+      )
      ((= new_key wb_keyboard_up) (send! *robot* :forward 500))
      ((= new_key wb_keyboard_down) (send! *robot* :forward -200))
      ((memq new_key (list 100 68))
@@ -220,7 +221,7 @@
       (if *swing* (setq *swing* nil) (setq *swing* t)))
      ((= new_key 32)
       (set-joint-angle :larm-shoulder-r 90.0)
-      (set-joint-angle :rarm-shoulder-r -90.0)
+      ;;(set-joint-angle :rarm-shoulder-r -90.0)
       (format t "keyboard space: i=~d~%" i)
       (send-webots))
      ((< new_key 65536)
@@ -288,7 +289,9 @@
     (format t ";; *compass*=~A~%" *compass*)
     (wb_compass_enable *compass* time_step))
   (format t "joint angle~%")
-  (send *robot* :head-neck-p :joint-angle -65)
+  (send *robot* :reset-pose)
+  (init-swim)
+  ;;(send *robot* :head-neck-p :joint-angle 0)
   (print (send *robot* :angle-vector))
   (send-webots)
   (wb_keyboard_enable time_step)
@@ -310,12 +313,30 @@
 (defun main-step2 nil
   (my_step)
   (read-webots)
+  (recognition-step *camera0*)
+  ;;(head-swing)
+  (cond ((= *phase* 0)
+	 (format t "right ~%")
+	 (make-swim-pose :diff 40)
+	 (send-webots)
+	 (unix::usleep (* 1000 2000))
+	 (setq *phase* 1)
+	 )
+	((= *phase* 1)
+	 (format t "left ~%")
+	 (make-swim-pose :diff -40)
+	 (send-webots)
+	 (unix::usleep (* 1000 2000))
+	 (setq *phase* 0)
+	 )
+	)
   (send *irtviewer* :draw-objects)
   (x::window-main-one)
   (unix:usleep (* time_step 1000)))
 (defun itimer-on nil
   (unless *init* (main-init))
   (setq *top-selector-interval* 0.01)
-  (pushnew 'main-step *timer-job*))
+  (pushnew 'main-step2 *timer-job*))
 (defun itimer-off nil (setq *timer-job* (remove 'main-step *timer-job*)))
 (itimer-on)
+;;(main-init)
