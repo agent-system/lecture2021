@@ -252,6 +252,71 @@ void process_image(const unsigned char *image, unsigned char *processed_image, i
   memcpy(processed_image, filtered.data, 4 * width * height * sizeof(unsigned char));
 }
 
+struct BoundingBox {
+  int x, y, w, h;
+};
+int findObj(const Mat& image, Mat& limage, int width, int height, int r, int c, int label) {
+
+  if (limage.at<uchar>(r, c) != 0 || image.at<Vec4b>(r, c)[2] != 255 ) return 0;
+
+  int num = 1;
+  limage.at<uchar>(r, c) = label;
+  if (r != 0) num += findObj(image, limage, width, height, r-1, c, label);
+  if (c != 0) num += findObj(image, limage, width, height, r, c-1, label);
+  if (r != width-1) num += findObj(image, limage, width, height, r+1, c, label);
+  if (c != height-1) num += findObj(image, limage, width, height, r, c+1, label);
+
+  return num;
+}
+
+int findNearest(const unsigned char *image, int width, int height, BoundingBox& box) {
+
+  Mat label_image = Mat(Size(width, height), CV_8UC1);
+  Mat img = Mat(Size(width, height), CV_8UC4);
+  img.data = (uchar *)image;
+
+  for (int i = 0; i < height; ++i) {
+    for (int j = 0; j < width; ++j) {
+      label_image.at<uchar>(i, j) = 0;
+    }
+  }
+  int label = 1;
+  int largest = 1;
+  int max_pix = 0;
+  for (int i = 0; i < height; ++i) {
+    for (int j = 0; j < width; ++j) {
+      if (img.at<Vec4b>(i, j)[2] == 255 && label_image.at<uchar>(i, j) == 0) {
+        int npix = findObj(img, label_image, width, height, i, j, label);
+        if (max_pix < npix) {
+          max_pix = npix;
+          largest = label;
+        }
+        label++;
+      }
+    }
+  }
+
+  int l, r, t, b;
+  l = width; t = height;
+  r = b = 0;
+  for (int i = 0; i < height; ++i) {
+    for (int j = 0; j < width; ++j) {
+      if (label_image.at<uchar>(i, j) == largest) {
+        if (j < l) l = j;
+        if (j > r) r = j;
+        if (i < t) t = i;
+        if (i > b) b = i;
+      }
+    }
+  }
+  box.w = r-l;
+  box.h = b-t;
+  box.x = l;
+  box.y = t;
+  // printf("%d %d %d %d \n", box.x, box.y, box.w, box.h);
+  return max_pix;
+}
+
 int main() {
   const double FREQUENCY = 1.0; /* locomotion frequency [Hz] */
   const double WALK_AMPL = 0.6; /* radians */
@@ -322,12 +387,16 @@ int main() {
   printf("I'm sweeper! \n");
 
   /* control loop: sense-compute-act */
+  int nStep = 0;
+  BoundingBox box;
+
   while (wb_robot_step(CONTROL_STEP) != -1) {
     read_keyboard_command();
 
     const unsigned char *image = wb_camera_get_image(camera);
     process_image(image, processed_image, width, height);
-    double cw, ch;
+#if 0
+    double cw, ch;    
     {
       Mat img = Mat(Size(width, height), CV_8UC4);
       img.data = (uchar *)processed_image;
@@ -341,12 +410,24 @@ int main() {
       }
       cw = cnt != 0 ? cw / double(cnt) : width / 2.0;
     }
+#endif
 
 #if 0
     spine_offset = (cw > 3.0 * width/4.0) ? 0.05 : 
                    (cw < width/4.0) ? -0.05 : 0.0;
 #else
-    spine_offset = (cw - width/2.0)/width*2.0*0.05;
+    int objSize = findNearest(processed_image, width, height, box);
+    if (nStep%CONTROL_STEP == 0) {
+      spine_offset = (box.x + box.w/2 - width/2.0)/width*2.0*0.075;
+    }
+    printf("size %d\n", objSize);
+    if (objSize > 10000) {
+      scontrol = SWEEP;
+    }
+    if (objSize > 42000) {
+      scontrol = GRIP;
+    }
+
 #endif
 
     if (control == AUTO || control == KEYBOARD) {
@@ -411,7 +492,11 @@ int main() {
     processed_image_ref = wb_display_image_new(processed_image_display, width, height, processed_image, WB_IMAGE_ARGB);
     wb_display_image_paste(processed_image_display, processed_image_ref, 0, 0, false);
 
-    wb_display_draw_line(processed_image_display, (int)cw, 0, (int)cw, height);
+    wb_display_draw_line(processed_image_display, (int)box.x + box.w/2, 0, (int)box.x + box.w/2, height);
+    if (box.w > 0 && box.h > 0)
+      wb_display_draw_rectangle(processed_image_display, box.x, box.y, box.w, box.h); 
+
+    nStep++;
   }
 
   // clean up
