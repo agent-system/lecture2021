@@ -1,0 +1,290 @@
+#VRML_SIM V6.0 utf8
+WorldInfo {
+  info [
+    "The model of the Elisa-3 robot"
+    "Author: Stefano Morgani"
+    "Date: 27 MAR 2013"
+  ]
+  title "Elisa-3"
+}
+Viewpoint {
+  orientation -0.190006 -0.949299 -0.250457 1.93021
+  position -2.30634 1.35908 -0.860155
+}
+PointLight {
+  ambientIntensity 0.5
+  intensity 0.6
+  location 0.14 0.6 -0.55
+  castShadows TRUE
+}
+PointLight {
+  ambientIntensity 0.5
+  intensity 0.6
+  location -0.43 0.6 0.5
+}
+Background {
+  skyColor [
+    0.4 0.7 1
+  ]
+}
+DEF FLOOR Solid {
+  translation 0 -0.0001 0
+  children [
+    Shape {
+      appearance Appearance {
+        material Material {
+          diffuseColor 1 1 1
+          specularColor 0.196078 0.196078 0.196078
+        }
+        texture ImageTexture {
+          url [
+            "textures/lightwood.png"
+          ]
+        }
+        textureTransform TextureTransform {
+          center 0.46 0
+          rotation -0.32
+          translation -1.01 0
+        }
+      }
+      geometry DEF PLANE Plane {
+        size 2 2
+      }
+    }
+  ]
+  boundingObject USE PLANE
+}
+DEF short_rock_1 Solid {
+  translation -0.2 0.05 0.683174
+  rotation 0 1 0 0.5
+  children [
+    Shape {
+      appearance Appearance {
+        material Material {
+          diffuseColor 1 1 1
+        }
+        texture ImageTexture {
+          url [
+            "textures/stone-2.png"
+          ]
+        }
+      }
+      geometry DEF short_brick_1_geometry Box {
+        size 0.1 0.1 0.1
+      }
+    }
+  ]
+  name "short brick"
+  boundingObject USE short_brick_1_geometry
+}
+DEF short_rock_2 Solid {
+  translation -0.75 0.05 -0.35
+  rotation 0 1 0 4.96782
+  children [
+    Shape {
+      appearance Appearance {
+        material Material {
+          diffuseColor 1 1 1
+        }
+        texture ImageTexture {
+          url [
+            "textures/stone-2.png"
+          ]
+        }
+      }
+      geometry DEF short_brick_1_geometry Box {
+        size 0.1 0.1 0.1
+      }
+    }
+  ]
+  name "short brick"
+  boundingObject USE short_brick_1_geometry
+}
+DEF short_rock_3 Solid {
+  translation 0.5 0.05 0.35471
+  rotation 0 1 0 5.36782
+  children [
+    Shape {
+      appearance Appearance {
+        material Material {
+          diffuseColor 1 1 1
+        }
+        texture ImageTexture {
+          url [
+            "textures/stone-2.png"
+          ]
+        }
+      }
+      geometry DEF short_brick_1_geometry Box {
+        size 0.1 0.1 0.1
+      }
+    }
+  ]
+  name "short brick"
+  boundingObject USE short_brick_1_geometry
+}
+DEF short_rock_4 Solid {
+  translation -0.3 0.05 -0.36
+  rotation 0 1 0 5.36782
+  children [
+    Shape {
+      appearance Appearance {
+        material Material {
+          diffuseColor 1 1 1
+        }
+        texture ImageTexture {
+          url [
+            "textures/stone-2.png"
+          ]
+        }
+      }
+      geometry DEF short_brick_1_geometry Box {
+        size 0.1 0.1 0.1
+      }
+    }
+  ]
+  name "short brick"
+  boundingObject USE short_brick_1_geometry
+}
+DEF short_rock_5 Solid {
+  translation -0.65 0.05 0.66
+  rotation 0 1 0 5.36782
+  children [
+    Shape {
+      appearance Appearance {
+        material Material {
+          diffuseColor 1 1 1
+        }
+        texture ImageTexture {
+          url [
+            "textures/stone-2.png"
+          ]
+        }
+      }
+      geometry DEF short_brick_1_geometry Box {
+        size 0.1 0.1 0.1
+      }
+    }
+  ]
+  name "short brick"
+  boundingObject USE short_brick_1_geometry
+}
+DEF WALL1 Solid {
+  translation 1 0.05 0
+  children [
+    DEF WALL_SHAPE Shape {
+      appearance DEF WALL_APPEARANCE Appearance {
+        material Material {
+          diffuseColor 1 0.501961 0.25098
+        }
+      }
+      geometry Box {
+        size 0.02 0.1 2
+      }
+    }
+  ]
+  boundingObject USE WALL_SHAPE
+}
+DEF WALL2 Solid {
+  translation -1 0.05 0
+  children [
+    USE WALL_SHAPE
+  ]
+  boundingObject USE WALL_SHAPE
+}
+DEF WALL3 Solid {
+  translation 0 0.05 1
+  rotation 0 1 0 1.5708
+  children [
+    USE WALL_SHAPE
+  ]
+  boundingObject USE WALL_SHAPE
+}
+DEF WALL4 Solid {
+  translation 0 0.05 -1
+  rotation 0 1 0 1.5708
+  children [
+    USE WALL_SHAPE
+  ]
+  boundingObject USE WALL_SHAPE
+}
+DEF ELISA3-1 Elisa3 {
+  translation 0.0246925 -0.000414131 0.0742381
+  rotation 0.0127106 0.999903 -0.00567862 -2.30022
+#  controller "elisa3"
+#  controllerArgs "255 255 0"
+  controller "irteusgl"
+  controllerArgs "motor_demo.l (main)"
+}
+DEF ELISA3-2 Elisa3 {
+  translation 0.345082 -0.00041403 -0.283637
+  rotation 0.0127302 0.998969 -0.0435813 -0.567472
+#  controller "elisa3"
+#  controllerArgs "255 0 0"
+  controller "irteusgl"
+  controllerArgs "motor_demo.l (main)"
+}
+DEF ELISA3-3 Elisa3 {
+  translation -0.346646 -0.000414059 -0.241923
+  rotation 0.0127216 0.998824 -0.0467882 -0.530425
+#  controller "elisa3"
+#  controllerArgs "0 255 0"
+  controller "irteusgl"
+  controllerArgs "motor_demo.l (main)"
+}
+DEF ELISA3-4 Elisa3 {
+  translation -0.321425 -0.000414069 0.125683
+  rotation 0.0126728 0.998291 0.0570428 0.438504
+#  controller "elisa3"
+#  controllerArgs "0 255 0"
+  controller "irteusgl"
+  controllerArgs "motor_demo.l (main)"
+}
+DEF ELISA3-5 Elisa3 {
+  translation 0.321178 -0.00041407 0.500225
+  rotation 0.0127169 0.998905 -0.0450288 -0.550141
+#  controller "elisa3"
+#  controllerArgs "255 255 0"
+  controller "irteusgl"
+  controllerArgs "motor_demo.l (main)"
+}
+DEF ELISA3-6 Elisa3 {
+  translation 0.158396 -0.00041416 -0.0756374
+  rotation 0.0126843 0.999657 0.0228995 1.01365
+#  controller "elisa3"
+#  controllerArgs "255 255 0"
+  controller "irteusgl"
+  controllerArgs "motor_demo.l (main)"
+}
+DEF ELISA3-7 Elisa3 {
+  translation -0.314326 -0.000414094 -0.830816
+  rotation 0.0126952 0.999701 0.0209109 1.09237
+#  controller "elisa3"
+#  controllerArgs "0 0 255"
+  controller "irteusgl"
+  controllerArgs "motor_demo.l (main)"
+}
+DEF ELISA3-8 Elisa3 {
+  translation 0.377286 -0.000414076 -0.526987
+  rotation 0.0127103 0.999904 -0.00544686 -2.33102
+#  controller "elisa3"
+#  controllerArgs "0 0 255"
+  controller "irteusgl"
+  controllerArgs "motor_demo.l (main)"
+}
+DEF ELISA3-9 Elisa3 {
+  translation 0.693387 -0.000414059 0.0923512
+  rotation 0.0127138 0.999833 -0.0130946 -1.54073
+#  controller "elisa3"
+#  controllerArgs "255 0 255"
+  controller "irteusgl"
+  controllerArgs "motor_demo.l (main)"
+}
+DEF ELISA3-10 Elisa3 {
+  translation -0.646468 -0.000414055 0.482807
+  rotation 0.0127224 0.999502 -0.028887 -0.828774
+#  controller "elisa3"
+#  controllerArgs "0 255 255"
+  controller "irteusgl"
+  controllerArgs "motor_demo.l (main)"
+}

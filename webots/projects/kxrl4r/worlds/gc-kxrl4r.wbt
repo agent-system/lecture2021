@@ -4,15 +4,24 @@ WorldInfo {
     "generated from eus2webots"
   ]
   title "kxrl4r demo"
-  basicTimeStep 16
+  basicTimeStep 1
+  CFM  1.000000e-04   # default 0.00001
+  ERP  0.2   # default 0.2
+  defaultDamping Damping {
+    linear 0.5
+    angular 0.5
+  }
   coordinateSystem "NUE" 
   contactProperties [
      ContactProperties {
       material1 "body"
       material2 "floor"
-      coulombFriction [ 0.5 ]
+      coulombFriction [ 0.995 ]
+      bounce 0.05
+      forceDependentSlip [ 0.005 ]
     }
   ]
+
 }
 Viewpoint {
   fieldOfView 1.1
@@ -145,8 +154,10 @@ DEF WATER Fluid {
 }
 
 Solid {
-  translation 3.79306 0.5 0.555885
+  translation 4.85688 0.5 2.60082
   rotation -0.48978614029103495 -0.15329904009109155 -0.8582592505099848 2.73794
+  recognitionColors [0.807843 0.72549 0.498039]
+  model "garbage"
   children [
   DEF S Shape {
       appearance PBRAppearance {
@@ -166,8 +177,10 @@ Solid {
   physics Physics { density 500
     damping Damping { linear 0.5 angular 0.5 } } } 
 Solid {
-  translation -4.73322 0.5 -1.65987
+  translation 0.426415 0.5 1.24922
   rotation -0.48978614029103495 -0.15329904009109155 -0.8582592505099848 2.73794
+  recognitionColors [0.807843 0.72549 0.498039]
+  model "garbage"
   children [
   DEF S Shape {
       appearance PBRAppearance {
@@ -187,8 +200,10 @@ Solid {
   physics Physics { density 500
     damping Damping { linear 0.5 angular 0.5 } } } 
 Solid {
-  translation 1.36547 0.5 1.58519
+  translation -4.59832 0.5 1.66656
   rotation -0.48978614029103495 -0.15329904009109155 -0.8582592505099848 2.73794
+  recognitionColors [0.807843 0.72549 0.498039]
+  model "garbage"
   children [
   DEF S Shape {
       appearance PBRAppearance {
@@ -208,8 +223,10 @@ Solid {
   physics Physics { density 500
     damping Damping { linear 0.5 angular 0.5 } } } 
 Solid {
-  translation 1.1571 0.5 -0.521389
+  translation -4.74671 0.5 -1.94951
   rotation -0.48978614029103495 -0.15329904009109155 -0.8582592505099848 2.73794
+  recognitionColors [0.807843 0.72549 0.498039]
+  model "garbage"
   children [
   DEF S Shape {
       appearance PBRAppearance {
@@ -229,8 +246,10 @@ Solid {
   physics Physics { density 500
     damping Damping { linear 0.5 angular 0.5 } } } 
 Solid {
-  translation -1.3302 0.5 2.92023
+  translation -2.87283 0.5 -2.29079
   rotation -0.48978614029103495 -0.15329904009109155 -0.8582592505099848 2.73794
+  recognitionColors [0.807843 0.72549 0.498039]
+  model "garbage"
   children [
   DEF S Shape {
       appearance PBRAppearance {
@@ -250,8 +269,10 @@ Solid {
   physics Physics { density 500
     damping Damping { linear 0.5 angular 0.5 } } } 
 Solid {
-  translation 4.41567 0.5 2.87418
+  translation 0.647975 0.5 -1.91305
   rotation -0.48978614029103495 -0.15329904009109155 -0.8582592505099848 2.73794
+  recognitionColors [0.807843 0.72549 0.498039]
+  model "garbage"
   children [
   DEF S Shape {
       appearance PBRAppearance {
@@ -271,8 +292,10 @@ Solid {
   physics Physics { density 500
     damping Damping { linear 0.5 angular 0.5 } } } 
 Solid {
-  translation -2.86356 0.5 -0.816906
+  translation 0.712768 0.5 -1.07581
   rotation -0.48978614029103495 -0.15329904009109155 -0.8582592505099848 2.73794
+  recognitionColors [0.807843 0.72549 0.498039]
+  model "garbage"
   children [
   DEF S Shape {
       appearance PBRAppearance {
@@ -292,8 +315,10 @@ Solid {
   physics Physics { density 500
     damping Damping { linear 0.5 angular 0.5 } } } 
 Solid {
-  translation -3.39309 0.5 0.264969
+  translation 1.8301 0.5 -1.42998
   rotation -0.48978614029103495 -0.15329904009109155 -0.8582592505099848 2.73794
+  recognitionColors [0.807843 0.72549 0.498039]
+  model "garbage"
   children [
   DEF S Shape {
       appearance PBRAppearance {
@@ -313,8 +338,10 @@ Solid {
   physics Physics { density 500
     damping Damping { linear 0.5 angular 0.5 } } } 
 Solid {
-  translation -1.74457 0.5 -2.16296
+  translation 2.77079 0.5 -0.908874
   rotation -0.48978614029103495 -0.15329904009109155 -0.8582592505099848 2.73794
+  recognitionColors [0.807843 0.72549 0.498039]
+  model "garbage"
   children [
   DEF S Shape {
       appearance PBRAppearance {
@@ -334,8 +361,10 @@ Solid {
   physics Physics { density 500
     damping Damping { linear 0.5 angular 0.5 } } } 
 Solid {
-  translation 0.824712 0.5 -1.28343
+  translation 1.9525 0.5 2.24499
   rotation -0.48978614029103495 -0.15329904009109155 -0.8582592505099848 2.73794
+  recognitionColors [0.807843 0.72549 0.498039]
+  model "garbage"
   children [
   DEF S Shape {
       appearance PBRAppearance {
@@ -357,6 +386,14 @@ Solid {
 kxrl4r {
   translation -3.0 0.5 0.0
   rotation 1.000000 0.000000 0.0 -1.57 
+  immersionProperties [ 
+                  ImmersionProperties {
+                  fluidName "fluid"
+                  dragForceCoefficients 0.1 0 0
+                  dragTorqueCoefficients 0.001 0 0
+                  viscousResistanceTorqueCoefficient 0.005
+                  }
+                ]
   controller "hello_world_demo"
   controllerArgs ""
   synchronization FALSE

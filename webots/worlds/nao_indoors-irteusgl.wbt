@@ -1,0 +1,163 @@
+#VRML_SIM V6.0 utf8
+WorldInfo {
+  info [
+    "Aldebaran's Nao H25 V4.0"
+    "Author: Yvan Bourquin - www.cyberbotics.com"
+    "Date: 06 Feb 2012"
+  ]
+  title "Nao Indoors"
+  basicTimeStep 40
+  displayRefresh 1
+}
+Viewpoint {
+  orientation -0.0887868 -0.985287 -0.146033 2.13843
+  position -1.54684 0.883079 -0.914408
+  follow "NAO_H25_V40"
+}
+Background {
+}
+Floor {
+  translation -1.7 0 -1.4
+  size 6.6 6.6
+  scale 3.3 3.3
+  texture [
+    "textures/tiles.png"
+  ]
+}
+Ceiling {
+  translation -1.7 2.4 -1.4
+  size 6.6 6.6
+  scale 6.6 6.6
+}
+# Nao_H25_V40 {
+#   rotation 0 0.707107 0.707107 3.1415
+# #  controller "nao_demo"
+#    controller "irteusgl"
+#    controllerArgs "nao_demo.l (main)"
+# }
+Wall {
+  translation -3.35 0 1.9
+}
+Wall {
+  translation -0.05 0 -4.7
+}
+Wall {
+  translation -3.35 0 -4.7
+}
+Wall {
+  translation -5 0 -3.05
+  rotation 0 1 0 1.5708
+}
+Wall {
+  translation 1.6 0 -3.05
+  rotation 0 1 0 1.5708
+}
+WallGap {
+  translation -5 0 -1.4
+}
+WallGap {
+  translation -5 0 1.9
+}
+WallGap {
+  translation 1.6 0 -4.7
+}
+WallGap {
+  translation -1.7 0 -4.7
+}
+WallGap {
+  translation -5 0 -4.7
+}
+WallGap {
+  translation -1.7 0 1.9
+}
+WallGap {
+  translation 1.6 0 1.9
+}
+WallGap {
+  translation 1.6 0 -1.4
+}
+WallWithSingleDoorFrame {
+  translation -0.05 0 1.9
+}
+SingleDoorCommon {
+  translation -0.05 0 1.9
+}
+WallWithSingleDoorFrame {
+  translation 1.6 0 0.25
+  rotation 0 1 0 -1.5708
+}
+SingleDoorEntree {
+  translation 1.6 0 0.25
+  rotation 0 1 0 1.5708
+}
+WallWithDoubleWindowFrame {
+  translation -5 0 0.25
+  rotation 0 1 0 1.5708
+}
+DoubleWindow {
+  translation -5 0 0.25
+  rotation 0 1 0 1.5708
+}
+CeilingLight {
+  translation -2.5 2.4 -1
+  pointLightAmbientIntensity 2
+  pointLightAttenuation 0 0 1
+  pointLightIntensity 3
+  pointLightCastShadows TRUE
+}
+FloorLight {
+  translation -4.3 0 -4
+  pointLightAmbientIntensity 2
+  pointLightAttenuation 0 0 1
+  pointLightIntensity 0.5
+}
+Desk {
+  translation -4.5 0 -3
+  rotation 0 1 0 1.5708
+}
+WoodenChair {
+  translation -4.1 0 -2.85
+  rotation 0 1 0 4.71239
+  physics Physics {
+    centerOfMass 0 0.45 0
+  }
+}
+Book {
+  translation -4.5 0.722909 -3.2
+  rotation -0.737221 0.478332 0.477184 1.8584
+}
+SmallTable {
+  translation -2.5 0.02 -0.8
+}
+Armchair {
+  translation -1.2 0 -2.2
+  rotation 0 -1 0 2.30591
+}
+Sofa {
+  translation -4.2 0 -1
+}
+Sofa {
+  translation -2.5 0 1
+  rotation 0 1 0 1.5708
+}
+Carpet {
+  translation -2.5 -0.015 -0.9
+}
+BunchOfSunFlowers {
+  translation -1.1 0 1
+}
+Book {
+  translation -4.61 0.72292 -2.7
+  rotation -0.9362 0.250785 0.246243 1.62618
+}
+Can {
+  translation -2.3 0.61335 -0.78
+  rotation 0 -1 0 1.29491
+}
+PottedTree {
+  translation 1 0 -3.5
+}
+PortraitPainting {
+  translation -2.53 1.6 1.73
+  rotation 0 1 0 3.14159
+}

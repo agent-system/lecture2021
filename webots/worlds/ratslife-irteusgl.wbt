@@ -1,0 +1,840 @@
+#VRML_SIM V6.0 utf8
+WorldInfo {
+  info [
+    "Name: Rats life pattern"
+    "Author: Rohrer Fabien"
+    "Date: September 10"
+  ]
+  basicTimeStep 16
+  displayRefresh 4
+}
+DEF VIEWPOINT Viewpoint {
+  fieldOfView 0.755398
+  orientation 0.0692449 0.96128 0.266731 3.89326
+  position -0.721543 0.880107 -0.700621
+  near 0.01
+}
+Background {
+  skyColor [
+    0.552941 0.596078 0.701961
+  ]
+}
+PointLight {
+  ambientIntensity 10
+  color 0.9 0.9 0.9
+  intensity 0.7
+  location 0.552 2 0.552
+}
+DEF W000 LegoWall {
+  translation 0 0.025 -0.2
+}
+DEF W001 LegoWall {
+  translation 0.05 0.025 -0.2
+}
+DEF W002 LegoWall {
+  translation 0.1 0.025 -0.2
+}
+DEF W003 LegoWall {
+  translation 0.15 0.025 -0.2
+}
+DEF W004 LegoWall {
+  translation 0.2 0.025 -0.2
+}
+DEF W005 LegoWall {
+  translation 0.25 0.025 -0.2
+}
+DEF W006 LegoWall {
+  translation 0.3 0.025 -0.2
+}
+DEF W007 LegoWall {
+  translation 0.35 0.025 -0.2
+}
+DEF W008 LegoWall {
+  translation 0.4 0.025 -0.2
+}
+DEF W009 LegoWall {
+  translation 0.45 0.025 -0.2
+}
+DEF W010 LegoWall {
+  translation 0.5 0.025 -0.2
+}
+DEF W011 LegoWall {
+  translation 0.55 0.025 -0.2
+}
+DEF W012 LegoWall {
+  translation 0.6 0.025 -0.2
+}
+DEF W013 LegoWall {
+  translation 0.65 0.025 -0.2
+}
+DEF W014 LegoWall {
+  translation 0.7 0.025 -0.2
+}
+DEF W015 LegoWall {
+  translation 0.75 0.025 -0.2
+}
+DEF W016 LegoWall {
+  translation 0.8 0.025 -0.2
+}
+DEF W017 LegoWall {
+  translation 0.85 0.025 -0.2
+}
+DEF W018 LegoWall {
+  translation 0.9 0.025 -0.2
+}
+DEF W019 LegoWall {
+  translation 0.95 0.025 -0.2
+}
+DEF W020 LegoWall {
+  translation 1 0.025 -0.2
+}
+DEF W021 LegoWall {
+  translation 1.05 0.025 -0.2
+}
+DEF W022 LegoWall {
+  translation 1.1 0.025 -0.2
+}
+DEF W023 LegoWall {
+  translation 1.15 0.025 -0.2
+}
+DEF W024 LegoWall {
+  translation 1.2 0.025 -0.2
+}
+DEF W025 LegoWall {
+  translation 1.25 0.025 -0.2
+}
+DEF W026 LegoWall {
+  translation 1.3 0.025 -0.2
+}
+DEF W027 LegoWall {
+  translation 1.35 0.025 -0.2
+}
+DEF W028 LegoWall {
+  translation 1.4 0.025 -0.2
+}
+DEF W029 LegoWall {
+  translation 1.45 0.025 -0.2
+}
+DEF W030 LegoWall {
+  translation 1.5 0.025 -0.2
+}
+DEF W031 LegoWall {
+  translation 1.55 0.025 -0.2
+}
+DEF W032 LegoWall {
+  translation 1.6 0.025 -0.2
+}
+DEF W033 LegoWall {
+  translation 1.65 0.025 -0.2
+}
+DEF W034 LegoWall {
+  translation 1.7 0.025 -0.2
+}
+DEF W035 LegoWall {
+  translation 1.75 0.025 -0.2
+}
+DEF W036 LegoWall {
+  translation 1.8 0.025 -0.2
+}
+DEF W037 LegoWall {
+  translation 1.85 0.025 -0.2
+}
+DEF W038 LegoWall {
+  translation 1.9 0.025 -0.2
+}
+DEF W039 LegoWall {
+  translation 1.95 0.025 -0.2
+}
+DEF W040 LegoWall {
+  translation 2 0.025 -0.2
+}
+DEF W041 LegoWall {
+  translation 2.05 0.025 -0.2
+}
+DEF W042 LegoWall {
+  translation 2.1 0.025 -0.2
+}
+DEF W043 LegoWall {
+  translation 2.15 0.025 -0.2
+}
+DEF W044 LegoWall {
+  translation 2.2 0.025 -0.2
+}
+DEF W045 LegoWall {
+  translation 2.25 0.025 -0.2
+}
+DEF W046 LegoWall {
+  translation 2.3 0.025 -0.2
+}
+DEF W047 LegoWall {
+  translation 2.35 0.025 -0.2
+}
+DEF W048 LegoWall {
+  translation 2.4 0.025 -0.2
+}
+DEF W049 LegoWall {
+  translation 2.45 0.025 -0.2
+}
+DEF W050 LegoWall {
+  translation 2.5 0.025 -0.2
+}
+DEF W051 LegoWall {
+  translation 2.55 0.025 -0.2
+}
+DEF W052 LegoWall {
+  translation 2.6 0.025 -0.2
+}
+DEF W053 LegoWall {
+  translation 2.65 0.025 -0.2
+}
+DEF W054 LegoWall {
+  translation 2.7 0.025 -0.2
+}
+DEF W055 LegoWall {
+  translation 2.75 0.025 -0.2
+}
+DEF W056 LegoWall {
+  translation 2.8 0.025 -0.2
+}
+DEF W057 LegoWall {
+  translation 2.85 0.025 -0.2
+}
+DEF W058 LegoWall {
+  translation 2.9 0.025 -0.2
+}
+DEF W059 LegoWall {
+  translation 2.95 0.025 -0.2
+}
+DEF W060 LegoWall {
+  translation 3 0.025 -0.2
+}
+DEF W061 LegoWall {
+  translation 3.05 0.025 -0.2
+}
+DEF W062 LegoWall {
+  translation 3.1 0.025 -0.2
+}
+DEF W063 LegoWall {
+  translation 3.15 0.025 -0.2
+}
+DEF W064 LegoWall {
+  translation 3.2 0.025 -0.2
+}
+DEF W065 LegoWall {
+  translation 3.25 0.025 -0.2
+}
+DEF W066 LegoWall {
+  translation 3.3 0.025 -0.2
+}
+DEF W067 LegoWall {
+  translation 3.35 0.025 -0.2
+}
+DEF W068 LegoWall {
+  translation 3.4 0.025 -0.2
+}
+DEF W069 LegoWall {
+  translation 3.45 0.025 -0.2
+}
+DEF W070 LegoWall {
+  translation 3.5 0.025 -0.2
+}
+DEF W071 LegoWall {
+  translation 3.55 0.025 -0.2
+}
+DEF W072 LegoWall {
+  translation 3.6 0.025 -0.2
+}
+DEF W073 LegoWall {
+  translation 3.65 0.025 -0.2
+}
+DEF W074 LegoWall {
+  translation 3.7 0.025 -0.2
+}
+DEF W075 LegoWall {
+  translation 3.75 0.025 -0.2
+}
+DEF W076 LegoWall {
+  translation 3.8 0.025 -0.2
+}
+DEF W077 LegoWall {
+  translation 3.85 0.025 -0.2
+}
+DEF W078 LegoWall {
+  translation 3.9 0.025 -0.2
+}
+DEF W079 LegoWall {
+  translation 3.95 0.025 -0.2
+}
+DEF W080 LegoWall {
+  translation 4 0.025 -0.2
+}
+DEF W081 LegoWall {
+  translation 4.05 0.025 -0.2
+}
+DEF W082 LegoWall {
+  translation 4.1 0.025 -0.2
+}
+DEF W083 LegoWall {
+  translation 4.15 0.025 -0.2
+}
+DEF W084 LegoWall {
+  translation 4.2 0.025 -0.2
+}
+DEF W085 LegoWall {
+  translation 4.25 0.025 -0.2
+}
+DEF W086 LegoWall {
+  translation 4.3 0.025 -0.2
+}
+DEF W087 LegoWall {
+  translation 4.35 0.025 -0.2
+}
+DEF W088 LegoWall {
+  translation 4.4 0.025 -0.2
+}
+DEF W089 LegoWall {
+  translation 4.45 0.025 -0.2
+}
+DEF W090 LegoWall {
+  translation 4.5 0.025 -0.2
+}
+DEF W091 LegoWall {
+  translation 4.55 0.025 -0.2
+}
+DEF W092 LegoWall {
+  translation 4.6 0.025 -0.2
+}
+DEF W093 LegoWall {
+  translation 4.65 0.025 -0.2
+}
+DEF W094 LegoWall {
+  translation 4.7 0.025 -0.2
+}
+DEF W095 LegoWall {
+  translation 4.75 0.025 -0.2
+}
+DEF W096 LegoWall {
+  translation 4.8 0.025 -0.2
+}
+DEF W097 LegoWall {
+  translation 4.85 0.025 -0.2
+}
+DEF W098 LegoWall {
+  translation 4.9 0.025 -0.2
+}
+DEF W099 LegoWall {
+  translation 4.95 0.025 -0.2
+}
+DEF W100 LegoWall {
+  translation 5 0.025 -0.2
+}
+DEF W101 LegoWall {
+  translation 5.05 0.025 -0.2
+}
+DEF W102 LegoWall {
+  translation 5.1 0.025 -0.2
+}
+DEF W103 LegoWall {
+  translation 5.15 0.025 -0.2
+}
+DEF W104 LegoWall {
+  translation 5.2 0.025 -0.2
+}
+DEF W105 LegoWall {
+  translation 5.25 0.025 -0.2
+}
+DEF W106 LegoWall {
+  translation 5.3 0.025 -0.2
+}
+DEF W107 LegoWall {
+  translation 5.35 0.025 -0.2
+}
+DEF W108 LegoWall {
+  translation 5.4 0.025 -0.2
+}
+DEF W109 LegoWall {
+  translation 5.45 0.025 -0.2
+}
+DEF W110 LegoWall {
+  translation 5.5 0.025 -0.2
+}
+DEF W111 LegoWall {
+  translation 5.55 0.025 -0.2
+}
+DEF W112 LegoWall {
+  translation 5.6 0.025 -0.2
+}
+DEF W113 LegoWall {
+  translation 5.65 0.025 -0.2
+}
+DEF W114 LegoWall {
+  translation 5.7 0.025 -0.2
+}
+DEF W115 LegoWall {
+  translation 5.75 0.025 -0.2
+}
+DEF W116 LegoWall {
+  translation 5.8 0.025 -0.2
+}
+DEF W117 LegoWall {
+  translation 5.85 0.025 -0.2
+}
+DEF W118 LegoWall {
+  translation 5.9 0.025 -0.2
+}
+DEF W119 LegoWall {
+  translation 5.95 0.025 -0.2
+}
+DEF W120 LegoWall {
+  translation 6 0.025 -0.2
+}
+DEF I000 LegoInterval {
+  translation 0 0.025 -0.3
+}
+DEF I001 LegoInterval {
+  translation 0.05 0.025 -0.3
+}
+DEF I002 LegoInterval {
+  translation 0.1 0.025 -0.3
+}
+DEF I003 LegoInterval {
+  translation 0.15 0.025 -0.3
+}
+DEF I004 LegoInterval {
+  translation 0.2 0.025 -0.3
+}
+DEF I005 LegoInterval {
+  translation 0.25 0.025 -0.3
+}
+DEF I006 LegoInterval {
+  translation 0.3 0.025 -0.3
+}
+DEF I007 LegoInterval {
+  translation 0.35 0.025 -0.3
+}
+DEF I008 LegoInterval {
+  translation 0.4 0.025 -0.3
+}
+DEF I009 LegoInterval {
+  translation 0.45 0.025 -0.3
+}
+DEF I010 LegoInterval {
+  translation 0.5 0.025 -0.3
+}
+DEF I011 LegoInterval {
+  translation 0.55 0.025 -0.3
+}
+DEF I012 LegoInterval {
+  translation 0.6 0.025 -0.3
+}
+DEF I013 LegoInterval {
+  translation 0.65 0.025 -0.3
+}
+DEF I014 LegoInterval {
+  translation 0.7 0.025 -0.3
+}
+DEF I015 LegoInterval {
+  translation 0.75 0.025 -0.3
+}
+DEF I016 LegoInterval {
+  translation 0.8 0.025 -0.3
+}
+DEF I017 LegoInterval {
+  translation 0.85 0.025 -0.3
+}
+DEF I018 LegoInterval {
+  translation 0.9 0.025 -0.3
+}
+DEF I019 LegoInterval {
+  translation 0.95 0.025 -0.3
+}
+DEF I020 LegoInterval {
+  translation 1 0.025 -0.3
+}
+DEF I021 LegoInterval {
+  translation 1.05 0.025 -0.3
+}
+DEF I022 LegoInterval {
+  translation 1.1 0.025 -0.3
+}
+DEF I023 LegoInterval {
+  translation 1.15 0.025 -0.3
+}
+DEF I024 LegoInterval {
+  translation 1.2 0.025 -0.3
+}
+DEF I025 LegoInterval {
+  translation 1.25 0.025 -0.3
+}
+DEF I026 LegoInterval {
+  translation 1.3 0.025 -0.3
+}
+DEF I027 LegoInterval {
+  translation 1.35 0.025 -0.3
+}
+DEF I028 LegoInterval {
+  translation 1.4 0.025 -0.3
+}
+DEF I029 LegoInterval {
+  translation 1.45 0.025 -0.3
+}
+DEF I030 LegoInterval {
+  translation 1.5 0.025 -0.3
+}
+DEF I031 LegoInterval {
+  translation 1.55 0.025 -0.3
+}
+DEF I032 LegoInterval {
+  translation 1.6 0.025 -0.3
+}
+DEF I033 LegoInterval {
+  translation 1.65 0.025 -0.3
+}
+DEF I034 LegoInterval {
+  translation 1.7 0.025 -0.3
+}
+DEF I035 LegoInterval {
+  translation 1.75 0.025 -0.3
+}
+DEF I036 LegoInterval {
+  translation 1.8 0.025 -0.3
+}
+DEF I037 LegoInterval {
+  translation 1.85 0.025 -0.3
+}
+DEF I038 LegoInterval {
+  translation 1.9 0.025 -0.3
+}
+DEF I039 LegoInterval {
+  translation 1.95 0.025 -0.3
+}
+DEF I040 LegoInterval {
+  translation 2 0.025 -0.3
+}
+DEF I041 LegoInterval {
+  translation 2.05 0.025 -0.3
+}
+DEF I042 LegoInterval {
+  translation 2.1 0.025 -0.3
+}
+DEF I043 LegoInterval {
+  translation 2.15 0.025 -0.3
+}
+DEF I044 LegoInterval {
+  translation 2.2 0.025 -0.3
+}
+DEF I045 LegoInterval {
+  translation 2.25 0.025 -0.3
+}
+DEF I046 LegoInterval {
+  translation 2.3 0.025 -0.3
+}
+DEF I047 LegoInterval {
+  translation 2.35 0.025 -0.3
+}
+DEF I048 LegoInterval {
+  translation 2.4 0.025 -0.3
+}
+DEF I049 LegoInterval {
+  translation 2.45 0.025 -0.3
+}
+DEF I050 LegoInterval {
+  translation 2.5 0.025 -0.3
+}
+DEF I051 LegoInterval {
+  translation 2.55 0.025 -0.3
+}
+DEF I052 LegoInterval {
+  translation 2.6 0.025 -0.3
+}
+DEF I053 LegoInterval {
+  translation 2.65 0.025 -0.3
+}
+DEF I054 LegoInterval {
+  translation 2.7 0.025 -0.3
+}
+DEF I055 LegoInterval {
+  translation 2.75 0.025 -0.3
+}
+DEF I056 LegoInterval {
+  translation 2.8 0.025 -0.3
+}
+DEF I057 LegoInterval {
+  translation 2.85 0.025 -0.3
+}
+DEF I058 LegoInterval {
+  translation 2.9 0.025 -0.3
+}
+DEF I059 LegoInterval {
+  translation 2.95 0.025 -0.3
+}
+DEF I060 LegoInterval {
+  translation 3 0.025 -0.3
+}
+DEF I061 LegoInterval {
+  translation 3.05 0.025 -0.3
+}
+DEF I062 LegoInterval {
+  translation 3.1 0.025 -0.3
+}
+DEF I063 LegoInterval {
+  translation 3.15 0.025 -0.3
+}
+DEF I064 LegoInterval {
+  translation 3.2 0.025 -0.3
+}
+DEF I065 LegoInterval {
+  translation 3.25 0.025 -0.3
+}
+DEF I066 LegoInterval {
+  translation 3.3 0.025 -0.3
+}
+DEF I067 LegoInterval {
+  translation 3.35 0.025 -0.3
+}
+DEF I068 LegoInterval {
+  translation 3.4 0.025 -0.3
+}
+DEF I069 LegoInterval {
+  translation 3.45 0.025 -0.3
+}
+DEF I070 LegoInterval {
+  translation 3.5 0.025 -0.3
+}
+DEF I071 LegoInterval {
+  translation 3.55 0.025 -0.3
+}
+DEF I072 LegoInterval {
+  translation 3.6 0.025 -0.3
+}
+DEF I073 LegoInterval {
+  translation 3.65 0.025 -0.3
+}
+DEF I074 LegoInterval {
+  translation 3.7 0.025 -0.3
+}
+DEF I075 LegoInterval {
+  translation 3.75 0.025 -0.3
+}
+DEF I076 LegoInterval {
+  translation 3.8 0.025 -0.3
+}
+DEF I077 LegoInterval {
+  translation 3.85 0.025 -0.3
+}
+DEF I078 LegoInterval {
+  translation 3.9 0.025 -0.3
+}
+DEF I079 LegoInterval {
+  translation 3.95 0.025 -0.3
+}
+DEF I080 LegoInterval {
+  translation 4 0.025 -0.3
+}
+DEF I081 LegoInterval {
+  translation 4.05 0.025 -0.3
+}
+DEF I082 LegoInterval {
+  translation 4.1 0.025 -0.3
+}
+DEF I083 LegoInterval {
+  translation 4.15 0.025 -0.3
+}
+DEF I084 LegoInterval {
+  translation 4.2 0.025 -0.3
+}
+DEF I085 LegoInterval {
+  translation 4.25 0.025 -0.3
+}
+DEF I086 LegoInterval {
+  translation 4.3 0.025 -0.3
+}
+DEF I087 LegoInterval {
+  translation 4.35 0.025 -0.3
+}
+DEF I088 LegoInterval {
+  translation 4.4 0.025 -0.3
+}
+DEF I089 LegoInterval {
+  translation 4.45 0.025 -0.3
+}
+DEF I090 LegoInterval {
+  translation 4.5 0.025 -0.3
+}
+DEF I091 LegoInterval {
+  translation 4.55 0.025 -0.3
+}
+DEF I092 LegoInterval {
+  translation 4.6 0.025 -0.3
+}
+DEF I093 LegoInterval {
+  translation 4.65 0.025 -0.3
+}
+DEF I094 LegoInterval {
+  translation 4.7 0.025 -0.3
+}
+DEF I095 LegoInterval {
+  translation 4.75 0.025 -0.3
+}
+DEF I096 LegoInterval {
+  translation 4.8 0.025 -0.3
+}
+DEF I097 LegoInterval {
+  translation 4.85 0.025 -0.3
+}
+DEF I098 LegoInterval {
+  translation 4.9 0.025 -0.3
+}
+DEF I099 LegoInterval {
+  translation 4.95 0.025 -0.3
+}
+DEF I100 LegoInterval {
+  translation 5 0.025 -0.3
+}
+DEF I101 LegoInterval {
+  translation 5.05 0.025 -0.3
+}
+DEF I102 LegoInterval {
+  translation 5.1 0.025 -0.3
+}
+DEF I103 LegoInterval {
+  translation 5.15 0.025 -0.3
+}
+DEF I104 LegoInterval {
+  translation 5.2 0.025 -0.3
+}
+DEF I105 LegoInterval {
+  translation 5.25 0.025 -0.3
+}
+DEF I106 LegoInterval {
+  translation 5.3 0.025 -0.3
+}
+DEF I107 LegoInterval {
+  translation 5.35 0.025 -0.3
+}
+DEF I108 LegoInterval {
+  translation 5.4 0.025 -0.3
+}
+DEF I109 LegoInterval {
+  translation 5.45 0.025 -0.3
+}
+DEF I110 LegoInterval {
+  translation 5.5 0.025 -0.3
+}
+DEF I111 LegoInterval {
+  translation 5.55 0.025 -0.3
+}
+DEF I112 LegoInterval {
+  translation 5.6 0.025 -0.3
+}
+DEF I113 LegoInterval {
+  translation 5.65 0.025 -0.3
+}
+DEF I114 LegoInterval {
+  translation 5.7 0.025 -0.3
+}
+DEF I115 LegoInterval {
+  translation 5.75 0.025 -0.3
+}
+DEF I116 LegoInterval {
+  translation 5.8 0.025 -0.3
+}
+DEF I117 LegoInterval {
+  translation 5.85 0.025 -0.3
+}
+DEF I118 LegoInterval {
+  translation 5.9 0.025 -0.3
+}
+DEF I119 LegoInterval {
+  translation 5.95 0.025 -0.3
+}
+DEF I120 LegoInterval {
+  translation 6 0.025 -0.3
+}
+DEF F0 NXTFeeder {
+  translation 0 0 -0.4
+}
+DEF F1 NXTFeeder {
+  translation 0.2 0 -0.4
+}
+DEF F2 NXTFeeder {
+  translation 0.4 0 -0.4
+}
+DEF F3 NXTFeeder {
+  translation 0.6 0 -0.4
+}
+DEF R0 EPuck {
+  translation 0 0 -0.6
+#  controller "Rat0"
+  controller "irteusgl"
+  controllerArgs "motor_demo.l (main)"
+  name "Rat0"
+  camera_windowPosition 0.95 0.95
+  battery [
+    200 100 1000
+  ]
+  turretSlot [
+    DEF EPUCK_FLAG Flag {
+    }
+  ]
+}
+DEF R1 EPuck {
+  translation 0.2 0 -0.6
+#  controller "Rat1"
+  controller "irteusgl"
+  controllerArgs "motor_demo.l (main)"
+  name "Rat1"
+  camera_windowPosition 0.05 0.95
+  battery [
+    200 100 1000
+  ]
+  turretSlot [
+    DEF EPUCK_FLAG Flag {
+      image [
+        "flags/rat1.png"
+      ]
+    }
+  ]
+}
+Supervisor {
+  translation 0.504 -0.0001 0.504
+  children [
+    DEF GROUND_SHAPE Shape {
+      appearance Appearance {
+        material Material {
+          specularColor 0.25098 0.25098 0.25098
+        }
+        texture ImageTexture {
+          url [
+            "textures/ground_tiles.png"
+          ]
+          filtering FALSE
+        }
+        textureTransform TextureTransform {
+          scale 10 10
+        }
+      }
+      geometry Plane {
+        size 1.12 1.12
+      }
+    }
+    DEF DEBUG Display {
+      name "debug_display"
+      boundingObject USE GROUND_SHAPE
+      width 21
+      height 21
+      windowPosition 1 0
+      pixelSize 5
+    }
+    DEF HELPER Display {
+      name "helper_display"
+      height 32
+      windowPosition 0.5 0
+      pixelSize 0
+    }
+  ]
+  locked TRUE
+#  controller "contest_manager"
+  controller "irteusgl"
+  controllerArgs "motor_demo.l (main)"
+}

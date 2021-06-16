@@ -1,7 +1,7 @@
 ;;;
 ;;;
 ;;;
-(load "../../projects/models/webotslib.l")
+(load "webotslib.l")
 
 (defconstant SPEED 1.5)
 (defconstant TIME_STEP 64)
@@ -18,8 +18,8 @@
   (wb_motor_set_velocity left_motor 0.0)
   (wb_motor_set_velocity right_motor 0.0)
 
-  (wb_motor_set_velocity left_motor (- SPEED))
-  (wb_motor_set_velocity right_motor SPEED)
+  ;;(wb_motor_set_velocity left_motor (- SPEED))
+  ;;(wb_motor_set_velocity right_motor SPEED)
   )
 
 (defun main nil
@@ -37,6 +37,87 @@
  (number_of_colors :long 1 8 112 8)
  (colors :pointer 1 8 120 8)
  (model :pointer 1 8 128 8))
+
+irteusgl$ (pprint (send *obj* :get-alist))
+#<bytecode #x8025c708>
+irteusgl$ (pprint (send *obj* :get-alist))
+((id . 0)
+ (position 0.0 0.0 0.0)
+ (orientation 0.0 0.0 0.0 0.0)
+ (size 0.0 0.0)
+ (position_on_image 0 0)
+ (size_on_image 0 0)
+ (number_of_colors . 0)
+ (colors . 0)
+ (model . 0))
+nil
+
+irteusgl$ (pprint (send (elt *robjs* 0) :get-alist))
+((id . 165)
+ (position -0.086198 -0.038943 -0.304842)
+ (orientation -0.000192 -1.0 0.000298 2.0)
+ (size 0.1 0.094482)
+ (position_on_image 57 92)
+ (size_on_image 96 71)
+ (number_of_colors . 1)
+ (colors . 94697931285520)
+ (model . 94697931284176))
+nil
+irteusgl$ (pprint (send (elt *robjs* 1) :get-alist))
+((id . 201)
+ (position -0.139417 -0.001478 -0.372755)
+ (orientation -0.643813 0.291107 -0.707645 1.66286)
+ (size 0.12198 0.170134)
+ (position_on_image 44 65)
+ (size_on_image 88 121)
+ (number_of_colors . 1)
+ (colors . 94697931284560)
+ (model . 94697931284752))
+nil
+Recognized 2 objects.
+Model of object 0: apple
+Id of object 0: 165
+Relative position of object 0: (-0.086198 -0.038943 -0.304842)
+Relative orientation of object 0: (-0.000192 -1.0 0.000298 2.0)
+Size of object 0: (0.1 0.094482)
+Position of the object 0 on the camera image: (57 92)
+Size of the object 0 on the camera image: (96 71)
+- Color 1/1: #f(0.59 0.75 0.28)
+Model of object 1: biscuit box
+Id of object 1: 201
+Relative position of object 1: (-0.139417 -0.001478 -0.372755)
+Relative orientation of object 1: (-0.643813 0.291107 -0.707645 1.66286)
+Size of object 1: (0.12198 0.170134)
+Position of the object 1 on the camera image: (44 65)
+Size of the object 1 on the camera image: (88 121)
+- Color 1/1: #f(0.92 0.76 0.3)
+
+irteusgl$ setq a (elt *robjs* 0)
+#<bytecode #x80304f90>
+irteusgl$ setq b (elt *robjs* 1)
+#<bytecode #x80302a40>
+irteusgl$ (pprint (send a :get-alist))
+((id . 164)
+ (position 0.125757 -0.031307 -0.285089)
+ (orientation 0.003547 -0.999894 -0.014151 2.65043)
+ (size 0.071139 0.098059)
+ (position_on_image 221 87)
+ (size_on_image 68 80)
+ (number_of_colors . 1)
+ (colors . 94130654978704)
+ (model . 94130654979088))
+nil
+irteusgl$ (pprint (send b :get-alist))
+((id . 200)
+ (position 0.041714 0.010742 -0.383088)
+ (orientation -0.8739 -0.015739 -0.485851 1.59935)
+ (size 0.331122 0.171366)
+ (position_on_image 153 57)
+ (size_on_image 205 107)
+ (number_of_colors . 1)
+ (colors . 94130654978512)
+ (model . 94130654977744))
+nil
 
 Recognized 2 objects.
 Model of object 0: apple

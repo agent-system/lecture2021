@@ -1,0 +1,231 @@
+#VRML_SIM V6.0 utf8
+WorldInfo {
+  info [
+    "iRobot Create simulation"
+    "The vacuum cleaner robot goes randomly into the appartment while a supervisor tracks its position and alterates the ground texture."
+    "The robot can be stopped by the virtual walls emitting IR light."
+    "Author: Fabien Rohrer <fabien.rohrer@cyberbotics.com>"
+    "Date: 21 Feb 2011"
+  ]
+  title "iRobot Create"
+}
+Viewpoint {
+  orientation -0.325127 -0.744447 -0.583174 2.40689
+  position -0.802259 5.98923 2.88325
+  near 0.1
+  follow "iRobot Create"
+}
+Background {
+  skyColor [
+    0.215686 0.258824 0.356863
+  ]
+}
+CeilingLight {
+  translation 1.29685 2.4 -1.82639
+  pointLightAmbientIntensity 3
+  pointLightAttenuation 0 0 1
+  pointLightIntensity 3
+  pointLightCastShadows TRUE
+}
+CeilingLight {
+  translation 3.55566 2.4 3.25511
+  pointLightAmbientIntensity 3
+  pointLightAttenuation 0 0 1
+  pointLightIntensity 3
+  pointLightCastShadows TRUE
+}
+WallGap {
+  translation 1.65 0 -4.95
+}
+WallGap {
+  translation 4.95 0 -4.95
+}
+WallGap {
+  translation -1.65 0 -4.95
+}
+WallGap {
+  translation -4.95 0 -4.95
+}
+WallGap {
+  translation 4.95 0 -1.65
+}
+WallGap {
+  translation -1.65 0 -1.65
+}
+WallGap {
+  translation -4.95 0 -1.65
+}
+WallGap {
+  translation 4.95 0 1.65
+}
+WallGap {
+  translation 1.65 0 1.65
+}
+WallGap {
+  translation -1.65 0 1.65
+}
+WallGap {
+  translation 4.95 0 4.95
+}
+WallGap {
+  translation 1.65 0 4.95
+}
+WallGap {
+  translation -1.65 0 4.95
+}
+WallGap {
+  translation -4.95 0 4.95
+}
+WallGap {
+  translation -4.95 0 1.65
+}
+Wall {
+  translation 3.3 0 -4.95
+}
+Wall {
+  translation -3.3 0 -4.95
+}
+Wall {
+  translation 3.3 0 4.95
+}
+Wall {
+  translation -3.3 0 4.95
+}
+Wall {
+  translation -3.3 0 1.65
+}
+Wall {
+  translation 0 0 4.95
+}
+Wall {
+  translation 4.95 0 -3.3
+  rotation 0 1 0 1.5708
+}
+Wall {
+  translation -1.65 0 -3.3
+  rotation 0 1 0 1.5708
+}
+Wall {
+  translation -4.95 0 -3.3
+  rotation 0 1 0 1.5708
+}
+Wall {
+  translation 4.95 0 0
+  rotation 0 1 0 1.5708
+}
+Wall {
+  translation -4.95 0 0
+  rotation 0 1 0 1.5708
+}
+Wall {
+  translation 4.95 0 3.3
+  rotation 0 1 0 1.5708
+}
+Wall {
+  translation -4.95 0 3.3
+  rotation 0 1 0 1.5708
+}
+Wall {
+  translation 0 0 -4.95
+}
+WallWithSingleDoorFrame {
+  translation 0 0 1.65
+}
+SingleDoorCommon {
+  translation 0 0 1.65
+}
+Table {
+  translation 3.86254 0 3.28632
+}
+Chair {
+  translation 3.47751 0 3.72164
+  rotation 0 1 0 1.71314
+}
+SmallTable {
+  translation 0.476732 0 -2.2745
+  rotation 0 1 0 0.534482
+}
+Armchair {
+  translation -0.323101 0 -3.5894
+  rotation 0 -1 0 1.01872
+}
+LandscapePainting {
+  translation 4.77308 1.5 -0.292736
+  rotation 0 1 0 -1.5708
+}
+CreateWall {
+  translation -1.63311 -3.11701e-05 -1.41024
+  rotation 0.000376288 1 0.000137895 -1.5708
+}
+CreateWall {
+  translation -3.16665 -3.11701e-05 4.72729
+  rotation 0 1 0 1.5708
+}
+DEF IROBOT_CREATE Create {
+  translation -0.0193578 0.0899546 3.69248
+  rotation -5.22101e-09 0.696498 0.717559 0
+}
+Supervisor {
+  children [
+    Transform {
+      translation -4.95 0 -4.95
+      children [
+        Shape {
+          appearance Appearance {
+            material Material {
+              diffuseColor 1 1 1
+              specularColor 0.74902 0.74902 0.74902
+            }
+            texture ImageTexture {
+              url [
+                "textures/tiles.png"
+              ]
+            }
+            textureTransform TextureTransform {
+              scale 3 3
+            }
+          }
+          geometry ElevationGrid {
+            xDimension 7
+            xSpacing 1.65
+            zDimension 7
+            zSpacing 1.65
+          }
+        }
+      ]
+    }
+    Display {
+      translation 0 0.01 0
+      children [
+        Shape {
+          appearance Appearance {
+            material Material {
+              diffuseColor 1 1 1
+              specularColor 0.74902 0.74902 0.74902
+              transparency 0.7
+            }
+            texture ImageTexture {
+              url [
+                "textures/dirty.png"
+              ]
+            }
+          }
+          geometry Plane {
+            size 9.9 9.9
+          }
+        }
+      ]
+      name "ground_display"
+      width 512
+      height 512
+      pixelSize 0
+    }
+  ]
+  boundingObject Plane {
+    size 9.9 9.9
+  }
+  locked TRUE
+#  controller "ground"
+  controller "irteusgl"
+  controllerArgs "motor_demo.l (main)"
+}

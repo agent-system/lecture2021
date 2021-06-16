@@ -1,0 +1,125 @@
+#VRML_SIM V6.0 utf8
+WorldInfo {
+  info [
+    "Pioneer 3DX robot (Adept Mobile Robots)"
+    "This two-wheel two-motor, differential wheel robot is equipped with a Microsoft kinect"
+    "It is programmed to perform a simple obstacle avoidance behaviour based on sensed values situtated on a medium-height line of the kinect display"
+    "Luc Guyot  <Luc.Guyot@Cyberbtotics.com>"
+    "Date : 24 Aug 2011"
+  ]
+  title "Pioneer 3AT equipped with a Microsoft kinect"
+  basicTimeStep 16 
+  displayRefresh 4 
+}
+Viewpoint {
+  fieldOfView 0.660595 
+  orientation -0.312202 -0.905709 -0.286742 1.66441 
+  position -20.5528 13.3045 -0.915826 
+}
+Background {
+}
+DEF GROUND Solid {
+  children [
+    DEF PLANE Shape {
+      appearance Appearance {
+        material Material {
+          diffuseColor 0.74902 0.74902 0.74902 
+        }
+        texture ImageTexture {
+          url [
+            "textures/parquet.png"
+          ]
+        }
+        textureTransform TextureTransform {
+        }
+      }
+      geometry Plane {
+        size 16 16 
+      }
+    }
+  ]
+  name "GROUND"
+  boundingObject USE PLANE
+  locked TRUE 
+}
+DEF WALL1 Solid {
+  translation -8 0.2 0 
+  children [
+    DEF WALL_SHAPE Shape {
+      appearance Appearance {
+        material Material {
+          diffuseColor 0.301961 0.301961 0.301961 
+        }
+        textureTransform TextureTransform {
+          scale 9 5 
+        }
+      }
+      geometry Box {
+        size 0.12 0.4 16 
+      }
+    }
+  ]
+  boundingObject USE WALL_SHAPE
+}
+DEF WALL2 Solid {
+  translation 8 0.2 0 
+  children [
+    USE WALL_SHAPE
+  ]
+  boundingObject USE WALL_SHAPE
+}
+DEF WALL3 Solid {
+  translation 0 0.2 -8 
+  rotation 0 1 0 1.5708 
+  children [
+    USE WALL_SHAPE
+  ]
+  boundingObject USE WALL_SHAPE
+}
+DEF WALL4 Solid {
+  translation 0 0.2 8 
+  rotation 0 1 0 1.5708 
+  children [
+    USE WALL_SHAPE
+  ]
+  boundingObject USE WALL_SHAPE
+}
+DEF PIONEER_3DX Pioneer3DX {
+  translation -0.613659 0.0975 0.0464224 
+  rotation 0 -1 0 5.12323 
+#  controller "obstacle_avoidance_with_kinect"
+  controller "irteusgl"
+  controllerArgs "motor_demo.l (main)"
+  extensionSlot [
+    Kinect {
+      translation 0 0.15 0 
+      width 150 
+      height 100 
+    }
+  ]
+}
+CardboardBox {
+  translation -0.201269 0.3 -4.94642 
+}
+CardboardBox {
+  translation 0.225428 0.3 5.08162 
+}
+FloorLight {
+  translation 0.351337 0 0.184194 
+  pointLightAmbientIntensity 6 
+  pointLightAttenuation 0 0 1 
+  pointLightIntensity 40 
+  pointLightCastShadows TRUE 
+}
+WoodBox {
+  translation 4.01933 0.3 3.31136 
+}
+WoodBox {
+  translation 3.98789 0.3 -3.08066 
+}
+WoodBox {
+  translation -4.22157 0.3 3.54663 
+}
+WoodBox {
+  translation -4.21065 0.3 -2.89465 
+}
