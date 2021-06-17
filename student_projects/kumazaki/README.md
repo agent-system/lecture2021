@@ -17,3 +17,9 @@
   - grasp or sweep garbages
 
     ![git](doc/salamander_arm.gif)
+
+### Demo
+
+
+https://user-images.githubusercontent.com/25011913/122124848-c90f2400-ce6a-11eb-82cd-68feb5a0631c.mp4
+
