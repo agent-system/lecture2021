@@ -1,5 +1,5 @@
 ;;
-;; Sun Jun 13 21:54:50 2021
+;; Thu Jun 17 21:07:14 2021
 ;; Generated for
 ;; https://github.com/agent-system/lecture2021/webots/projects/kxrl4c/controllers/irteusgl/kxr-demo.l
 ;;
@@ -18,10 +18,6 @@
 (defvar *head-swing* nil)
 (defvar *imu-show-state* nil)
 (defun isnan (v) (and  (< v 0) (> v 0)))
-(defun my_step nil
-  (when (= -1 (wb_robot_step TIME_STEP))
-    (wb_robot_cleanup)
-    (exit)))
 (defun send+ (&rest args)
   ;;(when (find-method (car args) (cadr args))
   (send* args)
@@ -114,6 +110,13 @@
   (:butterfly5 () (send self :arm-spherical 80 110))
   (:arm-up () (send! self :butterfly3))
   (:arm-down () (send! self :butterfly4))
+  (:motion-file-exec
+   (num)
+   (setq motion-file (format nil "motions/~A-~A.motion" *robot-name* num))
+   (format t ";; motion-file=~A~%" motion-file)
+   (when (probe-file motion-file)
+     (setq motion (wbu_motion_new motion-file))
+     (wbu_motion_play motion)))
   (:butterfly
    (&optional (dphi 30)) ;; deg
    (when *butterfly*
@@ -197,6 +200,7 @@
     ;;(format t ";; position=~A , j=~A~%" (wb_position_sensor_get_value (get j :sensor)) j)
     )
   (when *imu-show-state*
+    (format t ";; time_step=~A~%" time_step)
     (when (> *gyro* 0)
       (setq *gyro-vec* (cout-float-vector (wb_gyro_get_values *gyro*) 3))
       (format t ";; *gyro*=~A *gyro-vec*=~A~%" *gyro* *gyro-vec*))
@@ -271,6 +275,8 @@
    (WB_KEYBOARD_UP (send! *robot* :forward 100))
    (WB_KEYBOARD_DOWN (send! *robot* :forward -100)) ;; mm
    ("?" (help-keymap))
+   ("a" (send *robot* :motion-file-exec 20)) ;; greeting
+   ("A" (send *robot* :motion-file-exec 21)) ;; swing arm
    ("b" (setq *butterfly* (not *butterfly*)))
    ("C" (send! *robot* :to-car))
    ("c" (send! *robot* :to-humanoid))
@@ -280,12 +286,21 @@
    ("i" (setq *imu-show-state* (not *imu-show-state*)))
    ("J" (send! *robot* :fly -500))
    ("j" (send! *robot* :fly 500))
+   ("g" (send *robot* :motion-file-exec 14)) ;; get up from face-down
+   ("G" (send *robot* :motion-file-exec 15)) ;; get up from face-up
+   ("k" (send *robot* :motion-file-exec 25)) ;; kick left
+   ("K" (send *robot* :motion-file-exec 26)) ;; kick right
    ("n" (send! *robot* :neutral))
+   ("p" (send *robot* :motion-file-exec 22)) ;; push up
+   ("P" (send *robot* :motion-file-exec 24)) ;; pitty
+   ("w" (send *robot* :motion-file-exec 23)) ;; willing
    ("r" (send! *robot* :reset-pose))
    ("s" (send! *robot* :sit))
    ("S" (send! *robot* :stand))
-   ("t" (send! *robot* :turn 30))
-   ("T" (send! *robot* :turn -30))
+   ("t" (send *robot* :motion-file-exec 10)) ;; walk to left
+   ("T" (send *robot* :motion-file-exec 11)) ;; walk to right
+   ;;("t" (send! *robot* :turn 30))
+   ;;("T" (send! *robot* :turn -30))
    ("u" (send! *robot* :arm-up))
    (" " (send! *robot* :butterfly0))
    ("0" (send! *robot* :butterfly0))
@@ -294,6 +309,10 @@
    ("3" (send! *robot* :butterfly3))
    ("4" (send! *robot* :butterfly4))
    ("5" (send! *robot* :butterfly5))
+   ("6" (send *robot* :motion-file-exec 6))
+   ("7" (send *robot* :motion-file-exec 7))
+   ("8" (send *robot* :motion-file-exec 8))
+   ("9" (send *robot* :motion-file-exec 9))
    ((< new_key #x10000)
     (format t "keyboard space: i=~d key=~d~%" i new_key))
    ))
@@ -386,7 +405,7 @@
   (unless *init* (main-init))
   (do-until-key (main-step)))
 (defun main-step nil
-  (my_step)
+  (wb_robot_step (round TIME_STEP))
   (read-webots)
   (recognition-step *camera0*)
   (recognition-step *camera1*)
