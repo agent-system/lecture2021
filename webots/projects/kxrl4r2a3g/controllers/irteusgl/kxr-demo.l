@@ -1,5 +1,5 @@
 ;;
-;; Thu Jun 17 21:07:14 2021
+;; Fri Jun 18 17:47:40 2021
 ;; Generated for
 ;; https://github.com/agent-system/lecture2021/webots/projects/kxrl4r2a3g/controllers/irteusgl/kxr-demo.l
 ;;
@@ -116,7 +116,14 @@
    (format t ";; motion-file=~A~%" motion-file)
    (when (probe-file motion-file)
      (setq motion (wbu_motion_new motion-file))
-     (wbu_motion_play motion)))
+     (wbu_motion_play motion)
+     (let ((flag t))
+       (while flag
+	 (my_step)
+	 ;;(format t ";; wbu_motion_is_over=~A~%" (wbu_motion_is_over motion))
+	 (if (not (= (wbu_motion_is_over motion) 0)) (setq flag nil))
+	 ))
+     ))
   (:butterfly
    (&optional (dphi 30)) ;; deg
    (when *butterfly*
@@ -265,8 +272,10 @@
 	 (= (logand #xffff new_key) c)))
    (t (= new_key c))))
 
+
 (defun key-check (&rest args)
   (some #'(lambda (c) (char-check new_key c)) args))
+(setq *motion-i* 0)
 (setq
  *key-command-table*
  '(
@@ -291,9 +300,11 @@
    ("k" (send *robot* :motion-file-exec 25)) ;; kick left
    ("K" (send *robot* :motion-file-exec 26)) ;; kick right
    ("n" (send! *robot* :neutral))
+   ("-" (send *robot* :motion-file-exec *motion-i*) (decf *motion-i*))
+   ("+" (send *robot* :motion-file-exec *motion-i*) (incf *motion-i*))
    ("p" (send *robot* :motion-file-exec 22)) ;; push up
-   ("P" (send *robot* :motion-file-exec 24)) ;; pitty
-   ("w" (send *robot* :motion-file-exec 23)) ;; willing
+   ("P" (send *robot* :motion-file-exec 24)) ;; pity
+   ("w" (send *robot* :motion-file-exec 23)) ;; happy
    ("r" (send! *robot* :reset-pose))
    ("s" (send! *robot* :sit))
    ("S" (send! *robot* :stand))
@@ -339,6 +350,9 @@
   (wb_robot_init)
   (setq *robot-name* (wb_robot_get_name))
   (format t ";; *robot-name*=~S~%" *robot-name*) ;; webots/projects/kxrxxx/irteusgl
+  (format t ";; TIME_STEP=~S~%" TIME_STEP)
+  ;;(setq TIME_STEP (round (wb_robot_get_basic_time_step)))
+  ;;(format t ";; basic TIME_STEP=~S~%" TIME_STEP)
   (setq n_devices (wb_robot_get_number_of_devices))
   (dotimes (i n_devices)
     (setq d (wb_robot_get_device_by_index i))
@@ -404,8 +418,14 @@
 (defun main nil
   (unless *init* (main-init))
   (do-until-key (main-step)))
+(defun my_step nil
+  (wb_robot_step (round TIME_STEP))  
+  (send *irtviewer* :draw-objects)
+  (x::window-main-one)
+  ;;(unix::usleep (* time_step 1000))
+  )
 (defun main-step nil
-  (wb_robot_step (round TIME_STEP))
+  (my_step)
   (read-webots)
   (recognition-step *camera0*)
   (recognition-step *camera1*)
@@ -414,9 +434,6 @@
   (when *butterfly* (send *robot* :butterfly))
   (when *flutter* (send *robot* :flutter))
   (read-keyboard)
-  (send *irtviewer* :draw-objects)
-  (x::window-main-one)
-  (unix::usleep (* time_step 1000))
   )
 (defun itimer-on nil
   (unless *init* (main-init))
