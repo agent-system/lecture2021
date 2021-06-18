@@ -2166,7 +2166,7 @@
 
 (defforeign wbu_motion_new webotslib
 	"wbu_motion_new" () :integer)
-        ;;  ( :char *)
+	;;  ( :char *)
 
 (defforeign wbu_motion_delete webotslib
 	"wbu_motion_delete" () :integer)
@@ -2336,7 +2336,7 @@ typedef struct {
 (defun wb_camera_image_get_blue (im camera_width m n)
  (wb_camera_image_get_byte im camera_width m n 0))
 
-(defun wb_camera_image_get_gray (im camera_width m n)
+(defun wb_camera_image_get_grey (im camera_width m n)
  (/ (+
      (wb_camera_image_get_red im camera_width m n)
      (wb_camera_image_get_green im camera_width m n)
@@ -3000,3 +3000,6 @@ typedef struct {
   (webot-proc-color)
   (webot-proc-mepzoom)
   )
+
+
+
