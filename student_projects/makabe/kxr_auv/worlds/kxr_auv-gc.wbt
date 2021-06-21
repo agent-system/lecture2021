@@ -513,12 +513,12 @@ Can {
 ## OilBarrel {
 ##   name "oilbarrel476"
 ##   translation 0.747122 0.2 -0.663762
-##   immersionProperties [
-##     ImmersionProperties {
-##       fluidName "fluid"
-##       dragForceCoefficients 0.1 0 0
-##       dragTorqueCoefficients 0.001 0 0
-##       viscousResistanceTorqueCoefficient 0.005 } ]
+  ## immersionProperties [
+  ##   ImmersionProperties {
+  ##     fluidName "fluid"
+  ##     dragForceCoefficients 0.1 0 0
+  ##     dragTorqueCoefficients 0.001 0 0
+  ##     viscousResistanceTorqueCoefficient 0.005 } ]
 ##   physics Physics {
 ##     density 500
 ##     damping Damping {
@@ -532,13 +532,14 @@ Can {
 #KXR_AUV_FULLBODY {
 kxr_amv {
 #kxr_auv_fullbody_initial {
-#kxr_auv_fullbody_nobp {	
-  translation -3.0 0.0 0.0
-  ##translation 3.0 2.0 0.0
-##rotation 1.0 0.0 1.0 3.1415
-  rotation -1.0 1.0 -1.0 2.0944
+#kxr_auv_fullbody_nobp {
+  translation -3.0 0.0 0.0 ##default
+  ##translation 3.0 0.3 0.0 ##debug flutter kick
+  rotation -1.0 1.0 -1.0 2.0944 ##kxr_amv
+  ##rotation 1.0 0.0 1.0 3.1415 ##kxr_auv_fullbody_initial
+  ##rotation -1.0 -1.0 1.0 2.0944 ##debug kxr_amv
   controller "irteusgl"
   controllerArgs "swimming-demo.l"
   synchronization FALSE
-  #controller "python_demo" 
+  #controller "python_demo"
 }
