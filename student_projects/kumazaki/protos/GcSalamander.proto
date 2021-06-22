@@ -31,6 +31,9 @@ PROTO GcSalamander [
       }
       GPS {
       }
+      Compass{
+        name "compass"
+      }
       DEF SMALL_SEGMENT Group {
         children [
           Transform {

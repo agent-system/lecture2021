@@ -51,6 +51,7 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
 #include <stdio.h>
 #include <webots/distance_sensor.h>
 #include <webots/gps.h>
+#include <webots/compass.h>
 #include <webots/keyboard.h>
 #include <webots/motor.h>
 #include <webots/robot.h>
@@ -137,7 +138,7 @@ enum {
   RELEASING,
   NUM_STATE,
 };
-int state = RETURNING;
+int state = SEARCHING;
 const char *STATE_NAME[NUM_STATE] = {
   "SEARCHING",
   "APPROACHING",
@@ -356,7 +357,7 @@ int main() {
   double starget_position[NUM_ARMS] = {0.0, 0.0};
 
   /* distance sensors, gps devices and camera*/
-  WbDeviceTag ds_left, ds_right, gps, camera;
+  WbDeviceTag ds_left, ds_right, gps, camera, compass;
 
   /* Initialize Webots lib */
   wb_robot_init();
@@ -405,6 +406,10 @@ int main() {
   /* get and enable gps device */
   gps = wb_robot_get_device("gps");
   wb_gps_enable(gps, CONTROL_STEP);
+
+  /* get and enable compass */
+  compass = wb_robot_get_device("compass");
+  wb_compass_enable(compass, CONTROL_STEP);
 
   /* enable keyboard */
   wb_keyboard_enable(CONTROL_STEP);
@@ -498,16 +503,28 @@ int main() {
     case RETURNING:
       {
         control = AUTO;
-        //if (nStep%CONTROL_STEP == 0) {
-          double dx = cur_pos.x - prev_pos.x;
-          double dz = cur_pos.z - prev_pos.z;
-          double da = atan2(dz, dx);
+        double dx = goal.x - cur_pos.x;
+        double dz = goal.z - cur_pos.z;
+        double da = atan2(dx, dz);
 
-          double dxp = goal.x - cur_pos.x;
-          double dzp = goal.z - cur_pos.z;
-          double dap = atan2(dzp, dxp);
-          spine_offset = min(abs(da-dap), 0.1);
-        //}
+        double angx = -wb_compass_get_values(compass)[X];
+        double angz = -wb_compass_get_values(compass)[Z];
+        double ang = atan2(angz, angx);
+
+        if (nStep%CONTROL_STEP == 0) {
+
+          double d = ang-da;
+          while(abs(d) > M_PI){
+            d = d > 0 ? d - 2*M_PI : d + 2*M_PI;
+          }
+          spine_offset = max(-0.2, min(d/5.0, 0.2));
+          printf("pos %f %f\n", dx, dz);
+          printf("angle %f %f %f %f\n", da, ang, d, spine_offset);
+        }
+
+        if (abs(dx) < 1.0 && abs(dz) < 1.0) {
+          state = RELEASING;
+        }
       }
       break;
     case RELEASING:      
@@ -525,7 +542,7 @@ int main() {
       break;
     };
 
-    printf("spine_offset %f\n", spine_offset);
+    // printf("spine_offset %f\n", spine_offset);
 
     if (control == AUTO) {
       /* increase phase according to elapsed time */
