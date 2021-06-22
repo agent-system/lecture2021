@@ -18,6 +18,15 @@
 
     ![git](doc/salamander_arm.gif)
 
+#### State machine
+  - Searching - Look and walk around in random directions for garbage
+  - Approacning - When some garbages are detected, walk toward the nearest one.
+  - Grabbing - Grab garbage by arms.
+  - Returning - Carry garbage to the collection point.
+  - Releasing - Release garbage.
+
+  ![state machine](doc/StateMachine.png)
+
 ### Demo
 
 
