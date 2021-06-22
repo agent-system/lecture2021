@@ -74,7 +74,7 @@ using namespace cv;
 #define WATER_LEVEL 0.0
 
 /* virtual time between two calls to the run() function */
-#define CONTROL_STEP 32
+#define CONTROL_STEP 16
 
 /* global variables */
 static double spine_offset = 0.0;
@@ -257,14 +257,16 @@ struct BoundingBox {
 };
 int findObj(const Mat& image, Mat& limage, int width, int height, int r, int c, int label) {
 
+  if (0 > r || r >= height ) return 0;
+  if (0 > c || c >= width )  return 0;
   if (limage.at<uchar>(r, c) != 0 || image.at<Vec4b>(r, c)[2] != 255 ) return 0;
 
   int num = 1;
   limage.at<uchar>(r, c) = label;
-  if (r != 0) num += findObj(image, limage, width, height, r-1, c, label);
-  if (c != 0) num += findObj(image, limage, width, height, r, c-1, label);
-  if (r != width-1) num += findObj(image, limage, width, height, r+1, c, label);
-  if (c != height-1) num += findObj(image, limage, width, height, r, c+1, label);
+  if (r > 0) num += findObj(image, limage, width, height, r-1, c, label);
+  if (c > 0) num += findObj(image, limage, width, height, r, c-1, label);
+  if (r < width-1) num += findObj(image, limage, width, height, r+1, c, label);
+  if (c < height-1) num += findObj(image, limage, width, height, r, c+1, label);
 
   return num;
 }
@@ -416,16 +418,22 @@ int main() {
     spine_offset = (cw > 3.0 * width/4.0) ? 0.05 : 
                    (cw < width/4.0) ? -0.05 : 0.0;
 #else
-    int objSize = findNearest(processed_image, width, height, box);
-    if (nStep%CONTROL_STEP == 0) {
-      spine_offset = (box.x + box.w/2 - width/2.0)/width*2.0*0.075;
-    }
-    printf("size %d\n", objSize);
-    if (objSize > 10000) {
-      scontrol = SWEEP;
-    }
-    if (objSize > 42000) {
-      scontrol = GRIP;
+    if (scontrol != GRIP) {
+      int objSize = findNearest(processed_image, width, height, box);
+      if (nStep%CONTROL_STEP == 0) {
+        spine_offset = (box.x + box.w/2 - width/2.0)/width*2.0*0.175;
+        printf("offset: %f\n", spine_offset);
+      }
+      if (objSize > 42000) {
+        scontrol = GRIP;
+        control = STOP;
+      }
+      else if (objSize > 10000) {
+        scontrol = SWEEP;
+      }
+      else {
+        scontrol = CLOSE;
+      }
     }
 
 #endif
