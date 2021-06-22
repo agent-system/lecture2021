@@ -67,6 +67,13 @@ using namespace cv;
 #define Y 1
 #define Z 2
 
+struct Pos {
+  double x, y, z;
+};
+static const Pos goal = {
+  5.0, 0.0, -3.0
+};
+
 /* 6 actuated body segments and 4 legs */
 #define NUM_MOTORS 10
 
@@ -119,6 +126,24 @@ static double arm_targets[NUM_ARM_MODE][NUM_ARMS] = {
   { 0.0,          0.0,            0.0,          0.0 }, // CLOSE
   { M_PI/2.0,     -M_PI/2.0,      -M_PI,        M_PI }, // SWEEP
   { M_PI*2.0/3.0, -M_PI*2.0/3.0,  -M_PI/2.0,    M_PI/2.0 }, // GRIP
+};
+
+/* state */
+enum {
+  SEARCHING, 
+  APPROACHING,
+  GRABBING,
+  RETURNING,
+  RELEASING,
+  NUM_STATE,
+};
+int state = RETURNING;
+const char *STATE_NAME[NUM_STATE] = {
+  "SEARCHING",
+  "APPROACHING",
+  "GRABBING",
+  "RETURNING",
+  "RELEASING",
 };
 
 #define NB_FILTERS 6
@@ -392,53 +417,117 @@ int main() {
   int nStep = 0;
   BoundingBox box;
 
+  Pos prev_pos = {
+    wb_gps_get_values(gps)[X],
+    wb_gps_get_values(gps)[Y],
+    wb_gps_get_values(gps)[Z]
+  };
+
   while (wb_robot_step(CONTROL_STEP) != -1) {
     read_keyboard_command();
+    Pos cur_pos = {
+      wb_gps_get_values(gps)[X],
+      wb_gps_get_values(gps)[Y],
+      wb_gps_get_values(gps)[Z]
+    };
 
     const unsigned char *image = wb_camera_get_image(camera);
     process_image(image, processed_image, width, height);
-#if 0
-    double cw, ch;    
+
+    switch (state)
     {
-      Mat img = Mat(Size(width, height), CV_8UC4);
-      img.data = (uchar *)processed_image;
-      cw = ch = 0;
-      double cnt = 0;
-      for (int i = 0; i < height; i++) {
-        for (int j = 0; j < width; j++) {
-            cw  += double(img.at<Vec4b>(i, j)[2]) * j;
-            cnt += double(img.at<Vec4b>(i, j)[2]);
+    case SEARCHING:
+      {
+        static int objSize = 0;
+        scontrol = CLOSE;
+        objSize = findNearest(processed_image, width, height, box);
+        if (objSize > 0) {
+          state = APPROACHING;
+          spine_offset = (box.x + box.w/2 - width/2.0)/width*2.0*0.175;
+        }
+        else {
+          static int ss = 0;
+          if (++ss%CONTROL_STEP == 0) {
+            spine_offset = 0.5;
+          }
+          else {
+            spine_offset = 0.0;
+          }
         }
       }
-      cw = cnt != 0 ? cw / double(cnt) : width / 2.0;
-    }
-#endif
-
-#if 0
-    spine_offset = (cw > 3.0 * width/4.0) ? 0.05 : 
-                   (cw < width/4.0) ? -0.05 : 0.0;
-#else
-    if (scontrol != GRIP) {
-      int objSize = findNearest(processed_image, width, height, box);
-      if (nStep%CONTROL_STEP == 0) {
-        spine_offset = (box.x + box.w/2 - width/2.0)/width*2.0*0.175;
-        printf("offset: %f\n", spine_offset);
-      }
-      if (objSize > 42000) {
-        scontrol = GRIP;
-        control = STOP;
-      }
-      else if (objSize > 10000) {
-        scontrol = SWEEP;
-      }
-      else {
+      break;
+    case APPROACHING:
+      {
+        static int objSize = 0;
+        control = AUTO;
         scontrol = CLOSE;
+        if (nStep%CONTROL_STEP == 0) {
+          objSize = findNearest(processed_image, width, height, box);
+          spine_offset = (box.x + box.w/2 - width/2.0)/width*2.0*0.175;
+        }
+
+        static int ctime = 0;
+        ctime = objSize > 0 ? 0 : ctime+1;
+
+        if (objSize > 42000) {
+          state = GRABBING;
+        }
+        else if (objSize > 10000) {
+          scontrol = SWEEP;
+        }
+        else if (objSize == 0 && ctime > CONTROL_STEP) {
+          scontrol = CLOSE;
+          state = SEARCHING;
+        }
+        else {
+          scontrol = CLOSE;
+        }
       }
-    }
+      break;
+    case GRABBING:
+      {
+        control = STOP;
+        scontrol = GRIP;
+        static int gs = 0;
+        if (++gs > 2*CONTROL_STEP) {
+          gs = 0;
+          state = RETURNING;
+        }
+      }
+      break;
+    case RETURNING:
+      {
+        control = AUTO;
+        //if (nStep%CONTROL_STEP == 0) {
+          double dx = cur_pos.x - prev_pos.x;
+          double dz = cur_pos.z - prev_pos.z;
+          double da = atan2(dz, dx);
 
-#endif
+          double dxp = goal.x - cur_pos.x;
+          double dzp = goal.z - cur_pos.z;
+          double dap = atan2(dzp, dxp);
+          spine_offset = min(abs(da-dap), 0.1);
+        //}
+      }
+      break;
+    case RELEASING:      
+      {
+        control = STOP;
+        scontrol = CLOSE;
+        static int gs = 0;
+        if (++gs > 2*CONTROL_STEP) {
+          gs = 0;
+          state = SEARCHING;
+        }
+      }
+      break;
+    default:
+      break;
+    };
 
-    if (control == AUTO || control == KEYBOARD) {
+    printf("spine_offset %f\n", spine_offset);
+
+    if (control == AUTO) {
       /* increase phase according to elapsed time */
       lphase -= (double)CONTROL_STEP / 1000.0 * FREQUENCY * 2.0 * M_PI;
 
@@ -501,9 +590,11 @@ int main() {
     wb_display_image_paste(processed_image_display, processed_image_ref, 0, 0, false);
 
     wb_display_draw_line(processed_image_display, (int)box.x + box.w/2, 0, (int)box.x + box.w/2, height);
+    wb_display_draw_text(processed_image_display, STATE_NAME[state], 0, 0);    
     if (box.w > 0 && box.h > 0)
       wb_display_draw_rectangle(processed_image_display, box.x, box.y, box.w, box.h); 
 
+    prev_pos = cur_pos;
     nStep++;
   }
 
