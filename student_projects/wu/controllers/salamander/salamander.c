@@ -427,9 +427,9 @@ void set_motion_pos(WbDeviceTag gps, double *target_position) {
   else if (locomotion == WALK && elevation < WATER_LEVEL - 0.015) {
     locomotion = SWIM;
 
-  /* put legs backwards for swimming */
-  double backwards_position = phase - fmod(phase, 2.0 * M_PI) - M_PI / 2;
-  for (int i = 6; i < NUM_MOTORS; i++)
+    /* put legs backwards for swimming */
+    double backwards_position = phase - fmod(phase, 2.0 * M_PI) - M_PI / 2;
+    for (int i = 6; i < NUM_MOTORS; i++)
     target_position[i] = backwards_position;
   }
 
