@@ -51,6 +51,7 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
 #include <stdio.h>
 #include <webots/distance_sensor.h>
 #include <webots/gps.h>
+#include <webots/compass.h>
 #include <webots/keyboard.h>
 #include <webots/motor.h>
 #include <webots/robot.h>
@@ -67,6 +68,13 @@ using namespace cv;
 #define Y 1
 #define Z 2
 
+struct Pos {
+  double x, y, z;
+};
+static const Pos goal = {
+  5.0, 0.0, -3.0
+};
+
 /* 6 actuated body segments and 4 legs */
 #define NUM_MOTORS 10
 
@@ -74,7 +82,7 @@ using namespace cv;
 #define WATER_LEVEL 0.0
 
 /* virtual time between two calls to the run() function */
-#define CONTROL_STEP 32
+#define CONTROL_STEP 16
 
 /* global variables */
 static double spine_offset = 0.0;
@@ -119,6 +127,24 @@ static double arm_targets[NUM_ARM_MODE][NUM_ARMS] = {
   { 0.0,          0.0,            0.0,          0.0 }, // CLOSE
   { M_PI/2.0,     -M_PI/2.0,      -M_PI,        M_PI }, // SWEEP
   { M_PI*2.0/3.0, -M_PI*2.0/3.0,  -M_PI/2.0,    M_PI/2.0 }, // GRIP
+};
+
+/* state */
+enum {
+  SEARCHING, 
+  APPROACHING,
+  GRABBING,
+  RETURNING,
+  RELEASING,
+  NUM_STATE,
+};
+int state = SEARCHING;
+const char *STATE_NAME[NUM_STATE] = {
+  "SEARCHING",
+  "APPROACHING",
+  "GRABBING",
+  "RETURNING",
+  "RELEASING",
 };
 
 #define NB_FILTERS 6
@@ -252,6 +278,73 @@ void process_image(const unsigned char *image, unsigned char *processed_image, i
   memcpy(processed_image, filtered.data, 4 * width * height * sizeof(unsigned char));
 }
 
+struct BoundingBox {
+  int x, y, w, h;
+};
+int findObj(const Mat& image, Mat& limage, int width, int height, int r, int c, int label) {
+
+  if (0 > r || r >= height ) return 0;
+  if (0 > c || c >= width )  return 0;
+  if (limage.at<uchar>(r, c) != 0 || image.at<Vec4b>(r, c)[2] != 255 ) return 0;
+
+  int num = 1;
+  limage.at<uchar>(r, c) = label;
+  if (r > 0) num += findObj(image, limage, width, height, r-1, c, label);
+  if (c > 0) num += findObj(image, limage, width, height, r, c-1, label);
+  if (r < width-1) num += findObj(image, limage, width, height, r+1, c, label);
+  if (c < height-1) num += findObj(image, limage, width, height, r, c+1, label);
+
+  return num;
+}
+
+int findNearest(const unsigned char *image, int width, int height, BoundingBox& box) {
+
+  Mat label_image = Mat(Size(width, height), CV_8UC1);
+  Mat img = Mat(Size(width, height), CV_8UC4);
+  img.data = (uchar *)image;
+
+  for (int i = 0; i < height; ++i) {
+    for (int j = 0; j < width; ++j) {
+      label_image.at<uchar>(i, j) = 0;
+    }
+  }
+  int label = 1;
+  int largest = 1;
+  int max_pix = 0;
+  for (int i = 0; i < height; ++i) {
+    for (int j = 0; j < width; ++j) {
+      if (img.at<Vec4b>(i, j)[2] == 255 && label_image.at<uchar>(i, j) == 0) {
+        int npix = findObj(img, label_image, width, height, i, j, label);
+        if (max_pix < npix) {
+          max_pix = npix;
+          largest = label;
+        }
+        label++;
+      }
+    }
+  }
+
+  int l, r, t, b;
+  l = width; t = height;
+  r = b = 0;
+  for (int i = 0; i < height; ++i) {
+    for (int j = 0; j < width; ++j) {
+      if (label_image.at<uchar>(i, j) == largest) {
+        if (j < l) l = j;
+        if (j > r) r = j;
+        if (i < t) t = i;
+        if (i > b) b = i;
+      }
+    }
+  }
+  box.w = r-l;
+  box.h = b-t;
+  box.x = l;
+  box.y = t;
+  // printf("%d %d %d %d \n", box.x, box.y, box.w, box.h);
+  return max_pix;
+}
+
 int main() {
   const double FREQUENCY = 1.0; /* locomotion frequency [Hz] */
   const double WALK_AMPL = 0.6; /* radians */
@@ -264,7 +357,7 @@ int main() {
   double starget_position[NUM_ARMS] = {0.0, 0.0};
 
   /* distance sensors, gps devices and camera*/
-  WbDeviceTag ds_left, ds_right, gps, camera;
+  WbDeviceTag ds_left, ds_right, gps, camera, compass;
 
   /* Initialize Webots lib */
   wb_robot_init();
@@ -314,6 +407,10 @@ int main() {
   gps = wb_robot_get_device("gps");
   wb_gps_enable(gps, CONTROL_STEP);
 
+  /* get and enable compass */
+  compass = wb_robot_get_device("compass");
+  wb_compass_enable(compass, CONTROL_STEP);
+
   /* enable keyboard */
   wb_keyboard_enable(CONTROL_STEP);
 
@@ -322,34 +419,132 @@ int main() {
   printf("I'm sweeper! \n");
 
   /* control loop: sense-compute-act */
+  int nStep = 0;
+  BoundingBox box;
+
+  Pos prev_pos = {
+    wb_gps_get_values(gps)[X],
+    wb_gps_get_values(gps)[Y],
+    wb_gps_get_values(gps)[Z]
+  };
+
   while (wb_robot_step(CONTROL_STEP) != -1) {
     read_keyboard_command();
+    Pos cur_pos = {
+      wb_gps_get_values(gps)[X],
+      wb_gps_get_values(gps)[Y],
+      wb_gps_get_values(gps)[Z]
+    };
 
     const unsigned char *image = wb_camera_get_image(camera);
     process_image(image, processed_image, width, height);
-    double cw, ch;
+
+    switch (state)
     {
-      Mat img = Mat(Size(width, height), CV_8UC4);
-      img.data = (uchar *)processed_image;
-      cw = ch = 0;
-      double cnt = 0;
-      for (int i = 0; i < height; i++) {
-        for (int j = 0; j < width; j++) {
-            cw  += double(img.at<Vec4b>(i, j)[2]) * j;
-            cnt += double(img.at<Vec4b>(i, j)[2]);
+    case SEARCHING:
+      {
+        static int objSize = 0;
+        scontrol = CLOSE;
+        objSize = findNearest(processed_image, width, height, box);
+        if (objSize > 0) {
+          state = APPROACHING;
+          spine_offset = (box.x + box.w/2 - width/2.0)/width*2.0*0.175;
+        }
+        else {
+          static int ss = 0;
+          if (++ss%CONTROL_STEP == 0) {
+            spine_offset = 0.5;
+          }
+          else {
+            spine_offset = 0.0;
+          }
         }
       }
-      cw = cnt != 0 ? cw / double(cnt) : width / 2.0;
-    }
+      break;
+    case APPROACHING:
+      {
+        static int objSize = 0;
+        control = AUTO;
+        scontrol = CLOSE;
+        if (nStep%CONTROL_STEP == 0) {
+          objSize = findNearest(processed_image, width, height, box);
+          spine_offset = (box.x + box.w/2 - width/2.0)/width*2.0*0.175;
+        }
 
-#if 0
-    spine_offset = (cw > 3.0 * width/4.0) ? 0.05 : 
-                   (cw < width/4.0) ? -0.05 : 0.0;
-#else
-    spine_offset = (cw - width/2.0)/width*2.0*0.05;
-#endif
+        static int ctime = 0;
+        ctime = objSize > 0 ? 0 : ctime+1;
 
-    if (control == AUTO || control == KEYBOARD) {
+        if (objSize > 42000) {
+          state = GRABBING;
+        }
+        else if (objSize > 10000) {
+          scontrol = SWEEP;
+        }
+        else if (objSize == 0 && ctime > CONTROL_STEP) {
+          scontrol = CLOSE;
+          state = SEARCHING;
+        }
+        else {
+          scontrol = CLOSE;
+        }
+      }
+      break;
+    case GRABBING:
+      {
+        control = STOP;
+        scontrol = GRIP;
+        static int gs = 0;
+        if (++gs > 2*CONTROL_STEP) {
+          gs = 0;
+          state = RETURNING;
+        }
+      }
+      break;
+    case RETURNING:
+      {
+        control = AUTO;
+        double dx = goal.x - cur_pos.x;
+        double dz = goal.z - cur_pos.z;
+        double da = atan2(dx, dz);
+
+        double angx = -wb_compass_get_values(compass)[X];
+        double angz = -wb_compass_get_values(compass)[Z];
+        double ang = atan2(angz, angx);
+
+        if (nStep%CONTROL_STEP == 0) {
+
+          double d = ang-da;
+          while(abs(d) > M_PI){
+            d = d > 0 ? d - 2*M_PI : d + 2*M_PI;
+          }
+          spine_offset = max(-0.2, min(d/5.0, 0.2));
+          printf("pos %f %f\n", dx, dz);
+          printf("angle %f %f %f %f\n", da, ang, d, spine_offset);
+        }
+
+        if (abs(dx) < 1.0 && abs(dz) < 1.0) {
+          state = RELEASING;
+        }
+      }
+      break;
+    case RELEASING:      
+      {
+        control = STOP;
+        scontrol = CLOSE;
+        static int gs = 0;
+        if (++gs > 2*CONTROL_STEP) {
+          gs = 0;
+          state = SEARCHING;
+        }
+      }
+      break;
+    default:
+      break;
+    };
+
+    // printf("spine_offset %f\n", spine_offset);
+
+    if (control == AUTO) {
       /* increase phase according to elapsed time */
       lphase -= (double)CONTROL_STEP / 1000.0 * FREQUENCY * 2.0 * M_PI;
 
@@ -411,7 +606,13 @@ int main() {
     processed_image_ref = wb_display_image_new(processed_image_display, width, height, processed_image, WB_IMAGE_ARGB);
     wb_display_image_paste(processed_image_display, processed_image_ref, 0, 0, false);
 
-    wb_display_draw_line(processed_image_display, (int)cw, 0, (int)cw, height);
+    wb_display_draw_line(processed_image_display, (int)box.x + box.w/2, 0, (int)box.x + box.w/2, height);
+    wb_display_draw_text(processed_image_display, STATE_NAME[state], 0, 0);    
+    if (box.w > 0 && box.h > 0)
+      wb_display_draw_rectangle(processed_image_display, box.x, box.y, box.w, box.h); 
+
+    prev_pos = cur_pos;
+    nStep++;
   }
 
   // clean up

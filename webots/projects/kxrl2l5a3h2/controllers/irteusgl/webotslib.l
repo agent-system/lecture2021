@@ -106,7 +106,7 @@
 	;;  ( :char *)
 
 (defforeign wb_robot_get_mode webotslib
-	"wb_robot_get_mode" () WbRobotMode)
+	"wb_robot_get_mode" () :integer) ;; WbRobotMode
 	;;  ()
 
 (defforeign wb_robot_set_mode webotslib
