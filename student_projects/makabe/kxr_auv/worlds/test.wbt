@@ -108,9 +108,8 @@ TexturedBackgroundLight {
 }
 RectangleArena {
 }
-#SENSOR_SAMPLE { ## change name
-KXR_AUV_FULLBODY { ## change name
+SENSOR_SAMPLE { ## change name
   translation 0.0 0.3 0.0
-  rotation 1 0 0 -1.57
+  rotation 0 0 1 1.57
   controller "python_demo"
 }
