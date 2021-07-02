@@ -1,5 +1,7 @@
 ;;
-(load "webotslib.l")
+(eval-when
+ (eval load)
+ (load "webotslib.l"))
 
 (defconstant TIME_STEP 16)
 
@@ -12,7 +14,8 @@
 
 ;; function to check if a double is almost equal to another
 (defconstant TOLERANCE 0.05)		;;  arbitrary value
-(defun ALMOST_EQUAL (a b) (and (< a (+ b TOLERANCE)) (> a (- b TOLERANCE))))
+;;(defun ALMOST_EQUAL (a b &optional (tol TOLERANCE)) (and (< a (+ b tol)) (> a (- b tol))))
+(defun ALMOST_EQUAL (a b &optional (tol TOLERANCE)) (< (- b tol) a (+ b tol)))
 
 ;; helper constants to distinguish the motors
 (defconstant FLL_WHEEL 0)
@@ -153,7 +156,6 @@
     (wb_position_sensor_enable (elt left_arm_sensors i) TIME_STEP)
     (wb_position_sensor_enable (elt right_arm_sensors i) TIME_STEP))
   (wb_position_sensor_enable torso_sensor TIME_STEP)
-
   (wb_inertial_unit_enable imu_sensor TIME_STEP)
   (wb_camera_enable wide_stereo_l_stereo_camera_sensor TIME_STEP)
   (wb_camera_recognition_enable wide_stereo_l_stereo_camera_sensor TIME_STEP)
@@ -319,29 +321,26 @@
     (when (> firstCall 0)
       (setq maxTorque (wb_motor_get_available_torque (elt motors LEFT_FINGER)))
       (setq firstCall 0))
-    (dotimes (i 4)
-      (wb_motor_set_available_torque (elt motors i) maxTorque))
+    (dotimes (i 4) (wb_motor_set_available_torque (elt motors i) maxTorque))
     
     (cond
      ((> open 0)
-      (dotimes (i 4)
-	(wb_motor_set_position (elt motors i) (float targetOpenValue)))
-      
+      (dotimes (i 4) (wb_motor_set_position (elt motors i) (float targetOpenValue)))
       (if (> wait_on_feedback 0)
-	  (while
-	      (not (ALMOST_EQUAL (wb_position_sensor_get_value (elt sensors LEFT_FINGER)) targetOpenValue))
+	  (while (not (ALMOST_EQUAL (wb_position_sensor_get_value (elt sensors LEFT_FINGER)) targetOpenValue))
 	    (step))))
      (t
-      (dotimes (i 4)
-	(wb_motor_set_position (elt motors i) (float targetCloseValue)))
-      
+      (dotimes (i 4) (wb_motor_set_position (elt motors i) (float targetCloseValue)))
       (when (> wait_on_feedback 0)
 	;; wait until the 2 touch sensors are fired or the target value is reached
 	(while
-	    (and (or (ALMOST_EQUAL (wb_touch_sensor_get_value (elt contacts LEFT_FINGER)) 0.0)
-		     (ALMOST_EQUAL (wb_touch_sensor_get_value (elt contacts RIGHT_FINGER)) 0.0))
-		 (not (ALMOST_EQUAL (wb_position_sensor_get_value (elt sensors LEFT_FINGER))
-				    targetCloseValue)))
+	    (and
+	     (or (ALMOST_EQUAL (wb_touch_sensor_get_value (elt contacts LEFT_FINGER))
+			       0.0 0.00001)
+		 (ALMOST_EQUAL (wb_touch_sensor_get_value (elt contacts RIGHT_FINGER))
+			       0.0 0.00001))
+	     (not (ALMOST_EQUAL (wb_position_sensor_get_value (elt sensors LEFT_FINGER))
+				targetCloseValue)))
 	  (step))
 	(setq current_position (wb_position_sensor_get_value (elt sensors LEFT_FINGER)))
 	(dotimes (i 4)
@@ -359,7 +358,7 @@
   (wb_motor_set_position (elt right_arm_motors UPPER_ARM_ROLL) (float uarm_roll))
   (wb_motor_set_position (elt right_arm_motors ELBOW_LIFT) (float e_lift))
   (wb_motor_set_position (elt right_arm_motors WRIST_ROLL) (float w_roll))
-
+  (step)
   (if (> wait_on_feedback 0)
       (while
 	  (or
@@ -373,21 +372,24 @@
 
 ;; Idem for the left arm
 (defun set_left_arm_position (s_roll s_lift uarm_roll e_lift w_roll wait_on_feedback)
-  (step)
   (wb_motor_set_position (elt left_arm_motors SHOULDER_ROLL) (float s_roll))
   (wb_motor_set_position (elt left_arm_motors SHOULDER_LIFT) (float s_lift))
   (wb_motor_set_position (elt left_arm_motors UPPER_ARM_ROLL) (float uarm_roll))
   (wb_motor_set_position (elt left_arm_motors ELBOW_LIFT) (float e_lift))
   (wb_motor_set_position (elt left_arm_motors WRIST_ROLL) (float w_roll))
-
   (if (> wait_on_feedback 0)
       (while
 	  (or
-	   (not (ALMOST_EQUAL (wb_position_sensor_get_value (elt left_arm_sensors SHOULDER_ROLL)) s_roll))
-           (not (ALMOST_EQUAL (wb_position_sensor_get_value (elt left_arm_sensors SHOULDER_LIFT)) s_lift))
-           (not (ALMOST_EQUAL (wb_position_sensor_get_value (elt left_arm_sensors UPPER_ARM_ROLL)) uarm_roll))
-           (not (ALMOST_EQUAL (wb_position_sensor_get_value (elt left_arm_sensors ELBOW_LIFT)) e_lift))
-           (not (ALMOST_EQUAL (wb_position_sensor_get_value (elt left_arm_sensors WRIST_ROLL)) w_roll)))
+	   (not (ALMOST_EQUAL
+		 (wb_position_sensor_get_value (elt left_arm_sensors SHOULDER_ROLL)) s_roll))
+           (not (ALMOST_EQUAL
+		 (wb_position_sensor_get_value (elt left_arm_sensors SHOULDER_LIFT)) s_lift))
+           (not (ALMOST_EQUAL
+		 (wb_position_sensor_get_value (elt left_arm_sensors UPPER_ARM_ROLL)) uarm_roll))
+           (not (ALMOST_EQUAL
+		 (wb_position_sensor_get_value (elt left_arm_sensors ELBOW_LIFT)) e_lift))
+           (not (ALMOST_EQUAL
+		 (wb_position_sensor_get_value (elt left_arm_sensors WRIST_ROLL)) w_roll)))
 	(step)))
   )
 
@@ -412,10 +414,11 @@
   (wb_robot_init)
   (initialize_devices)
   (enable_devices)
+  (step)
   (set_initial_position)
   (format t ";;-- go to the initial position~%")
-  (set_left_arm_position 0.0 0.5 0.0 -0.5 0.0 0)
-  (set_right_arm_position 0.0 0.5 0.0 -0.5 0.0 0)
+  (set_left_arm_position 0.0 0.5 0.0 -0.5 0.0 1)
+  (set_right_arm_position 0.0 0.5 0.0 -0.5 0.0 1)
   (format t ";;-- before go_forward 0.35~%")
   (robot_go_forward 0.35)
   (format t ";;-- after go_forward 0.35~%")  
@@ -423,13 +426,15 @@
   (setq *init* t))
 
 (defun main-step nil
+  (step)
   (format t ";; i= ~A~%" (incf i))
   (format t ";;-- close the gripper with forcefeedback~%")
-  (set_gripper 1 0 20.0 1)
-  (set_gripper 0 0 20.0 1)
+  (set_gripper 1 0 80.0 1) ;; left close  20.0
+  (set_gripper 0 0 80.0 1) ;; right close 20.0
   (format t ";;-- lift the arms~%")
-  (set_left_arm_position 0.0 0.5 0.0 -1.0 0.0 0)
-  (set_right_arm_position 0.0 0.5 0.0 -1.0 0.0 0)
+  (set_left_arm_position 0.0 0.5 0.0 -1.0 0.0 1)
+  (set_right_arm_position 0.0 0.5 0.0 -1.0 0.0 1)
+  (step)
   (format t ";;-- go to the other table~%")
   (robot_go_forward -0.35)
   (format t ";;-- before turn~%")
@@ -440,8 +445,8 @@
   (set_left_arm_position 0.0 0.5 0.0 -0.5 0.0 1)
   (set_right_arm_position 0.0 0.5 0.0 -0.5 0.0 1)
   (format t ";;-- open the grippers~%")
-  (set_gripper 1 1 0.0 1)
-  (set_gripper 0 1 0.0 1)
+  (set_gripper 1 1 0.0 1) ;; left open
+  (set_gripper 0 1 0.0 1) ;; right open
   )
 (defvar *init*)
 (defun main nil
@@ -455,7 +460,10 @@
 (defun itimer-off nil
   (setq *timer-job* (remove 'main-step *timer-job*)))
 ;;(itimer-on)
-(main)
+(eval-when
+ (eval load)
+ (main))
+
 
 
 
