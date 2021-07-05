@@ -60,6 +60,9 @@ roseus $ (objects (list *robot*))
 $ ROS_NAMESPACE=robotiq roslaunch robotiq_3f_gripper_visualization robotiq_gripper_upload.launch
 $ rosparam get -p /robotiq/robot_description | sed -e 's@|@@' > robotiq_3f.urdf
 $ rosrun euscollada collada2eus -I robotiq_3f.urdf -C robotiq_3f.yaml -O robotiq_3f.l
+$ roseus robotiq_3f.l
+roseus $ (setq *robot* (robotiq-3f-gripper_articulated))
+roseus $ (objects (list *robot*))
 ```
 
 ## Kuka/youbot
