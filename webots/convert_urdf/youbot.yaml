@@ -1,0 +1,46 @@
+###
+###  $ sudo apt install ros-${ROS_DISTRO}-jsk-model-tools
+###
+###  $ mkdir /youbot_ws
+###  $ cd /youbot_ws
+###
+###  $ wstool init src
+###  $ set -y -t src youbot_description https://github.com/mas-group/youbot_description.git --git
+###  $ wstool update -t src
+###
+###  $ catkin init
+###  $ catkin build youbot_description
+###
+###  $ source /youbot_ws/devel/setup.bash
+###
+###  $ roscd youbot_description
+###  $ rosrun xacro xacro --inorder robots/youbot.urdf.xacro > youbot.urdf
+###
+###  $ rosrun euscollada collada2eus -I youbot.urdf -C youbot.yaml -O youbot.l
+###
+###  $ roseus youbot.l ## you get tiago robot as EusLisp model.
+###  roseus $ (setq *robot* (youbot))
+###  roseus $ (objects (list *robot*))
+###
+
+rarm:
+  - arm_joint_1 : rarm-shoulder-y
+  - arm_joint_2 : rarm-shoulder-p
+  - arm_joint_3 : rarm-elbow-p
+  - arm_joint_4 : rarm-wrist-p
+  - arm_joint_5 : rarm-wrist-y
+  - gripper_finger_joint_l : rarm-gripper-l
+  - gripper_finger_joint_r : rarm-gripper-r
+
+rleg:
+  - caster_joint_fl : rleg-caster-fl
+  - caster_joint_fr : rleg-caster-fr
+  - caster_joint_bl : rleg-caster-bl
+  - caster_joint_br : rleg-caster-br
+  - wheel_joint_fl  : rleg-wheel-fl
+  - wheel_joint_fr  : rleg-wheel-fr
+  - wheel_joint_bl  : rleg-wheel-bl
+  - wheel_joint_br  : rleg-wheel-br
+
+#angle-vector:
+#  reset-pose: [] 
