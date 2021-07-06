@@ -1278,14 +1278,14 @@ PROTO kxrl2w2l5a4h2_urdf [
                                       }
                                       device [
                                         RotationalMotor {
-                                          name "JOINT15"
+                                          name "larm-gripper-w"
                                           maxVelocity 40.0
                                           minPosition -4.71239
                                           maxPosition 4.71239
                                           maxTorque 10000
                                         }
                                         PositionSensor {
-                                          name "JOINT15_sensor"
+                                          name "larm-gripper-w_sensor"
                                         }
                                       ]
                                       endPoint Solid {
@@ -1466,14 +1466,14 @@ PROTO kxrl2w2l5a4h2_urdf [
                                 }
                                 device [
                                   RotationalMotor {
-                                    name "JOINT14"
+                                    name "larm-gripper2-r"
                                     maxVelocity 40.0
                                     minPosition -4.71239
                                     maxPosition 4.71239
                                     maxTorque 200.0
                                   }
                                   PositionSensor {
-                                    name "JOINT14_sensor"
+                                    name "larm-gripper2-r_sensor"
                                   }
                                 ]
                                 endPoint Solid {
@@ -2995,14 +2995,14 @@ PROTO kxrl2w2l5a4h2_urdf [
                                       }
                                       device [
                                         RotationalMotor {
-                                          name "JOINT7"
+                                          name "rarm-gripper-w"
                                           maxVelocity 40.0
                                           minPosition -4.71239
                                           maxPosition 4.71239
                                           maxTorque 10000
                                         }
                                         PositionSensor {
-                                          name "JOINT7_sensor"
+                                          name "rarm-gripper-w_sensor"
                                         }
                                       ]
                                       endPoint Solid {
@@ -3173,14 +3173,14 @@ PROTO kxrl2w2l5a4h2_urdf [
                                 }
                                 device [
                                   RotationalMotor {
-                                    name "JOINT6"
+                                    name "rarm-gripper2-r"
                                     maxVelocity 40.0
                                     minPosition -4.71239
                                     maxPosition 4.71239
                                     maxTorque 200.0
                                   }
                                   PositionSensor {
-                                    name "JOINT6_sensor"
+                                    name "rarm-gripper2-r_sensor"
                                   }
                                 ]
                                 endPoint Solid {
@@ -5313,14 +5313,14 @@ PROTO kxrl2w2l5a4h2_urdf [
                                 }
                                 device [
                                   RotationalMotor {
-                                    name "JOINT21"
+                                    name "lleg-ankle-w"
                                     maxVelocity 40.0
                                     minPosition -4.71239
                                     maxPosition 4.71239
                                     maxTorque 200.0
                                   }
                                   PositionSensor {
-                                    name "JOINT21_sensor"
+                                    name "lleg-ankle-w_sensor"
                                   }
                                 ]
                                 endPoint Solid {
@@ -8213,6 +8213,53 @@ PROTO kxrl2w2l5a4h2_urdf [
             centerOfMass [ -0.007368 0.000076 0.001506 ]
           }
         }
+      }
+    ## add
+      Solid {
+        translation -0.030000 -0.029000 0.041800
+        rotation 0.577350 -0.577350 0.577350 4.188785
+        physics Physics { density 10 }
+        children [
+          Accelerometer {
+            name "imu_gyrometer_topic accelerometer"
+          }
+          Gyro {
+            name "imu_gyrometer_topic gyro"
+          }
+          InertialUnit {
+            name "imu_gyrometer_topic inertialunit"
+          }
+          Compass {
+            name "imu_gyrometer_topic compass"
+          }
+        Group {
+        children IS extensionSlot
+        }
+        ]
+        name "imu_gyrometer"
+      }
+      Solid {
+        translation -0.030000 -0.029000 0.041800
+        rotation 0.577350 -0.577350 0.577350 4.188785
+        physics Physics { density 10 }
+        children [
+          Accelerometer {
+            name "imu_gsensor_topic accelerometer"
+          }
+          Gyro {
+            name "imu_gsensor_topic gyro"
+          }
+          InertialUnit {
+            name "imu_gsensor_topic inertialunit"
+          }
+          Compass {
+            name "imu_gsensor_topic compass"
+          }
+        Group {
+        children IS extensionSlot
+        }
+        ]
+        name "imu_gsensor"
       }
     Group {
     children IS extensionSlot

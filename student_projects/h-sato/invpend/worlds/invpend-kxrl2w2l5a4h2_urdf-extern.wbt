@@ -4,428 +4,95 @@ WorldInfo {
     "generated from eus2webots"
   ]
   title "kxrl2w2l5a4h2 demo"
+  CFM 0.0001
   basicTimeStep 1
-  CFM  1.000000e-04   # default 0.00001
-  ERP  0.2   # default 0.2
   defaultDamping Damping {
     linear 0.5
     angular 0.5
   }
-  coordinateSystem "NUE" 
+  coordinateSystem "NUE"
 }
 Viewpoint {
   fieldOfView 1.1
-  position 0.9 1.5 2.0
-  orientation  -0.780486 0.58667 0.216011 0.599585
+  orientation -0.437796205392189 0.8784400588710013 0.19151382591059005 0.5807049267158012
+  position 0.36499644550181476 0.3977796733812588 0.6850790922653127
 }
-
 TexturedBackground {
 }
 TexturedBackgroundLight {
 }
 Floor {
-tileSize 1 1
+  tileSize 1 1
 }
-
-# Solid {
-#   name "ball138"
-#   translation 1.74957 0.2 0.150468
-#   recognitionColors [ 0 0.8 0 ]
-#   model "ball"
-#   children [
-#     Shape {
-#       appearance DEF DARK_BROWN PBRAppearance {
-#         baseColor 0.1 0.9 0.1
-#         roughness 0.01
-#         metalness 0
-#       }
-#       geometry DEF BALL_GEOM Sphere {
-#         radius 0.1
-#         subdivision 3
-#       }
-#     }
-#   ]
-#   immersionProperties [
-#     ImmersionProperties {
-#       fluidName "fluid"
-#       dragForceCoefficients 0.1 0 0
-#       dragTorqueCoefficients 0.001 0 0
-#       viscousResistanceTorqueCoefficient 0.005 } ]
-#   boundingObject USE BALL_GEOM
-#   physics Physics {
-#     density 300
-#     damping Damping {
-#       linear 0.5
-#       angular 0.5
-#     }
-#   }  
-# }
-
-# Can {
-#   name "can138"
-#   translation 0.127434 0.2 -1.7132
-#   immersionProperties [
-#     ImmersionProperties {
-#       fluidName "fluid"
-#       dragForceCoefficients 0.1 0 0
-#       dragTorqueCoefficients 0.001 0 0
-#       viscousResistanceTorqueCoefficient 0.005 } ]
-#   physics Physics {
-#     density 500
-#     damping Damping {
-#       linear 0.5
-#       angular 0.5
-#     }
-#   }  
-  
-# }
-
-# Apple {
-#   name "apple138"
-#   translation -1.59116 0.2 -1.26605
-#   immersionProperties [
-#     ImmersionProperties {
-#       fluidName "fluid"
-#       dragForceCoefficients 0.1 0 0
-#       dragTorqueCoefficients 0.001 0 0
-#       viscousResistanceTorqueCoefficient 0.005 } ]
-#   physics Physics {
-#     density 500
-#     damping Damping {
-#       linear 0.5
-#       angular 0.5
-#     }
-#   }  
-  
-# }
-
-# JamJar {
-#   name "jamjar138"
-#   translation 0.79378 0.2 -0.735189
-#   immersionProperties [
-#     ImmersionProperties {
-#       fluidName "fluid"
-#       dragForceCoefficients 0.1 0 0
-#       dragTorqueCoefficients 0.001 0 0
-#       viscousResistanceTorqueCoefficient 0.005 } ]
-#   physics Physics {
-#     density 500
-#     damping Damping {
-#       linear 0.5
-#       angular 0.5
-#     }
-#   }  
-  
-# }
-
-# BiscuitBox {
-#   name "biscuitbox138"
-#   translation -1.87505 0.2 0.733684
-#   immersionProperties [
-#     ImmersionProperties {
-#       fluidName "fluid"
-#       dragForceCoefficients 0.1 0 0
-#       dragTorqueCoefficients 0.001 0 0
-#       viscousResistanceTorqueCoefficient 0.005 } ]
-#   physics Physics {
-#     density 500
-#     damping Damping {
-#       linear 0.5
-#       angular 0.5
-#     }
-#   }  
-  
-# }
-
-# OilBarrel {
-#   name "oilbarrel138"
-#   translation 0.279224 0.2 -0.378484
-#   immersionProperties [
-#     ImmersionProperties {
-#       fluidName "fluid"
-#       dragForceCoefficients 0.1 0 0
-#       dragTorqueCoefficients 0.001 0 0
-#       viscousResistanceTorqueCoefficient 0.005 } ]
-#   physics Physics {
-#     density 500
-#     damping Damping {
-#       linear 0.5
-#       angular 0.5
-#     }
-#   }  
-#   radius 0.1 height 0.233333
-# }
-
-# Solid {
-#   name "ball139"
-#   translation 1.05682 0.2 -1.89063
-#   recognitionColors [ 0 0.8 0 ]
-#   model "ball"
-#   children [
-#     Shape {
-#       appearance DEF DARK_BROWN PBRAppearance {
-#         baseColor 0.1 0.9 0.1
-#         roughness 0.01
-#         metalness 0
-#       }
-#       geometry DEF BALL_GEOM Sphere {
-#         radius 0.1
-#         subdivision 3
-#       }
-#     }
-#   ]
-#   immersionProperties [
-#     ImmersionProperties {
-#       fluidName "fluid"
-#       dragForceCoefficients 0.1 0 0
-#       dragTorqueCoefficients 0.001 0 0
-#       viscousResistanceTorqueCoefficient 0.005 } ]
-#   boundingObject USE BALL_GEOM
-#   physics Physics {
-#     density 300
-#     damping Damping {
-#       linear 0.5
-#       angular 0.5
-#     }
-#   }  
-# }
-
-# Can {
-#   name "can139"
-#   translation 0.164716 0.2 0.46374
-#   immersionProperties [
-#     ImmersionProperties {
-#       fluidName "fluid"
-#       dragForceCoefficients 0.1 0 0
-#       dragTorqueCoefficients 0.001 0 0
-#       viscousResistanceTorqueCoefficient 0.005 } ]
-#   physics Physics {
-#     density 500
-#     damping Damping {
-#       linear 0.5
-#       angular 0.5
-#     }
-#   }  
-  
-# }
-
-# Apple {
-#   name "apple139"
-#   translation 1.84893 0.2 -0.757148
-#   immersionProperties [
-#     ImmersionProperties {
-#       fluidName "fluid"
-#       dragForceCoefficients 0.1 0 0
-#       dragTorqueCoefficients 0.001 0 0
-#       viscousResistanceTorqueCoefficient 0.005 } ]
-#   physics Physics {
-#     density 500
-#     damping Damping {
-#       linear 0.5
-#       angular 0.5
-#     }
-#   }  
-  
-# }
-
-# JamJar {
-#   name "jamjar139"
-#   translation -0.097569 0.2 -1.4597
-#   immersionProperties [
-#     ImmersionProperties {
-#       fluidName "fluid"
-#       dragForceCoefficients 0.1 0 0
-#       dragTorqueCoefficients 0.001 0 0
-#       viscousResistanceTorqueCoefficient 0.005 } ]
-#   physics Physics {
-#     density 500
-#     damping Damping {
-#       linear 0.5
-#       angular 0.5
-#     }
-#   }  
-  
-# }
-
-# BiscuitBox {
-#   name "biscuitbox139"
-#   translation -1.32046 0.2 0.006882
-#   immersionProperties [
-#     ImmersionProperties {
-#       fluidName "fluid"
-#       dragForceCoefficients 0.1 0 0
-#       dragTorqueCoefficients 0.001 0 0
-#       viscousResistanceTorqueCoefficient 0.005 } ]
-#   physics Physics {
-#     density 500
-#     damping Damping {
-#       linear 0.5
-#       angular 0.5
-#     }
-#   }  
-  
-# }
-
-# OilBarrel {
-#   name "oilbarrel139"
-#   translation 0.623725 0.2 -0.848901
-#   immersionProperties [
-#     ImmersionProperties {
-#       fluidName "fluid"
-#       dragForceCoefficients 0.1 0 0
-#       dragTorqueCoefficients 0.001 0 0
-#       viscousResistanceTorqueCoefficient 0.005 } ]
-#   physics Physics {
-#     density 500
-#     damping Damping {
-#       linear 0.5
-#       angular 0.5
-#     }
-#   }  
-#   radius 0.1 height 0.233333
-# }
-
-# Solid {
-#   name "ball140"
-#   translation -1.25368 0.2 1.37464
-#   recognitionColors [ 0 0.8 0 ]
-#   model "ball"
-#   children [
-#     Shape {
-#       appearance DEF DARK_BROWN PBRAppearance {
-#         baseColor 0.1 0.9 0.1
-#         roughness 0.01
-#         metalness 0
-#       }
-#       geometry DEF BALL_GEOM Sphere {
-#         radius 0.1
-#         subdivision 3
-#       }
-#     }
-#   ]
-#   immersionProperties [
-#     ImmersionProperties {
-#       fluidName "fluid"
-#       dragForceCoefficients 0.1 0 0
-#       dragTorqueCoefficients 0.001 0 0
-#       viscousResistanceTorqueCoefficient 0.005 } ]
-#   boundingObject USE BALL_GEOM
-#   physics Physics {
-#     density 300
-#     damping Damping {
-#       linear 0.5
-#       angular 0.5
-#     }
-#   }  
-# }
-
-# Can {
-#   name "can140"
-#   translation -1.8508 0.2 0.009302
-#   immersionProperties [
-#     ImmersionProperties {
-#       fluidName "fluid"
-#       dragForceCoefficients 0.1 0 0
-#       dragTorqueCoefficients 0.001 0 0
-#       viscousResistanceTorqueCoefficient 0.005 } ]
-#   physics Physics {
-#     density 500
-#     damping Damping {
-#       linear 0.5
-#       angular 0.5
-#     }
-#   }  
-  
-# }
-
-# Apple {
-#   name "apple140"
-#   translation 1.72828 0.2 -0.317983
-#   immersionProperties [
-#     ImmersionProperties {
-#       fluidName "fluid"
-#       dragForceCoefficients 0.1 0 0
-#       dragTorqueCoefficients 0.001 0 0
-#       viscousResistanceTorqueCoefficient 0.005 } ]
-#   physics Physics {
-#     density 500
-#     damping Damping {
-#       linear 0.5
-#       angular 0.5
-#     }
-#   }  
-  
-# }
-
-# JamJar {
-#   name "jamjar140"
-#   translation -0.028676 0.2 0.547844
-#   immersionProperties [
-#     ImmersionProperties {
-#       fluidName "fluid"
-#       dragForceCoefficients 0.1 0 0
-#       dragTorqueCoefficients 0.001 0 0
-#       viscousResistanceTorqueCoefficient 0.005 } ]
-#   physics Physics {
-#     density 500
-#     damping Damping {
-#       linear 0.5
-#       angular 0.5
-#     }
-#   }  
-  
-# }
-
-# BiscuitBox {
-#   name "biscuitbox140"
-#   translation -1.45169 0.2 -0.859243
-#   immersionProperties [
-#     ImmersionProperties {
-#       fluidName "fluid"
-#       dragForceCoefficients 0.1 0 0
-#       dragTorqueCoefficients 0.001 0 0
-#       viscousResistanceTorqueCoefficient 0.005 } ]
-#   physics Physics {
-#     density 500
-#     damping Damping {
-#       linear 0.5
-#       angular 0.5
-#     }
-#   }  
-  
-# }
-
-# OilBarrel {
-#   name "oilbarrel140"
-#   translation -1.91117 0.2 1.77897
-#   immersionProperties [
-#     ImmersionProperties {
-#       fluidName "fluid"
-#       dragForceCoefficients 0.1 0 0
-#       dragTorqueCoefficients 0.001 0 0
-#       viscousResistanceTorqueCoefficient 0.005 } ]
-#   physics Physics {
-#     density 500
-#     damping Damping {
-#       linear 0.5
-#       angular 0.5
-#     }
-#   }  
-#   radius 0.1 height 0.233333
-# }
-
 kxrl2w2l5a4h2_urdf {
-  translation 0.0 0.204288 0.0
-  rotation 1.000000 0.000000 0.0 -1.57 
-  immersionProperties [ 
-                  ImmersionProperties {
-                  fluidName "fluid"
-                  dragForceCoefficients 0.1 0 0
-                  dragTorqueCoefficients 0.001 0 0
-                  viscousResistanceTorqueCoefficient 0.005
-                  }
-                ]
+  hidden position_0_0 3.628436786685995e-08
+  hidden position_0_1 3.699589234794597e-08
+  hidden position_0_2 2.030846977974303e-09
+  hidden position_0_3 6.273580107367339e-07
+  hidden position_0_4 -6.288199410064976e-07
+  hidden rotation_1 1.2828461284861995e-08 0.7071067811865459 0.707106781186549 3.1415930256569222
+  hidden position_1_0 -3.127181891215969e-07
+  hidden rotation_2 -0.5773502090069657 -0.5773503895549164 0.5773502090069763 2.0943948194520785
+  hidden position_2_0 4.387472120873043e-09
+  hidden rotation_3 1 -2.193736777338388e-09 2.1937360604365216e-09 1.570796
+  hidden position_3_0 -3.1984320880695805e-07
+  hidden rotation_4 1.1308165093193488e-07 -0.7071067811865291 -0.7071067811865568 3.1415932261633017
+  hidden position_4_0 -1.7285432640790077e-07
+  hidden position_4_1 -1.504989555201064e-08
+  hidden rotation_5 0 0 1 1.5707958271456737
+  hidden position_5_0 2.3335075576180163e-10
+  hidden rotation_6 -0.752937953141488 0.4653409711612689 -0.46534097098557037 1.8508349998914122
+  hidden rotation_7 0 0 1 1.5707959849501045
+  hidden rotation_8 1.308002317764002e-08 -0.7071067811865491 0.7071067811865459 3.1415929738399533
+  hidden position_8_0 3.2696491601263705e-07
+  hidden rotation_9 0.5773502062651806 -0.5773503950384843 -0.5773502062651917 2.0943948112267283
+  hidden position_9_0 -2.83571068848687e-08
+  hidden rotation_10 0.9999999999999997 1.417855807591401e-08 -1.4178553442434346e-08 1.5707960000000003
+  hidden position_10_0 3.1984129759367605e-07
+  hidden rotation_11 -1.130809752159945e-07 -0.7071067811865569 -0.7071067811865293 3.1415927738380494
+  hidden position_11_0 1.728539289447597e-07
+  hidden position_11_1 -1.504980406963341e-08
+  hidden rotation_12 -0.7071068422996376 0.7071067200734522 -1.496959131018247e-14 3.141593
+  hidden position_12_0 -2.333599979920109e-10
+  hidden rotation_13 -0.7529379531885166 0.46534097094751986 -0.4653409711232255 1.850835000108592
+  hidden rotation_14 -0.7071067865074568 0.7071067758656383 -1.3033514343358135e-15 3.141593
+  hidden rotation_15 0 0 1 3.141593002030847
+  hidden position_15_0 4.0487367005899126e-08
+  hidden rotation_16 0.5773502536060305 -0.5773502769814239 0.5773502769814226 2.0943950233753923
+  hidden rotation_17 0.7071067811865029 -2.21804551811834e-07 0.7071067811865572 3.1415934436091035
+  hidden position_17_0 4.824487968498004e-07
+  hidden rotation_18 0.9999999999999418 -2.412244772558061e-07 2.412243984248909e-07 1.570796000000058
+  hidden position_18_0 4.825626749981552e-07
+  hidden rotation_19 0 0 -1 1.153447517437325
+  hidden position_19_0 4.4837337378898153e-07
+  hidden rotation_20 -0.5452808778032329 0.8382534010083919 -3.883027826421975e-14 3.141593
+  hidden position_20_0 6.55817770103765e-07
+  hidden position_20_1 2.6090200614068334e-10
+  hidden rotation_21 -0.9999999999998925 3.2790899221082674e-07 3.27908885051859e-07 1.5707960000001073
+  hidden rotation_22 -1 1.3045100307034167e-10 2.2594779463652777e-17 3.141593
+  hidden rotation_23 0.7071067811865573 2.2232142221550288e-07 0.7071067811865028 3.1415925553571555
+  hidden position_23_0 4.918215397576176e-07
+  hidden rotation_24 0.9999999999999395 -2.459108502411966e-07 2.4591076987879885e-07 1.5707960000000603
+  hidden position_24_0 4.91943557115653e-07
+  hidden rotation_25 0 0 -1 1.1534475080564428
+  hidden position_25_0 4.577655918789141e-07
+  hidden rotation_26 -0.5452808817397623 0.8382533984476935 -3.964366831650675e-14 3.141593
+  hidden position_26_0 -7.046592171988664e-07
+  hidden position_26_1 2.609018456435926e-10
+  hidden rotation_27 -0.999999999999876 -3.5232972373894083e-07 -3.52329608599404e-07 1.570796000000124
+  translation -9.21563281491844e-06 0.19905703569784516 -0.0001574401454294063
+  rotation 0.9999999994487262 2.5991745807660508e-05 -2.0663419543355452e-05 -1.570794351459503
   controller "<extern>"
-  controllerArgs ""
+  controllerArgs [
+    ""
+  ]
   synchronization FALSE
+  immersionProperties [
+    ImmersionProperties {
+      fluidName "fluid"
+      dragForceCoefficients 0.1 0 0
+      dragTorqueCoefficients 0.001 0 0
+      viscousResistanceTorqueCoefficient 0.005
+    }
+  ]
 }
