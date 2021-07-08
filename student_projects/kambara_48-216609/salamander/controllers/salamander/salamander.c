@@ -241,24 +241,24 @@ int main() {
         if(fabs(salamanderZ - ballZ) < 0.1){ //match Z of salamander and ball
           //angle matching
           if(salamanderA > 0){ 
-            spine_offset = (salamanderA - M_PI/2) * (0.3);
+            spine_offset = (salamanderA - M_PI/2) * (0.5);
           }else{
-            spine_offset = (fabs(salamanderA) - M_PI/2) * (0.3);
+            spine_offset = (fabs(salamanderA) - M_PI/2) * (0.5);
           }
-        }else if(salamanderZ > ballZ){ //salamander is the left of the ball
-          spine_offset = salamanderA * 0.2;
+        }else if(salamanderZ > ballZ){ //salamander is the right of the ball
+          spine_offset = salamanderA*0.1;
         }else{
           if(salamanderA > 0){ 
-            spine_offset = (M_PI - salamanderA) * (-0.3);
+            spine_offset = (M_PI - salamanderA) * (-0.5);
           }else{ 
-            spine_offset = (M_PI - fabs(salamanderA)) * (0.3);
+            spine_offset = (M_PI - fabs(salamanderA)) * (0.5);
           }
         }
       }else{ 
         if(salamanderA < 0){ 
-          spine_offset = (M_PI/2 + salamanderA) * (0.3);
+          spine_offset = (M_PI/2 + salamanderA) * (0.5);
         }else{ 
-          spine_offset = (salamanderA + M_PI/2) * (0.3);
+          spine_offset = (salamanderA + M_PI/2) * (0.5);
         }
       }
     }

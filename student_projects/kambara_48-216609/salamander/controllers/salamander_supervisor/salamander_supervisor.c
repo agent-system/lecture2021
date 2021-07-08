@@ -24,13 +24,11 @@
 #define GOAL_X_LIMIT 1
 #define TIME_STEP 64
 
-static void set_scores(int b, int y) {
+static void set_scores(int b) {
   char score[16];
 
   sprintf(score, "%d", b);
   wb_supervisor_set_label(0, score, 0.05, 0.01, 0.1, 0x0000ff, 0.0, "Arial");  // blue
-  sprintf(score, "%d", y);
-  wb_supervisor_set_label(1, score, 0.92, 0.01, 0.1, 0xff6666, 0.0, "Arial");  // red
 }
 
 int main() {
@@ -76,7 +74,8 @@ int main() {
     ball_initial_translation[j] = ball_translation[j];
   }
   // printf("ball initial translation = %g %g %g\n",ball_translation[0],ball_translation[1],ball_translation[2]);
-
+  set_scores(0);
+  
   while (wb_robot_step(TIME_STEP) != -1) {
     ball_translation = wb_supervisor_field_get_sf_vec3f(ball_translation_field);
     for (i = 0; i < ROBOTS; i++) {
@@ -94,6 +93,26 @@ int main() {
     packet[3 * ROBOTS] = ball_translation[0];      // ball X
     packet[3 * ROBOTS + 1] = ball_translation[2];  // ball Z
     wb_emitter_send(emitter, packet, sizeof(packet));
+    
+    //goal
+    if (ball_reset_timer == 0) {
+      if (ball_translation[0] < -5.7) {  
+        if (ball_translation[2] < 1.5 && ball_translation[2] > -1.5) {  // ball in the blue goal
+          set_scores(++score[0]);
+          ball_reset_timer = 3;
+        }
+      } 
+    } else {
+      ball_reset_timer -= (double)TIME_STEP / 1000.0;
+      if (ball_reset_timer <= 0) {
+        ball_reset_timer = 0;
+        wb_supervisor_field_set_sf_vec3f(ball_translation_field, ball_initial_translation);
+        for (i = 0; i < ROBOTS; i++) {
+          wb_supervisor_field_set_sf_vec3f(robot_translation_field[i], robot_initial_translation[i]);
+          wb_supervisor_field_set_sf_rotation(robot_rotation_field[i], robot_initial_rotation[i]);
+        }
+      }
+    }
   }
 
   wb_robot_cleanup();
