@@ -30,8 +30,8 @@ WorldInfo {
   ]
 }
 Viewpoint {
-  orientation 0.7171722995134655 -0.6931004157436851 0.07263405886014473 5.54181092310712
-  position 14.022396961990793 14.606831340541326 17.587581585769506
+  orientation 0.3287590412260596 -0.9407070991122376 -0.08359214372153052 4.865409509610011
+  position 22.540959929125957 12.651812683578822 1.7906974016563706
 }
 TexturedBackground {
 }
@@ -190,7 +190,7 @@ Solid {
           translation -4.43 -0.11 0
           children [
             Shape {
-              appearance Sand {
+              appearance SandyGround {
               }
               geometry Box {
                 size 3.14 0.001 8
@@ -203,7 +203,7 @@ Solid {
           rotation 0 0 1 0.02
           children [
             Shape {
-              appearance Soil {
+              appearance Sand {
               }
               geometry Box {
                 size 5.74 0.001 8
