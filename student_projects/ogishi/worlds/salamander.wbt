@@ -41,15 +41,15 @@ TexturedBackground {
 TexturedBackgroundLight {
 }
 DEF R1 Salamander {
-  //translation 3.4 0.29422 3.15
-  translation 0.4 0.29422 -0.15
+  translation 3.4 0.29422 3.15
+  //translation 0.4 0.29422 -0.15
   rotation 0 1 0 1.5708
   controller "salamander_red"
   name "R1"
 }
 DEF R2 Salamander {
-  //translation 3.4 0.29422 1.15
-  translation 0.4 0.29422 0.15
+  translation 3.4 0.29422 1.15
+  //translation 0.4 0.29422 0.15
   rotation 0 1 0 1.5708
   controller "salamander_red"
   name "R2"
