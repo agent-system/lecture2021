@@ -20,7 +20,7 @@ WorldInfo {
 }
 Viewpoint {
   fieldOfView 1.1
-  position 2.0 1.5 1.5
+  position 6.0 1.5 1.5
   orientation  -0.363187 0.913335 0.184159 1.1
 }
 
@@ -531,7 +531,7 @@ Can {
 
 kxrl2makabe {
   ##translation -3.0 0.0 0.0 ##default
-  translation 3.0 0.5 0.0 ##debug flutter kick
+  translation 4.0 0.4 0.0 ##debug flutter kick
   rotation 1.0 0.0 0.0 -1.5707 ##kxr_amv
   ##rotation 1.0 0.0 1.0 3.1415 ##kxr_auv_fullbody_initial
   ##rotation -1.0 -1.0 1.0 2.0944 ##debug kxr_amv
