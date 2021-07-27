@@ -343,3 +343,12 @@
     (format t "finish transform~%")
     )
   )
+
+(defun send-init-pose ()
+  (squat-1.9)
+  (send-webots)
+  )
+
+(defun transform_step nil
+  (when (= -1 (wb_robot_step time_step)) (wb_robot_cleanup) (exit))
+  )
