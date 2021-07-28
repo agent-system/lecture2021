@@ -352,3 +352,18 @@
 (defun transform_step nil
   (when (= -1 (wb_robot_step time_step)) (wb_robot_cleanup) (exit))
   )
+
+(defun print-contact-node-id (&key (def "KXRL2MAKABE"))
+  (let* ((id (wb_supervisor_node_get_from_def def))
+	 (cp-num (wb_supervisor_node_get_number_of_contact_points id))
+	 (count 0) tmp-id)
+    (format t "DEF:~A~%" def)
+    (format t "contact-point-num:~A~%" cp-num)
+    (while (< count cp-num)
+      (setq tmp-id (wb_supervisor_node_get_contact_point_node id count))
+      (format t "index:~A node:~A~%" count tmp-id)
+      (format t "node name:~A~%" (wb_supervisor_field_get_sf_string(wb_supervisor_node_get_field tmp-id "name")))
+      (setq count (+ 1 count)))
+      )
+    )
+)
