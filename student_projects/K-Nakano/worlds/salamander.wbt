@@ -1,0 +1,304 @@
+#VRML_SIM R2021a utf8
+WorldInfo {
+  info [
+    "Model of the Salamandra Robotica amphibious robot developped at the BIOROB (http://biorob.epfl.ch). This demo exemplifies how Webots automotically generates hydrostatic and hydrodynamic forces."
+    "Authors: Jerome Braure (original work), Yvan Bourquin (this demo) and Luc Guyot (adaptation to the generic Webots fluid dynamics features)"
+    "Biorobotics Laboratory, EPFL, Lausanne"
+    "Ecole Polytechnique Federale de Lausanne (EPFL), Switzerland"
+    ""
+    "Related publication:"
+    "A. Ijspeert, A. Crespi, D. Ryczko, and J.M. Cabelguen. From swimming to walking with a salamander robot driven by a spinal cord model. Science, 315(5817):1416-1420, 2007."
+  ]
+  title "Salamandra Robotica"
+  basicTimeStep 4
+  coordinateSystem "NUE"
+  contactProperties [
+    ContactProperties {
+      material1 "leg"
+      material2 "floor"
+      coulombFriction [
+        5
+      ]
+    }
+    ContactProperties {
+      material1 "body"
+      material2 "floor"
+      coulombFriction [
+        0.2
+      ]
+    }
+  ]
+}
+Viewpoint {
+  orientation -0.34661457736376317 0.8991053206739559 0.2673349155922638 1.4824081139339924
+  position 14.525609571953723 8.644101705076958 0.9283028943001053
+  follow "Salamander"
+}
+TexturedBackground {
+}
+TexturedBackgroundLight {
+}
+Salamander {
+  hidden position_0_0 0.006956931243869324
+  hidden rotation_4 0 0.9999999999999999 0 0.006956931243890424
+  hidden position_4_0 -1.5707963297759764
+  hidden position_4_1 -1.5707963258244115
+  hidden position_4_2 -0.04169530106488156
+  hidden rotation_5 -1 0 0 1.5707963297759764
+  hidden rotation_7 1 0 0 1.5707936741755881
+  hidden rotation_9 0 -1 0 0.041695301064880536
+  hidden position_9_0 0.3636691670392832
+  hidden rotation_10 0 1 0 0.3636691670392832
+  hidden position_10_0 0.48265197480901123
+  hidden rotation_11 0 0.9999999999999999 0 0.482651974809011
+  hidden position_11_0 0.0007505323076008633
+  hidden rotation_12 0 1 0 0.0007505323077199072
+  hidden position_12_0 -1.570796326731949
+  hidden position_12_1 -1.5707963287943458
+  hidden position_12_2 0.06670482079897486
+  hidden rotation_13 -1 0 0 1.570796326731949
+  hidden rotation_15 1 0 0 1.5707936712056543
+  hidden rotation_17 0 1 0 0.06670482079897525
+  hidden position_17_0 -0.5455118798472591
+  hidden rotation_18 0 -1 0 0.5455118798472595
+  hidden position_18_0 -0.6894823176460119
+  hidden rotation_19 0 -1 0 0.6894823176460121
+  translation 2.5586 -0.0099624 -1.86017
+  rotation 0.03241507958577413 0.9994385437292543 0.008477023286232673 1.159435035328008
+}
+Salamander {
+  hidden position_0_0 0.006956931243876673
+  hidden rotation_4 0 0.9999999999999999 0 0.006956931243890424
+  hidden position_4_0 -1.5707963297759773
+  hidden position_4_1 -1.5707963258244113
+  hidden position_4_2 -0.04169530106488151
+  hidden rotation_5 -1 0 0 1.5707963297759773
+  hidden rotation_7 1 0 0 1.5707936741755886
+  hidden rotation_9 0 -1 0 0.041695301064880536
+  hidden position_9_0 0.36366916703928276
+  hidden rotation_10 0 1 0 0.3636691670392832
+  hidden position_10_0 0.48265197480901123
+  hidden rotation_11 0 0.9999999999999999 0 0.482651974809011
+  hidden position_11_0 0.0007505323075993359
+  hidden rotation_12 0 1 0 0.0007505323077199072
+  hidden position_12_0 -1.5707963267319491
+  hidden position_12_1 -1.5707963287943456
+  hidden position_12_2 0.06670482079897462
+  hidden rotation_13 -1 0 0 1.5707963267319494
+  hidden rotation_15 1 0 0 1.5707936712056543
+  hidden rotation_17 0 1 0 0.06670482079897525
+  hidden position_17_0 -0.5455118798472588
+  hidden rotation_18 0 -1 0 0.5455118798472587
+  hidden position_18_0 -0.6894823176460136
+  hidden rotation_19 0 -1 0 0.6894823176460133
+  translation 2.5812121316754943 -0.009962399669853572 0.13003177727171944
+  rotation 0.032415079585773374 0.9994385437292543 0.008477023286232175 1.1594350353280034
+  name "Salamander(1)"
+}
+Salamander {
+  hidden position_0_0 0.006956931243873847
+  hidden rotation_4 0 1 0 0.006956931243890424
+  hidden position_4_0 -1.5707963297759773
+  hidden position_4_1 -1.570796325824411
+  hidden position_4_2 -0.041695301064881674
+  hidden rotation_5 -1 0 0 1.5707963297759773
+  hidden rotation_7 1 0 0 1.5707936741755888
+  hidden rotation_9 0 -1 0 0.041695301064880536
+  hidden position_9_0 0.36366916703928337
+  hidden rotation_10 0 1 0 0.3636691670392832
+  hidden position_10_0 0.48265197480901023
+  hidden rotation_11 0 1 0 0.48265197480901006
+  hidden position_11_0 0.0007505323075991578
+  hidden rotation_12 0 1 0 0.0007505323077199072
+  hidden position_12_0 -1.570796326731949
+  hidden position_12_1 -1.570796328794346
+  hidden position_12_2 0.06670482079897444
+  hidden rotation_13 -1 0 0 1.570796326731949
+  hidden rotation_15 1 0 0 1.5707936712056538
+  hidden rotation_17 0 1 0 0.06670482079897525
+  hidden position_17_0 -0.5455118798472588
+  hidden rotation_18 0 -1 0 0.5455118798472587
+  hidden position_18_0 -0.6894823176460138
+  hidden rotation_19 0 -1 0 0.689482317646014
+  translation 2.8864721316754967 -0.009962399669853428 2.2660787772717232
+  rotation 0.032415079585775074 0.9994385437292543 0.008477023286233263 1.159435035328009
+  name "Salamander(2)"
+}
+Salamander {
+  hidden position_0_0 0.006956931243869911
+  hidden rotation_4 0 1 0 0.006956931243890424
+  hidden position_4_0 -1.5707963297759764
+  hidden position_4_1 -1.5707963258244113
+  hidden position_4_2 -0.041695301064881285
+  hidden rotation_5 -1 0 0 1.5707963297759764
+  hidden rotation_7 1 0 0 1.5707936741755886
+  hidden rotation_9 0 -1 0 0.041695301064880536
+  hidden position_9_0 0.3636691670392827
+  hidden rotation_10 0 1 0 0.3636691670392832
+  hidden position_10_0 0.4826519748090111
+  hidden rotation_11 0 1 0 0.482651974809011
+  hidden position_11_0 0.0007505323075962815
+  hidden rotation_12 0 1 0 0.0007505323077199072
+  hidden position_12_0 -1.5707963267319494
+  hidden position_12_1 -1.570796328794346
+  hidden position_12_2 0.06670482079897576
+  hidden rotation_13 -1 0 0 1.5707963267319494
+  hidden rotation_15 1 0 0 1.5707936712056538
+  hidden rotation_17 0 1 0 0.06670482079897525
+  hidden position_17_0 -0.5455118798472588
+  hidden rotation_18 0 -1 0 0.5455118798472587
+  hidden position_18_0 -0.689482317646013
+  hidden rotation_19 0 -1 0 0.6894823176460126
+  translation -0.55017232016752 -0.009962399669851933 3.07257250066506
+  rotation 0.005549144512301766 0.9997594490092836 -0.021219121372840242 -1.9828954263538152
+  name "Salamander(3)"
+}
+Salamander {
+  hidden position_0_0 0.006956931243873792
+  hidden rotation_4 0 1 0 0.006956931243890424
+  hidden position_4_0 -1.5707963297759773
+  hidden position_4_1 -1.5707963258244113
+  hidden position_4_2 -0.04169530106488112
+  hidden rotation_5 -1 0 0 1.5707963297759773
+  hidden rotation_7 1 0 0 1.5707936741755886
+  hidden rotation_9 0 -1 0 0.041695301064880536
+  hidden position_9_0 0.36366916703928254
+  hidden rotation_10 0 0.9999999999999999 0 0.363669167039282
+  hidden position_10_0 0.482651974809011
+  hidden rotation_11 0 1 0 0.482651974809011
+  hidden position_11_0 0.0007505323075973583
+  hidden rotation_12 0 1 0 0.0007505323077199072
+  hidden position_12_0 -1.5707963267319507
+  hidden position_12_1 -1.5707963287943456
+  hidden position_12_2 0.06670482079897541
+  hidden rotation_13 -1 0 0 1.5707963267319505
+  hidden rotation_15 1 0 0 1.5707936712056543
+  hidden rotation_17 0 1 0 0.06670482079897525
+  hidden position_17_0 -0.545511879847256
+  hidden rotation_18 0 -1 0 0.5455118798472562
+  hidden position_18_0 -0.689482317646013
+  hidden rotation_19 0 -1 0 0.6894823176460126
+  translation 0.042578679832480475 -0.009962399669851784 0.6653975006650602
+  rotation 0.005549144512302293 0.9997594490092837 -0.021219121372841154 -1.9828954263538205
+  name "Salamander(4)"
+}
+Salamander {
+  hidden position_0_0 0.006956931243873771
+  hidden rotation_4 0 1 0 0.006956931243890424
+  hidden position_4_0 -1.5707963297759773
+  hidden position_4_1 -1.5707963258244113
+  hidden position_4_2 -0.041695301064882784
+  hidden rotation_5 -1 0 0 1.5707963297759773
+  hidden rotation_7 1 0 0 1.5707936741755886
+  hidden rotation_9 0 -1 0 0.041695301064880536
+  hidden position_9_0 0.363669167039283
+  hidden rotation_10 0 1 0 0.3636691670392832
+  hidden position_10_0 0.48265197480901206
+  hidden rotation_11 0 1 0 0.48265197480901195
+  hidden position_11_0 0.0007505323075961861
+  hidden rotation_12 0 1 0 0.0007505323077199072
+  hidden position_12_0 -1.5707963267319498
+  hidden position_12_1 -1.5707963287943456
+  hidden position_12_2 0.06670482079897608
+  hidden rotation_13 -1 0 0 1.5707963267319498
+  hidden rotation_15 1 0 0 1.5707936712056543
+  hidden rotation_17 0 1 0 0.06670482079897525
+  hidden position_17_0 -0.5455118798472597
+  hidden rotation_18 0 -1 0 0.5455118798472595
+  hidden position_18_0 -0.6894823176460138
+  hidden rotation_19 0 -1 0 0.689482317646014
+  translation 0.001391679832477885 -0.009962399669851955 -2.0574574993349324
+  rotation 0.005549144512301822 0.9997594490092836 -0.021219121372839964 -1.9828954263538294
+  name "Salamander(5)"
+}
+DEF AQUARIUM Solid {
+  translation 0 0.1 0
+  children [
+    DEF SIDES_GROUP Group {
+      children [
+        Transform {
+          translation 0 0 4
+          children [
+            DEF GLASS_SHAPE1 Shape {
+              appearance DEF GLASS_APPEARANCE PBRAppearance {
+                baseColor 1 0.6 0.6
+                roughness 1
+                metalness 0
+              }
+              geometry Box {
+                size 12 0.7 0.02
+              }
+            }
+          ]
+        }
+        Transform {
+          translation 0 0 -4
+          children [
+            USE GLASS_SHAPE1
+          ]
+        }
+        Transform {
+          translation -6 0 0
+          rotation 0 1 0 1.5708
+          children [
+            DEF GLASS_SHAPE2 Shape {
+              appearance USE GLASS_APPEARANCE
+              geometry Box {
+                size 8 0.7 0.02
+              }
+            }
+          ]
+        }
+        Transform {
+          translation 6 0 0
+          rotation 0 1 0 1.5708
+          children [
+            USE GLASS_SHAPE2
+          ]
+        }
+      ]
+    }
+  ]
+  name "aquarium"
+  boundingObject USE SIDES_GROUP
+  locked TRUE
+}
+DEF WATER Fluid {
+  translation 0 -0.125 0
+  children [
+    DEF WATER_BOX Shape {
+      appearance PBRAppearance {
+        baseColor 0.7254901960784313 0.8705882352941177 1
+        transparency 0.7
+        roughness 0.2
+        metalness 0
+      }
+      geometry Box {
+        size 12 0.25 8
+      }
+    }
+  ]
+  boundingObject USE WATER_BOX
+  locked TRUE
+}
+DEF ball Solid {
+  children [
+    DEF ballshape Shape {
+      appearance PBRAppearance {
+      }
+      geometry Sphere {
+        radius 0.1
+      }
+    }
+  ]
+  name "ball"
+  immersionProperties [
+    ImmersionProperties {
+      fluidName "fluid"
+      dragForceCoefficients 0.95 0.15 0.15
+    }
+  ]
+  boundingObject USE ballshape
+  physics Physics {
+  }
+}
