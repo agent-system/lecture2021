@@ -50,7 +50,20 @@
      (t
       (wb_motor_set_position
        (get j :device)
-       (deg2rad (send j :joint-angle)))))))
+       (deg2rad (send j :joint-angle))))))
+
+  ;;gripper settings
+   (when t
+     (setq j (send *robot* :rarm-gripper2-r))
+     (wb_motor_set_position (get j :device) (deg2rad (send j :joint-angle)))
+     
+     (setq j (send *robot* :larm-gripper2-r))
+     (wb_motor_set_position (get j :device) (deg2rad (send j :joint-angle)))
+     )
+   ;;end gripper settings
+   
+  
+  )
 (defun read-webots nil
   (dolist
       (j (send *robot* :joint-list))
@@ -242,16 +255,41 @@
       (load (format nil "~A-motions.l" *robot-name*)))
    (setq *robot* (funcall (read-from-string *robot-name*)))
    (objects (list *robot*))
-   (dolist
-      (j (send *robot* :joint-list))
-      (setq n (send j :name))
-      (setq n (string-downcase (if (symbolp n) (symbol-name n) n)))
-      (send j :put :device (wb_robot_get_device n))
-      (send j :put :sensor (wb_robot_get_device (format nil "~A_sensor" n)))
+   (dolist (j (send *robot* :joint-list))
+     (setq n (send j :name))
+     (setq n (string-downcase (if (symbolp n) (symbol-name n) n)))
+     (send j :put :device (wb_robot_get_device n))
+     (send j :put :sensor (wb_robot_get_device (format nil "~A_sensor" n)))
       (format t ";; joint name=~S :device=~S~%" n (get j :device))
       (if
-         (get j :sensor)
-         (wb_position_sensor_enable (get j :sensor) time_step)))
+	  (get j :sensor)
+	  (wb_position_sensor_enable (get j :sensor) time_step))
+      )
+   
+   ;;gripper settings
+   (when t
+     (setq j (send *robot* :rarm-gripper2-r))
+     (setq n (send j :name))
+     (setq n (string-downcase (if (symbolp n) (symbol-name n) n)))
+     (send j :put :device (wb_robot_get_device n))
+     (send j :put :sensor (wb_robot_get_device (format nil "~A_sensor" n)))
+     (format t ";; joint name=~S :device=~S~%" n (get j :device))
+     (if
+	 (get j :sensor)
+	 (wb_position_sensor_enable (get j :sensor) time_step))
+
+     (setq j (send *robot* :larm-gripper2-r))
+     (setq n (send j :name))
+     (setq n (string-downcase (if (symbolp n) (symbol-name n) n)))
+     (send j :put :device (wb_robot_get_device n))
+     (send j :put :sensor (wb_robot_get_device (format nil "~A_sensor" n)))
+     (format t ";; joint name=~S :device=~S~%" n (get j :device))
+     (if
+	 (get j :sensor)
+	 (wb_position_sensor_enable (get j :sensor) time_step))
+     )
+   ;;end gripper settings
+   
    (send *robot* :reset-pose)
    (setq *camera0* (wb_robot_get_device "camera_camera0_camera"))
    (when
