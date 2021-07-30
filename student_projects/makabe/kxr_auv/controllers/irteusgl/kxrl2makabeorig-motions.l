@@ -1,6 +1,14 @@
 ;;(load "~/prog/rcb4eus/makabe-common-function.l")
 (require :kxrl2makabeorig)
 
+(setq *start-angle-vector* nil)
+(setq *ref-angle-vector* nil)
+(setq *d-angle-vector* nil)
+(setq *count* nil)
+(setq *ref-time* nil)
+(setq *step-num* nil)
+(setq *active* nil)
+
 (defun test-motion()
   (format t"motion-sample ~%")
   )
@@ -76,6 +84,7 @@
   (if draw
       (send *irtviewer* :draw-objects)
     )
+  (send *robot* :angle-vector)
   )
 
 (defun squat-1 (&key (crds (make-coords)) (draw t));;50frame
@@ -90,6 +99,7 @@
   (if draw
       (send *irtviewer* :draw-objects)
     )
+  (send *robot* :angle-vector)
   )
 
 (defun squat-1.9 (&key (crds (make-coords)) (draw t));;50frame
@@ -100,6 +110,7 @@
   (if draw
       (send *irtviewer* :draw-objects)
     )
+  (send *robot* :angle-vector)
   )
 
 (defun squat-2 (&key (crds (make-coords)) (draw t));;50frame
@@ -116,6 +127,7 @@
   (if draw
       (send *irtviewer* :draw-objects)
     )
+  (send *robot* :angle-vector)
   )
 
 (defun squat-2.6 (&key (crds (make-coords)) (draw t));;50frame
@@ -132,6 +144,7 @@
   (if draw
       (send *irtviewer* :draw-objects)
     )
+  (send *robot* :angle-vector)
   )
 
 (defun squat-3 (&key (crds (make-coords)) (draw t));;50frame
@@ -150,6 +163,7 @@
   (if draw
       (send *irtviewer* :draw-objects)
     )
+  (send *robot* :angle-vector)
   )
 
 (defun squat-4 (&key (crds (make-coords)) (draw t));;50frame
@@ -158,8 +172,8 @@
   (send *robot* :torso-chest-p :joint-angle (h2h-to-angle 750 :waist t))
   (send *robot* :rarm-shoulder-y :joint-angle (h2h-to-angle 2666 :sign t))
   (send *robot* :larm-shoulder-y :joint-angle (h2h-to-angle -2666 :sign t))
-  (send *robot* :rarm-shoulder-r :joint-angle (h2h-to-angle 1500))
-  (send *robot* :larm-shoulder-r :joint-angle (h2h-to-angle -1500))
+  (send *robot* :rarm-shoulder-r :joint-angle (h2h-to-angle 1300))
+  (send *robot* :larm-shoulder-r :joint-angle (h2h-to-angle -1300))
   (send *robot* :rarm-gripper-r :joint-angle -20)
   (send *robot* :larm-gripper-r :joint-angle -20)
   (send *robot* :rarm-gripper2-r :joint-angle -20)
@@ -168,6 +182,7 @@
   (if draw
       (send *irtviewer* :draw-objects)
     )
+  (send *robot* :angle-vector)
   )
 
 (defun squat-5 (&key (crds (make-coords)) (draw t));;50frame
@@ -184,6 +199,7 @@
   (if draw
       (send *irtviewer* :draw-objects)
     )
+  (send *robot* :angle-vector)
   )
 
 (defun init-car (&key (crds (make-coords)) (draw t));;50frame
@@ -197,6 +213,7 @@
   (if draw
       (send *irtviewer* :draw-objects)
     )
+  (send *robot* :angle-vector)
   )
 
 (defun h2h-to-angle (val &key (sign nil) (waist nil))
@@ -349,11 +366,61 @@
   (send-webots)
   )
 
-(defun transform_step nil
-  (when (= -1 (wb_robot_step time_step)) (wb_robot_cleanup) (exit))
+(defun send-start-pose ()
+  (squat-4)
+  (send-webots)
   )
 
-(defun print-contact-node-id (&key (def "KXRL2MAKABE"))
+(defun send-end-pose ()
+  (init-car)
+  (send-webots)
+  )
+
+(defun set-refpose-time (&key (start (send *robot* :angle-vector)) (ref (send *robot* :angle-vector)) (time 1000))
+  (let ()
+    (setq *active* t)
+    (print "start-angle-vector")
+    (setq *start-angle-vector* start)
+    (print *start-angle-vector*)
+    (print "ref-angle-vector")
+    (setq *ref-angle-vector* ref)
+    (print *ref-angle-vector*)
+    (setq *count* 0)
+    (setq *ref-time* time)
+    (setq *step-num* (+ 1 (/ *ref-time* time_step)));;time_step 32ms
+    (format t "step-num:~A~%" *step-num*)
+    (setq *d-angle-vector* (scale (/ 1.0 *step-num*) (v- *ref-angle-vector* *start-angle-vector*)));;dtheta/dt, dt = time_step
+    )
+  )
+
+(defun transform_step (&key (debug nil) (run t))
+  (let (i-v)
+    (when *active*
+      (when debug 
+	(format t "*count*:~A~%" *count*)
+	)
+      (cond ((< *count* *step-num*)
+	     (setq *count* (+ *count* 1))
+	     (setq i-v (v+ *start-angle-vector* (scale *count* *d-angle-vector*)))
+	     )
+	    (t
+	     (setq *active* nil)
+	     (setq i-v *ref-angle-vector*)
+	     )
+	    )
+      (when debug
+	(print "======")
+	(print i-v)
+	)
+      (when run
+	(send *robot* :angle-vector i-v)
+	(send-webots)
+	)
+      )
+    )
+  )
+
+(defun print-contact-link-webots (&key (def "KXRL2MAKABE"))
   (let* ((id (wb_supervisor_node_get_from_def def))
 	 (cp-num (wb_supervisor_node_get_number_of_contact_points id))
 	 (count 0) tmp-id)
@@ -367,3 +434,21 @@
       )
     )
 )
+
+(defun make-floor nil
+  (setq *fl* (make-cube 750 750 1))
+  (send *fl* :translate #f(0 0 -0.5))
+  (send *robot* :fix-leg-to-coords (make-coords))
+  (objects (list *robot* *fl*))
+  )
+
+(defun print-contact-link-eus (&key (min-th 0.1))
+  (unless *fl* (make-floor))
+  (dolist (l (send *robot* :links))
+    ;;(list l (bt-collision-distance l *fl*))
+    (when (< (car (bt-collision-distance l *fl*)) min-th)
+      (print (list (send l :name) (bt-collision-distance l *fl*)))
+      )
+    )
+  )
+

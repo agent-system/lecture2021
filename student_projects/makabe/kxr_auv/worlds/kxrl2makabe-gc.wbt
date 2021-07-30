@@ -3,10 +3,10 @@ WorldInfo {
   info [
     "generated from eus2webots"
   ]
-  title "kxr_auv demo"
+  title "kxrl2makabeorig demo"
   basicTimeStep 16
   defaultDamping Damping {
-    linear 0.5
+    linear 0.7
     angular 0.5
   }
   coordinateSystem "NUE" 
@@ -15,6 +15,11 @@ WorldInfo {
       material1 "body"
       material2 "floor"
       coulombFriction [ 0.5 ]
+      bounce 1.0
+      bounceVelocity 0.01
+      forceDependentSlip 0
+      softERP 0.2
+      softCFM 0.001
     }
   ]
 }
@@ -530,7 +535,7 @@ DEF FLOOR Solid {
 ##   radius 0.1 height 0.233333
 ## }
 
-kxrl2makabeorig {
+DEF KXRL2MAKABE kxrl2makabeorig {
 #SENSOR_SAMPLE {
   translation 4.0 0.4 0.0 ##debug flutter kick
   rotation 1.0 0.0 0.0 -1.5707 ##kxr_amv
