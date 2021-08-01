@@ -428,6 +428,7 @@
   (my_step)
   (read-webots)
   (transform_step)
+  (setpose_step)
   ;;(recognition-step *camera0*)
   ;;(read-keyboard)
   (send *irtviewer* :draw-objects)
