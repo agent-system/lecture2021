@@ -1,0 +1,103 @@
+#VRML_SIM R2021a utf8
+WorldInfo {
+  basicTimeStep 6
+  coordinateSystem "NUE"
+}
+Viewpoint {
+  orientation -0.3248405797796171 -0.8753947719000901 -0.3579980321991049 2.493502068578157
+  position -3.6651337202575918 7.905166855225937 -6.9823270563999325
+}
+TexturedBackground {
+}
+TexturedBackgroundLight {
+}
+DEF POOL Solid {
+  children [
+    DEF POOL_GROUP Group {
+      children [
+        DEF GROUND Shape {
+          appearance DEF GROUND_APPEARANCE PBRAppearance {
+            baseColorMap ImageTexture {
+              url [
+                "textures/chessboard.jpg"
+              ]
+            }
+            roughness 1
+            metalness 0
+          }
+          geometry Box {
+            size 5 0.005 8
+          }
+        }
+        Transform {
+          translation 0 0.4 4
+          children [
+            DEF SIDE_WALL1 Shape {
+              appearance DEF SIDE_WALL_APPERANCE PBRAppearance {
+                baseColor 0.7 0.7 0.7
+                roughness 1
+                metalness 0
+              }
+              geometry Box {
+                size 5 0.8 0.1
+              }
+            }
+          ]
+        }
+        Transform {
+          translation 0 0.4 -4
+          children [
+            USE SIDE_WALL1
+          ]
+        }
+        Transform {
+          translation 2.54 0.4 0
+          rotation 0 1 0 1.57
+          children [
+            DEF SIDE_WALL2 Shape {
+              appearance USE SIDE_WALL_APPERANCE
+              geometry Box {
+                size 8.1 0.8 0.1
+              }
+            }
+          ]
+        }
+        Transform {
+          translation -2.54 0.4 0
+          rotation 0 1 0 1.57
+          children [
+            USE SIDE_WALL2
+          ]
+        }
+      ]
+    }
+  ]
+  name "pool"
+  contactMaterial "pool floor"
+  boundingObject USE POOL_GROUP
+  locked TRUE
+}
+DEF WATER Fluid {
+  translation 0 0.18 0
+  children [
+    DEF WATER_BOX Shape {
+      appearance PBRAppearance {
+        baseColor 0.725 0.871 0.95
+        transparency 0.8
+        roughness 0.2
+        metalness 0
+      }
+      geometry Box {
+        size 5 0.3 8
+      }
+    }
+  ]
+  boundingObject USE WATER_BOX
+  locked TRUE
+}
+SalamanderCamera {
+  translation -0.354943 0.34 -1.99
+  rotation 0 1 0 3.14
+  controller "ppo_controller"
+  supervisor TRUE
+}

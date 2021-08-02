@@ -1,0 +1,247 @@
+#VRML_SIM R2021a utf8
+WorldInfo {
+  basicTimeStep 4
+  coordinateSystem "NUE"
+}
+Viewpoint {
+  orientation -0.46537392010040873 -0.7828706086804608 -0.41296576680720515 1.9372647975324728
+  position -6.009542101857897 12.621276975454023 -1.2419598047749028
+}
+TexturedBackground {
+}
+TexturedBackgroundLight {
+}
+SwimBall {
+  translation -0.33 0.44 -0.17
+  radius 0.08
+}
+DEF POOL Solid {
+  children [
+    DEF POOL_GROUP Group {
+      children [
+        DEF GROUND Shape {
+          appearance DEF GROUND_APPEARANCE PBRAppearance {
+            baseColorMap ImageTexture {
+              url [
+                "textures/chessboard.jpg"
+              ]
+            }
+            roughness 1
+            metalness 0
+          }
+          geometry Box {
+            size 5 0.005 8
+          }
+        }
+        Transform {
+          translation 0 0.4 4
+          children [
+            DEF SIDE_WALL1 Shape {
+              appearance DEF SIDE_WALL_APPERANCE PBRAppearance {
+                baseColor 0.7 0.7 0.7
+                roughness 1
+                metalness 0
+              }
+              geometry Box {
+                size 5 0.8 0.1
+              }
+            }
+          ]
+        }
+        Transform {
+          translation 0 0.4 -4
+          children [
+            USE SIDE_WALL1
+          ]
+        }
+        Transform {
+          translation 2.54 0.4 0
+          rotation 0 1 0 1.57
+          children [
+            DEF SIDE_WALL2 Shape {
+              appearance USE SIDE_WALL_APPERANCE
+              geometry Box {
+                size 8.1 0.8 0.1
+              }
+            }
+          ]
+        }
+        Transform {
+          translation -2.54 0.4 0
+          rotation 0 1 0 1.57
+          children [
+            USE SIDE_WALL2
+          ]
+        }
+      ]
+    }
+  ]
+  name "pool"
+  contactMaterial "pool floor"
+  boundingObject USE POOL_GROUP
+  locked TRUE
+}
+DEF WATER Fluid {
+  translation 0 0.18 0
+  children [
+    DEF WATER_BOX Shape {
+      appearance PBRAppearance {
+        baseColor 0.725 0.871 0.95
+        transparency 0.8
+        roughness 0.2
+        metalness 0
+      }
+      geometry Box {
+        size 5 0.3 8
+      }
+    }
+  ]
+  boundingObject USE WATER_BOX
+  locked TRUE
+}
+DEF CUBOID1 Solid {
+  translation -1.47301 0.32 1.19077
+  rotation 0 1 0 -0.523595307179586
+  children [
+    DEF OBSTACLE Shape {
+      appearance PBRAppearance {
+        baseColor 0.4 1 1
+        roughness 1
+        metalness 0
+      }
+      geometry Box {
+        size 0.8 0.2 0.15
+      }
+    }
+  ]
+  immersionProperties [
+    ImmersionProperties {
+      fluidName "fluid"
+    }
+  ]
+  boundingObject USE OBSTACLE
+  physics Physics {
+    density 500
+    damping Damping {
+    }
+  }
+  recognitionColors [
+    0 1 1
+  ]
+}
+DEF CUBOID2 Solid {
+  translation 1.04736 0.37 1.57952
+  rotation 0 -1 0 -0.7854053071795866
+  children [
+    DEF OBSTACLE Shape {
+      appearance PBRAppearance {
+        baseColor 0.4 1 1
+        roughness 1
+        metalness 0
+      }
+      geometry Box {
+        size 0.8 0.2 0.15
+      }
+    }
+  ]
+  name "solid(1)"
+  immersionProperties [
+    ImmersionProperties {
+      fluidName "fluid"
+    }
+  ]
+  boundingObject USE OBSTACLE
+  physics Physics {
+    density 500
+    damping Damping {
+    }
+  }
+  recognitionColors [
+    0 1 1
+  ]
+}
+DEF CUBOID3 Solid {
+  translation 1.05043 0.32 -0.529746
+  rotation 0 1 0 -1.8325953071795862
+  children [
+    DEF OBSTACLE Shape {
+      appearance PBRAppearance {
+        baseColor 0.4 1 1
+        roughness 1
+        metalness 0
+      }
+      geometry Box {
+        size 0.8 0.2 0.15
+      }
+    }
+  ]
+  name "solid(2)"
+  immersionProperties [
+    ImmersionProperties {
+      fluidName "fluid"
+    }
+  ]
+  boundingObject USE OBSTACLE
+  physics Physics {
+    density 500
+    damping Damping {
+    }
+  }
+  recognitionColors [
+    0 1 1
+  ]
+}
+DEF CUBOID4 Solid {
+  translation -1.33604 0.32 -1.00213
+  rotation 0 1 0 -1.047195307179586
+  children [
+    DEF OBSTACLE Shape {
+      appearance PBRAppearance {
+        baseColor 0.4 1 1
+        roughness 1
+        metalness 0
+      }
+      geometry Box {
+        size 0.8 0.2 0.15
+      }
+    }
+  ]
+  name "solid(3)"
+  immersionProperties [
+    ImmersionProperties {
+      fluidName "fluid"
+    }
+  ]
+  boundingObject USE OBSTACLE
+  physics Physics {
+    density 500
+    damping Damping {
+    }
+  }
+  recognitionColors [
+    0 1 1
+  ]
+}
+SalamanderCamera {
+  translation -1.21257 0.41 3.73415
+  rotation 0 1 0 2.8798
+  controller "reach_ball"
+}
+SalamanderCamera {
+  translation -1.27338 0.37 -3.13477
+  rotation 0 1 0 0.785395
+  name "Salamander(1)"
+  controller "reach_ball"
+}
+SalamanderCamera {
+  translation 2.05475 0.41 -3.02844
+  rotation 0 -1 0 0.261801
+  name "Salamander(2)"
+  controller "reach_ball"
+}
+SalamanderCamera {
+  translation 0.572026 0.41 -2.80318
+  rotation 0 1 0 -0.261795307179586
+  name "Salamander(3)"
+  controller "reach_ball"
+}
