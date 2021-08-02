@@ -1,0 +1,45 @@
+###
+###  $ sudo apt install ros-${ROS_DISTRO}-jsk-model-tools
+###
+###  $ mkdir /spot_ws
+###  $ cd /spot_ws
+###
+###  $ wstool init src
+###  $ set -y -t src spot_ros https://github.com/clearpathrobotics/spot_ros.git --git
+###  $ wstool update -t src
+###
+###  $ catkin init
+###  $ catkin build spot_description
+###
+###  $ source /spot_ws/devel/setup.bash
+###  $ roslaunch spot_description description.launch
+###  $ rosparam get -p /robot_description | sed -e 's@|@@' > spot.urdf
+###  $ rosrun euscollada collada2eus -I spot.urdf -C /jskrobotics/convert_urdf/spot.yaml -O spot.l
+###
+###  $ roseus spot.l
+###  roseus $ (setq *robot* (spot))
+###  roseus $ (objects (list *robot*))
+###
+
+larm:
+  - front_left_hip_x  : larm-hip-r
+  - front_left_hip_y  : larm-hip-p
+  - front_left_knee   : larm-knee-p
+rarm:
+  - front_right_hip_x : rarm-hip-r
+  - front_right_hip_y : rarm-hip-p
+  - front_right_knee  : rarm-knee-p
+lleg:
+  - rear_left_hip_x   : lleg-hip-r
+  - rear_left_hip_y   : lleg-hip-p
+  - rear_left_knee    : lleg-knee-p
+rleg:
+  - rear_right_hip_x  : rleg-hip-r
+  - rear_right_hip_y  : rleg-hip-p
+  - rear_right_knee   : rleg-knee-p
+
+angle-vector:
+  reset-pose: [0, 0, 0,
+               0, 0, 0,
+               0, 0, 0,
+               0, 0, 0 ]

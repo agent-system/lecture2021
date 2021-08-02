@@ -1,0 +1,40 @@
+###
+###  $ sudo apt install ros-${ROS_DISTRO}-jsk-model-tools
+###
+###  $ mkdir /universal_ws
+###  $ cd /universal_ws
+###
+###  $ wstool init src
+###  $ wstool set -y -t src universal_robot https://github.com/ros-industrial/universal_robot.git --git
+###  $ wstool set -y -t src robotiq https://github.com/ros-industrial/robotiq.git --git
+###  $ wstool update -t src
+###
+###  $ catkin init
+###  $ catkin build ur_e_description robotiq_3f_gripper_visualization
+###
+###  $ source /universal_ws/devel/setup.bash
+###
+###  $ roslaunch ur_e_description view_ur5e.launch  ## -> you can see the model in rviz
+###   ## at another terminal while running rviz
+###  $ rosparam get -p /robot_description | sed -e 's@|@@' > ur5e.urdf
+###
+###  $ rosrun euscollada collada2eus -I ur5e.urdf -C ur5e.yaml -O ur5e.l
+###
+###  $ roseus ur5e.l ## you get tiago robot as EusLisp model.
+###  roseus $ (setq *robot* (ur5e))
+###  roseus $ (objects (list *robot*))
+###
+### $ ROS_NAMESPACE=robotiq roslaunch robotiq_3f_gripper_visualization robotiq_gripper_upload.launch
+### $ rosparam get -p /robotiq/robot_description | sed -e 's@|@@' > robotiq_3f.urdf
+### 
+rarm:
+  - shoulder_pan_joint  : rarm-shoulder-p
+  - shoulder_lift_joint : rarm-shoulder-r
+  - elbow_joint         : rarm-elbow-p
+  - wrist_1_joint       : rarm-wrist-p
+  - wrist_2_joint       : rarm-wrist-r
+  - wrist_3_joint       : rarm-wrist-y
+angle-vector:
+  reset-pose : [
+0.0, 0.0, 0.0, 0.0, 0.0, 0.0, ## arm
+]

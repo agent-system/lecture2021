@@ -1,0 +1,271 @@
+#VRML_SIM R2021a utf8
+WorldInfo {
+  info [
+    "Model of the Salamandra Robotica amphibious robot developped at the BIOROB (http://biorob.epfl.ch). This demo exemplifies how Webots automotically generates hydrostatic and hydrodynamic forces."
+    "Authors: Jerome Braure (original work), Yvan Bourquin (this demo) and Luc Guyot (adaptation to the generic Webots fluid dynamics features)"
+    "Biorobotics Laboratory, EPFL, Lausanne"
+    "Ecole Polytechnique Federale de Lausanne (EPFL), Switzerland"
+    ""
+    "Related publication:"
+    "A. Ijspeert, A. Crespi, D. Ryczko, and J.M. Cabelguen. From swimming to walking with a salamander robot driven by a spinal cord model. Science, 315(5817):1416-1420, 2007."
+  ]
+  title "Salamandra Robotica"
+  basicTimeStep 4
+  coordinateSystem "NUE"
+  contactProperties [
+    ContactProperties {
+      material1 "leg"
+      material2 "floor"
+      coulombFriction [
+        5
+      ]
+    }
+    ContactProperties {
+      material1 "body"
+      material2 "floor"
+      coulombFriction [
+        0.2
+      ]
+    }
+  ]
+}
+Viewpoint {
+  # orientation -0.3631869715851604 0.9133349285429613 0.18415898559186192 1.10338
+  #position 5.42399 1.14139 4.17935
+    orientation -1 0 0 1.0  
+  position 0 9 5
+#   # follow "Salamander"
+}
+TexturedBackground {
+}
+TexturedBackgroundLight {
+}
+#original
+# Salamander {
+#   translation 3.4 0.29422 3.15
+#   rotation 0 1 0 1.5708
+# }
+DEF Y1 MysalamanderA {
+  translation 1.5 0.3 0.8
+  rotation 0 1 0 1.5708
+  name "Y1"
+}
+DEF Y2 MysalamanderA {
+ # translation 1.0 0.80064 0
+  translation 1.5 0.3 0
+  rotation 0 1 0 1.5708
+  name "Y2"     
+}
+DEF Y3 MysalamanderA {
+  translation 1.5 0.3 -0.8
+  rotation 0 1 0 1.5708
+  name "Y3"     
+}
+DEF B1 MysalamanderB {
+  translation -1.5 0.3 0.8
+  rotation 0 1 0 -1.5708
+  name "B1"     
+}
+DEF B2 MysalamanderB {
+  translation -1.5 0.3 0
+  rotation 0 1 0 -1.5708
+  name "B2"       
+}
+DEF B3 MysalamanderB {
+  translation -1.5 0.3 -0.8
+  rotation 0 1 0 -1.5708
+  name "B3"       
+}
+Robot {
+  children [
+    Emitter {
+      range 10
+      baudRate 115200
+    }
+  ]
+  controller "salamander_referee_supervisor"
+  supervisor TRUE
+}
+DEF FLOOR Solid {
+  children [
+    DEF GND Group {
+      children [
+        Transform {
+          # translation -4.42876 -0.25 0
+          translation 0 -0.25 0          
+          children [
+            Shape {
+              appearance DEF GROUND_APPEARANCE PBRAppearance {
+                baseColorMap ImageTexture {
+                  url [
+                    "textures/texture_grid.png"
+                  ]
+                }
+                roughness 1
+                metalness 0
+              }
+              
+              geometry Box {
+                # size 3.14249 0.001 8
+                # size 12 0.25 8
+                size 8 0.25 6 
+              }
+            }
+          ]
+        }      
+      ]
+    }
+  ]
+  name "ground"
+  contactMaterial "floor"
+  boundingObject USE GND
+  locked TRUE
+}
+
+DEF AQUARIUM Solid {
+  translation 0 0.1 0
+  children [
+    DEF SIDES_GROUP Group {
+      children [
+        Transform {
+          # translation 0 0 4
+                    translation 0 0 3
+          children [
+            DEF GLASS_SHAPE1 Shape {
+              appearance DEF GLASS_APPEARANCE PBRAppearance {
+                # baseColor 1 0.6 0.6
+                # baseColor 0 1 0
+                baseColor 0 1 0
+                roughness 1
+                metalness 0
+              }
+              geometry Box {
+                # size 12 0.7 0.02
+                # size 8 0.7 0.02
+                size 8 2.0 0.02                
+              }
+            }
+          ]
+        }
+        Transform {
+          # translation 0 0 -4
+          translation 0 0 -3          
+          children [
+            USE GLASS_SHAPE1
+          ]
+        }
+        Transform {
+          # translation -6 0 0
+          translation 4 0 0
+          rotation 0 1 0 1.5708
+          children [
+            DEF GLASS_SHAPE2 Shape {
+              appearance USE GLASS_APPEARANCE
+              geometry Box {
+                # size 8 0.7 0.02
+                # size 6 0.7 0.02
+                size 6 2.0 0.02                
+              }
+            }
+          ]
+        }
+        Transform {
+          # translation 6 0 0
+          translation -4 0 0
+          rotation 0 1 0 1.5708
+          children [
+            USE GLASS_SHAPE2
+          ]
+        }
+      ]
+    }
+  ]
+  name "aquarium"
+  boundingObject USE SIDES_GROUP
+  locked TRUE
+}
+DEF WATER Fluid {
+  translation 0 -0.125 0
+  children [
+    DEF WATER_BOX Shape {
+      appearance PBRAppearance {
+        baseColor 0.7254901960784313 0.8705882352941177 1
+        transparency 0.7
+        roughness 0.2
+        metalness 0
+      }
+      geometry Box {
+        # size 12 0.25 8
+        #contoroler のwater_levelなどとの兼ね合い
+        size 8 0.25 6
+        
+      }
+    }
+  ]
+  boundingObject USE WATER_BOX
+  locked TRUE
+  # name "swimming pool"  
+}
+#~/webots/projects/objects/balls/protos/以下にあるproto immersionPropertiesなどがなかった
+# DEF BALL Ball {
+#   translation 0.5 0.773 0
+#   color 1 0 0
+#   immersionProperties [
+#     DEF SWIMMING_POOL_IMMERSION_PROPERTIES ImmersionProperties {
+#       fluidName "swimming pool"
+#       dragForceCoefficients 0.1 0 0
+#       dragTorqueCoefficients 0.001 0 0
+#       viscousResistanceTorqueCoefficient 0.005
+#     }
+#   ]
+#   physics Physics {
+#     density 100
+#     damping Damping {
+#       linear 0.5
+#       angular 0.5
+#     }
+#   }  
+# }
+DEF BALL Solid {
+  translation 0 1.80064 0
+  rotation -0.05050388415752142 0.2566699208005525 0.9651786930103886 4.30555
+  children [
+    DEF S Shape {
+      # appearance USE DARK_BROWN
+  appearance DEF DARK_BROWN PBRAppearance {
+    # baseColor 0.501961 0.337255 0.2
+    baseColor 1 0 0
+    roughness 1.1102230246251565e-16
+    metalness 0
+  }
+      geometry Sphere {
+        # radius 0.15
+        radius 0.4
+        subdivision 2
+      }
+    }
+  ]
+  name "sphere(1)"
+ immersionProperties [
+    DEF SWIMMING_POOL_IMMERSION_PROPERTIES ImmersionProperties {
+      fluidName "fluid"
+      dragForceCoefficients 0.1 0 0
+      dragTorqueCoefficients 0.001 0 0
+      viscousResistanceTorqueCoefficient 0.005
+    }
+  ]
+  boundingObject USE S
+  physics Physics {
+    mass 0.5
+    density 450
+    damping Damping {
+      linear 0.1
+      angular 0.5
+    }
+  }
+}
+# E-puck {
+#   translation -0.0299999 -0.0036008 0.7
+#   rotation 0.9941136611859152 0.00021835892557885237 -0.10834196307486305 -0.000341486
+#   controller "novice_camera"
+# }

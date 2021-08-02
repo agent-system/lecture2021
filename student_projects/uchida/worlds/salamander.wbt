@@ -1,0 +1,261 @@
+#VRML_SIM R2021a utf8
+WorldInfo {
+  info [
+    "2021年エージェントシステム用改造ver。Model of the Salamandra Robotica amphibious robot developped at the BIOROB (http://biorob.epfl.ch). This demo exemplifies how Webots automotically generates hydrostatic and hydrodynamic forces."
+    "Authors: Jerome Braure (original work), Yvan Bourquin (this demo) and Luc Guyot (adaptation to the generic Webots fluid dynamics features)"
+    "Biorobotics Laboratory, EPFL, Lausanne"
+    "Ecole Polytechnique Federale de Lausanne (EPFL), Switzerland"
+    ""
+    "Related publication:"
+    "A. Ijspeert, A. Crespi, D. Ryczko, and J.M. Cabelguen. From swimming to walking with a salamander robot driven by a spinal cord model. Science, 315(5817):1416-1420, 2007."
+  ]
+  title "Salamandra Robotica"
+  basicTimeStep 4
+  coordinateSystem "NUE"
+  contactProperties [
+    ContactProperties {
+      material1 "leg"
+      material2 "floor"
+      coulombFriction [
+        5
+      ]
+    }
+    ContactProperties {
+      material1 "body"
+      material2 "floor"
+      coulombFriction [
+        0.2
+      ]
+    }
+  ]
+}
+Viewpoint {
+  # orientation -0.3631869715851604 0.9133349285429613 0.18415898559186192 1.10338
+  orientation -1 0 0 1.58
+  # position 15.42399 11.14139 14.17935
+  position 0 15 0
+  # follow "Salamander"
+}
+TexturedBackground {
+}
+TexturedBackgroundLight {
+}
+
+DEF FLOOR Solid {
+  children [
+    DEF GND Group {
+      children [
+        Transform {
+          translation -4.42876 -0.25 0
+          children [
+            Shape {
+              appearance DEF GROUND_APPEARANCE PBRAppearance {
+                baseColorMap ImageTexture {
+                  url [
+                    "textures/texture_grid.png"
+                  ]
+                }
+                roughness 1
+                metalness 0
+              }
+              geometry Box {
+                size 3.14249 0.001 8
+              }
+            }
+          ]
+        }
+        Transform {
+          rotation 0 0 1 0.087266
+          children [
+            Shape {
+              appearance USE GROUND_APPEARANCE
+              geometry Box {
+                size 5.73686 0.001 8
+              }
+            }
+          ]
+        }
+        Transform {
+          translation 4.42876 0.25 0
+          children [
+            Shape {
+              appearance USE GROUND_APPEARANCE
+              geometry Box {
+                size 3.14249 0.001 8
+              }
+            }
+          ]
+        }
+      ]
+    }
+  ]
+  name "ground"
+  contactMaterial "floor"
+  boundingObject USE GND
+  locked TRUE
+}
+
+
+# DEF R1 Salamander {
+  # translation 3.4 0.29422 3.15
+  # translation 0.4 0.29422 -0.15
+  # rotation 0 1 0 1.5708
+  # controller "salamander_red"
+  # name "R1"
+# }
+# DEF R2 Salamander {
+  # translation 3.4 0.29422 1.15
+  # translation 0.4 0.29422 0.15
+  # rotation 0 1 0 1.5708
+  # controller "salamander_red"
+  # name "R2"
+# }
+
+# DEF R3 Salamander {
+  # translation 3.4 0.29422 -1.15
+  # rotation 0 1 0 1.5708
+  # controller "salamander_red"
+  # name "R3"
+# }
+
+DEF R1 Salamander {
+  # translation -3.4 0.29422 3.15
+  translation -2.0 0.29422 1
+  rotation 0 1 0 -1.5708
+  controller "salamander_blue"
+  name "R1"
+}
+
+DEF R2 Salamander {
+  # translation -3.4 0.29422 1.15
+  translation -4.0 0.29422 0
+  rotation 0 1 0 -1.5708
+  controller "salamander_blue"
+  name "R2"
+}
+
+DEF R3 Salamander {
+  # translation -3.4 0.29422 -1.15
+  translation -2.0 0.29422 -1
+  rotation 0 1 0 -1.5708
+  controller "salamander_blue"
+  name "R3"
+}
+DEF BALL Solid {
+  translation -1 0.2 0
+  rotation 0.7071067811865477 0 0.7071067811865477 2.62318
+  children [
+    DEF S Shape {
+      appearance DEF LIGHT_BROWN PBRAppearance {
+        baseColor 0.807843 0.72549 0.498039
+        roughness 1.1102230246251565e-16
+        metalness 0
+      }
+      geometry Sphere {
+        radius 0.175
+        subdivision 2
+      }
+    }
+  ]
+  name "ball"
+  immersionProperties [
+    DEF IMMERSION_HOGE ImmersionProperties {
+      fluidName "fluid"
+      referenceArea "xyz-projection"
+      dragForceCoefficients 0.1 0 0
+      dragTorqueCoefficients 0.1 0 0
+      viscousResistanceTorqueCoefficient 0.5
+    }
+  ]
+  boundingObject USE S
+  physics Physics {
+    mass 0.1
+    damping Damping {
+      linear 0.5
+      angular 0.5
+    }
+  }
+}
+
+
+DEF AQUARIUM Solid {
+  translation 0 0.1 0
+  children [
+    DEF SIDES_GROUP Group {
+      children [
+        Transform {
+          translation 0 0 4
+          children [
+            DEF GLASS_SHAPE1 Shape {
+              appearance DEF GLASS_APPEARANCE PBRAppearance {
+                baseColor 1 0.6 0.6
+                roughness 1
+                metalness 0
+              }
+              geometry Box {
+                size 12 0.7 0.02
+              }
+            }
+          ]
+        }
+        Transform {
+          translation 0 0 -4
+          children [
+            USE GLASS_SHAPE1
+          ]
+        }
+        Transform {
+          translation -6 0 0
+          rotation 0 1 0 1.5708
+          children [
+            DEF GLASS_SHAPE2 Shape {
+              appearance USE GLASS_APPEARANCE
+              geometry Box {
+                size 8 0.7 0.02
+              }
+            }
+          ]
+        }
+        Transform {
+          translation 6 0 0
+          rotation 0 1 0 1.5708
+          children [
+            USE GLASS_SHAPE2
+          ]
+        }
+      ]
+    }
+  ]
+  name "aquarium"
+  boundingObject USE SIDES_GROUP
+  locked TRUE
+}
+DEF WATER Fluid {
+  translation 0 -0.125 0
+  children [
+    DEF WATER_BOX Shape {
+      appearance PBRAppearance {
+        baseColor 0.7254901960784313 0.8705882352941177 1
+        transparency 0.7
+        roughness 0.2
+        metalness 0
+      }
+      geometry Box {
+        size 12 0.25 8
+      }
+    }
+  ]
+  boundingObject USE WATER_BOX
+  locked TRUE
+}
+
+Robot {
+  children [
+    Emitter {
+      range 10
+      baudRate 115200
+    }
+  ]
+  controller "waterpolo_supervisor"
+  supervisor TRUE
+}

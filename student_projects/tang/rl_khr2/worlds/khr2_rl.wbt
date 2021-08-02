@@ -1,0 +1,103 @@
+#VRML_SIM R2021a utf8
+WorldInfo {
+  basicTimeStep 4
+  coordinateSystem "NUE"
+}
+Viewpoint {
+  orientation 0.0763435335947404 -0.9252827147162412 -0.3715152254290686 4.641695871210743
+  position 6.909474060137903 3.3999937502864284 -1.8792085133793461
+}
+TexturedBackground {
+}
+TexturedBackgroundLight {
+}
+DEF POOL Solid {
+  children [
+    DEF POOL_GROUP Group {
+      children [
+        DEF GROUND Shape {
+          appearance DEF GROUND_APPEARANCE PBRAppearance {
+            baseColorMap ImageTexture {
+              url [
+                "textures/chessboard.jpg"
+              ]
+            }
+            roughness 1
+            metalness 0
+          }
+          geometry Box {
+            size 5 0.005 8
+          }
+        }
+        Transform {
+          translation 0 0.4 4
+          children [
+            DEF SIDE_WALL1 Shape {
+              appearance DEF SIDE_WALL_APPERANCE PBRAppearance {
+                baseColor 0.7 0.7 0.7
+                roughness 1
+                metalness 0
+              }
+              geometry Box {
+                size 5 0.8 0.1
+              }
+            }
+          ]
+        }
+        Transform {
+          translation 0 0.4 -4
+          children [
+            USE SIDE_WALL1
+          ]
+        }
+        Transform {
+          translation 2.54 0.4 0
+          rotation 0 1 0 1.57
+          children [
+            DEF SIDE_WALL2 Shape {
+              appearance USE SIDE_WALL_APPERANCE
+              geometry Box {
+                size 8.1 0.8 0.1
+              }
+            }
+          ]
+        }
+        Transform {
+          translation -2.54 0.4 0
+          rotation 0 1 0 1.57
+          children [
+            USE SIDE_WALL2
+          ]
+        }
+      ]
+    }
+  ]
+  name "pool"
+  contactMaterial "pool floor"
+  boundingObject USE POOL_GROUP
+  locked TRUE
+}
+DEF WATER Fluid {
+  translation 0 0.23 0
+  children [
+    DEF WATER_BOX Shape {
+      appearance PBRAppearance {
+        baseColor 0.725 0.871 0.95
+        transparency 0.8
+        roughness 0.2
+        metalness 0
+      }
+      geometry Box {
+        size 5 0.4 8
+      }
+    }
+  ]
+  boundingObject USE WATER_BOX
+  locked TRUE
+}
+Khr2hvfluid {
+  translation 0 0.451 -3
+  rotation 1 0 0 -0.261795307179586
+  controller "<extern>"
+  supervisor TRUE
+}

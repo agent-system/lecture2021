@@ -1,0 +1,95 @@
+###
+###  $ sudo apt install ros-${ROS_DISTRO}-jsk-model-tools
+###
+###  $ mkdir tiago_ws
+###  $ cd tiago_ws
+###  $ wstool init src https://raw.githubusercontent.com/pal-robotics/tiago_tutorials/kinetic-devel/tiago_public-melodic.rosinstall
+###
+###  $ catkin build teago_description
+###
+###  $ source tiago_ws/devel/setup.bash
+###
+###  $ roslaunch tiago_description show.launch  ## -> you can see the model in rviz
+###   ## at another terminal while running rviz
+###  $ rosparam get -p /robot_description | sed -e 's@|@@' > tiago.urdf
+###
+###  $ rosrun euscollada collada2eus -I tiago.urdf -C tiago.yaml -O tiago.l
+###    ## tiago.yaml is this file
+###
+###  $ roseus tiago.l ## you get tiago robot as EusLisp model.
+###  roseus $ (setq *robot* (tiago))
+###  roseus $ (objects (list *robot*))
+###
+rarm:
+  - arm_1_joint  : rarm-shoulder-p
+  - arm_2_joint  : rarm-shoulder-r
+  - arm_3_joint  : rarm-shoulder-y
+  - arm_4_joint  : rarm-elbow-p
+  - arm_5_joint  : rarm-wrist-y
+  - arm_6_joint  : rarm-wrist-r
+  - arm_7_joint  : rarm-wrist-p
+larm: ## not larm but hand
+  - hand_index_abd_joint        : larm-hand-index0
+  - hand_index_flex_1_joint     : larm-hand-index1
+  - hand_index_flex_2_joint     : larm-hand-index2
+  - hand_index_flex_3_joint     : larm-hand-index3
+  - hand_index_joint            : larm-hand-index4
+  - hand_index_virtual_1_joint  : larm-hand-index5
+  - hand_index_virtual_2_joint  : larm-hand-index6
+  - hand_index_virtual_3_joint  : larm-hand-index7
+  - hand_little_abd_joint       : larm-hand-little0
+  - hand_little_flex_1_joint    : larm-hand-little1
+  - hand_little_flex_2_joint    : larm-hand-little2
+  - hand_little_flex_3_joint    : larm-hand-little3
+  - hand_little_virtual_1_joint : larm-hand-little4
+  - hand_little_virtual_2_joint : larm-hand-little5
+  - hand_little_virtual_3_joint : larm-hand-little6
+  - hand_middle_abd_joint       : larm-hand-middle0
+  - hand_middle_flex_1_joint    : larm-hand-middle0
+  - hand_middle_flex_2_joint    : larm-hand-middle0
+  - hand_middle_flex_3_joint    : larm-hand-middle0
+  - hand_middle_virtual_1_joint : larm-hand-middle0
+  - hand_middle_virtual_2_joint : larm-hand-middle0
+  - hand_middle_virtual_3_joint : larm-hand-middle0
+  - hand_mrl_joint              : larm-hand-mrl
+  - hand_ring_abd_joint         : larm-hand-ring0
+  - hand_ring_flex_1_joint      : larm-hand-ring1
+  - hand_ring_flex_2_joint      : larm-hand-ring2
+  - hand_ring_flex_3_joint      : larm-hand-ring3
+  - hand_ring_virtual_1_joint   : larm-hand-ring4
+  - hand_ring_virtual_2_joint   : larm-hand-ring5
+  - hand_ring_virtual_3_joint   : larm-hand-ring6
+  - hand_thumb_abd_joint        : larm-hand-thumb0
+  - hand_thumb_flex_1_joint     : larm-hand-thumb1
+  - hand_thumb_flex_2_joint     : larm-hand-thumb2
+  - hand_thumb_joint            : larm-hand-thumb3
+  - hand_thumb_virtual_1_joint  : larm-hand-thumb4
+  - hand_thumb_virtual_2_joint  : larm-hand-thumb5
+head:
+  - head_1_joint : neck-y
+  - head_2_joint : neck-p
+torso:
+  - suspension_left_joint  : torso-waist-r
+  - suspension_right_joint : torso-waist-y
+  - torso_lift_joint       : torso-waist-p
+## not using caster/wheel
+#   - caster_back_left_1_joint
+#   - caster_back_left_2_joint
+#   - caster_back_right_1_joint
+#   - caster_back_right_2_joint
+#   - caster_front_left_1_joint
+#   - caster_front_left_2_joint
+#   - caster_front_right_1_joint
+#   - caster_front_right_2_joint
+#   - wheel_left_joint
+#   - wheel_right_joint
+angle-vector:
+  reset-pose : [
+0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, ## arm
+0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, ## hand
+0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, ## hand
+0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, ## hand
+0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, ## hand
+0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, ## hand
+0.0, 0.0, ## head
+0.0, 0.0, 0.0 ] ## torso

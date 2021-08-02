@@ -1,0 +1,1 @@
+rosrun robot_assembler create_urdf.sh $(rospack find robot_assembler)/sample/kxr_rcb4robots/kxrl2l6a6h2.roboasm.l $(pwd)/kxrl2l6a6h2.urdf $(pwd)/kxrl2l6a6h2.l $(rospack find robot_assembler)/sample/kxr_rcb4robots/kxrl2l6a6h2.urdf.euscollada.fixed.yaml
