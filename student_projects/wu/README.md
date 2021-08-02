@@ -18,21 +18,24 @@ controllers/irteusgl/webotslib.l is the file allowing euslisp to call webots fun
 
 ## 3.How to run
 a. **gc_sala.wbt**  
-    `cd student_projects/wu`  
-    `webots worlds/gc_sala.wbt`  
-    `//build the controller in webots and start the simulation`  
+    
+    cd student_projects/wu  
+    webots worlds/gc_sala.wbt  
+    //build the controller in webots and start the simulation  
 
-b. **gc_sala_irteusgl.wbt**  
-    `cd student_projects/wu`  
-    `webots worlds/gc_sala_irteusgl.wbt`  
-    `//in another terminal`  
-    `irteusgl controllers/irteusgl/salamander.l`  
+b. **gc_sala_irteusgl.wbt** 
+
+    cd student_projects/wu  
+    webots worlds/gc_sala_irteusgl.wbt  
+    //in another terminal  
+    irteusgl controllers/irteusgl/salamander.l  
 
 c. **gc_tiago_irteusgl.wbt**  
-    `cd student_projects/wu`  
-    `webots worlds/gc_tiago_irteusgl.wbt`  
-    `//in another terminal`  
-    `irteusgl controllers/irteusgl/tiago.l`  
+
+    cd student_projects/wu  
+    webots worlds/gc_tiago_irteusgl.wbt  
+    //in another terminal  
+    irteusgl controllers/irteusgl/tiago.l  
 
 ## 4.Problems left  
 a. When executing salamander.l, as the state of the garbage(box) on the pool-side is unstable, the simulation may be dumped. Also, in some cases, the garbage(box) starts spinning even without touching any objects, which can also lead to irregular conditions.  
