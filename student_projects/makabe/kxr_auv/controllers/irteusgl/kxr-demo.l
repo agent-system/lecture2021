@@ -4,12 +4,15 @@
 ;; https://github.com/agent-system/lecture2021/webots/controllers/irteusgl/kxr-demo.l
 ;;
 (load "webotslib.l")
+;;
 (setq time_step 32)
 (defvar *init* nil)
 (defvar *swing* nil)
 (defun isnan (v) (and (< v 0) (> v 0)))
 (defun my_step nil
-   (when (= -1 (wb_robot_step time_step)) (wb_robot_cleanup) (exit)))
+  (when (= -1 (wb_robot_step time_step))
+    (wb_robot_cleanup)
+    (exit)))
 (defun send+ (&rest args)
    (send* args)
    (send *irtviewer* :draw-objects)
@@ -37,24 +40,33 @@
        (send self j :joint-angle angle))))
 (defun set-joint-angle (j angle) (send *robot* :set-joint-angle j angle))
 (defun send-webots nil
-   (dolist
-      (j (send *robot* :joint-list))
-      (cond
-         ((memq (send j :get :joint-type) (list :wheel :thrust))
-          (format t ";; joint j=~A type=~A~%" j (send j :get :joint-type))
-          (wb_motor_set_position (get j :device) infinity)
-          (wb_motor_set_velocity
-           (get j :device)
-           (deg2rad (send j :joint-angle))))
-         (t
-	  (print j)
-	  (print (send j :joint-angle))	  
-	  (print (get j :device))
-          (wb_motor_set_position
-           (get j :device)
-           (deg2rad (send j :joint-angle)))))))
+  (dolist (j (send *robot* :joint-list))
+    (cond
+     ((memq (send j :get :joint-type) (list :wheel :thrust))
+      (format t ";; joint j=~A type=~A~%" j (send j :get :joint-type))
+      (wb_motor_set_position (get j :device) infinity)
+      (wb_motor_set_velocity (get j :device) (deg2rad (send j :joint-angle))))
+     (t
+      (print j)
+      (print (send j :joint-angle))	  
+      (print (get j :device))
+      (wb_motor_set_position (get j :device) (deg2rad (send j :joint-angle)))))
+    )
+  )
+
+(defun send-webots2 nil
+  (dolist (j (send *robot* :joint-list))
+    (cond
+     ((memq (send j :get :joint-type) (list :wheel :thrust))
+      (format t ";; joint j=~A type=~A~%" j (send j :get :joint-type))
+      (wb_motor_set_position (get j :device) infinity)
+      (wb_motor_set_velocity (get j :device) (deg2rad (send j :joint-angle))))
+     (t (wb_motor_set_position (get j :device) (deg2rad (send j :joint-angle)))))
+    )
+  )
+
 (defun read-webots nil
-   (dolist
+  (dolist
       (j (send *robot* :joint-list))
       (unless
          (eq :wheel (send j :get :joint-type))

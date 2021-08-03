@@ -3,10 +3,10 @@ WorldInfo {
   info [
     "generated from eus2webots"
   ]
-  title "kxr_auv demo"
+  title "kxrl2makabeorig demo"
   basicTimeStep 16
   defaultDamping Damping {
-    linear 0.5
+    linear 0.7
     angular 0.5
   }
   coordinateSystem "NUE" 
@@ -15,6 +15,11 @@ WorldInfo {
       material1 "body"
       material2 "floor"
       coulombFriction [ 0.5 ]
+      bounce 1.0
+      bounceVelocity 0.01
+      forceDependentSlip 0
+      softERP 0.2
+      softCFM 0.001
     }
   ]
 }
@@ -81,72 +86,74 @@ DEF FLOOR Solid {
   boundingObject USE GND
   locked TRUE
 }
-DEF AQUARIUM Solid {
-  translation 0 0.1 0
-  children [
-    DEF SIDES_GROUP Group {
-      children [
-        Transform {
-          translation 0 0 4
-          children [
-            DEF GLASS_SHAPE1 Shape {
-              appearance DEF GLASS_APPEARANCE PBRAppearance {
-                baseColor 1 0.6 0.6
-                roughness 1
-                metalness 0
-              }
-              geometry Box {
-                size 12 0.7 0.02
-              }
-            }
-          ]
-        }
-        Transform {
-          translation 0 0 -4
-          children [
-            USE GLASS_SHAPE1
-          ]
-        }
-        Transform {
-          translation -6 0 0
-          rotation 0 1 0 1.5708
-          children [
-            DEF GLASS_SHAPE2 Shape {
-              appearance USE GLASS_APPEARANCE
-              geometry Box {
-                size 8 0.7 0.02
-              }
-            }
-          ]
-        }
-        Transform {
-          translation 6 0 0
-          rotation 0 1 0 1.5708
-          children [
-            USE GLASS_SHAPE2
-          ]
-        }
-      ]
-    }
-  ]
-  name "aquarium"
-  boundingObject USE SIDES_GROUP
-  locked TRUE
-}
-DEF WATER Fluid {
-  translation 0 -0.125 0
-  name "fluid"
-  children [
-    DEF WATER_BOX Shape {
-      appearance PBRAppearance {
-        baseColor 0.7254901960784313 0.8705882352941177 1
-        transparency 0.7  roughness 0.2  metalness 0 }
-      geometry Box { size 12 0.25 8 }
-    }
-  ]
-  boundingObject USE WATER_BOX
-  locked TRUE
-}
+
+# DEF AQUARIUM Solid {
+#   translation 0 0.1 0
+#   children [
+#     DEF SIDES_GROUP Group {
+#       children [
+#         Transform {
+#           translation 0 0 4
+#           children [
+#             DEF GLASS_SHAPE1 Shape {
+#               appearance DEF GLASS_APPEARANCE PBRAppearance {
+#                 baseColor 1 0.6 0.6
+#                 roughness 1
+#                 metalness 0
+#               }
+#               geometry Box {
+#                 size 12 0.7 0.02
+#               }
+#             }
+#           ]
+#         }
+#         Transform {
+#           translation 0 0 -4
+#           children [
+#             USE GLASS_SHAPE1
+#           ]
+#         }
+#         Transform {
+#           translation -6 0 0
+#           rotation 0 1 0 1.5708
+#           children [
+#             DEF GLASS_SHAPE2 Shape {
+#               appearance USE GLASS_APPEARANCE
+#               geometry Box {
+#                 size 8 0.7 0.02
+#               }
+#             }
+#           ]
+#         }
+#         Transform {
+#           translation 6 0 0
+#           rotation 0 1 0 1.5708
+#           children [
+#             USE GLASS_SHAPE2
+#           ]
+#         }
+#       ]
+#     }
+#   ]
+#   name "aquarium"
+#   boundingObject USE SIDES_GROUP
+#   locked TRUE
+# }
+
+# DEF WATER Fluid {
+#   translation 0 -0.125 0
+#   name "fluid"
+#   children [
+#     DEF WATER_BOX Shape {
+#       appearance PBRAppearance {
+#         baseColor 0.7254901960784313 0.8705882352941177 1
+#         transparency 0.7  roughness 0.2  metalness 0 }
+#       geometry Box { size 12 0.25 8 }
+#     }
+#   ]
+#   boundingObject USE WATER_BOX
+#   locked TRUE
+# }
 
 ## Solid {
 ##   name "ball474"
@@ -180,24 +187,23 @@ DEF WATER Fluid {
 ##   }  
 ## }
 
-Can {
-  name "can474"
-  translation -1.77354 0.2 1.08302
-  immersionProperties [
-    ImmersionProperties {
-      fluidName "fluid"
-      dragForceCoefficients 0.1 0 0
-      dragTorqueCoefficients 0.001 0 0
-      viscousResistanceTorqueCoefficient 0.005 } ]
-  physics Physics {
-    density 500
-    damping Damping {
-      linear 0.5
-      angular 0.5
-    }
-  }  
-  
-}
+# Can {
+#   name "can474"
+#   translation -1.77354 0.2 1.08302
+#   immersionProperties [
+#     ImmersionProperties {
+#       fluidName "fluid"
+#       dragForceCoefficients 0.1 0 0
+#       dragTorqueCoefficients 0.001 0 0
+#       viscousResistanceTorqueCoefficient 0.005 } ]
+#   physics Physics {
+#     density 500
+#     damping Damping {
+#       linear 0.5
+#       angular 0.5
+#     }
+#   }  
+#   }
 
 ## Apple {
 ##   name "apple474"
@@ -529,14 +535,14 @@ Can {
 ##   radius 0.1 height 0.233333
 ## }
 
-kxrl2makabe {
-  ##translation -3.0 0.0 0.0 ##default
+DEF KXRL2MAKABE kxrl2makabeorig {
+#SENSOR_SAMPLE {
   translation 4.0 0.4 0.0 ##debug flutter kick
   rotation 1.0 0.0 0.0 -1.5707 ##kxr_amv
-  ##rotation 1.0 0.0 1.0 3.1415 ##kxr_auv_fullbody_initial
-  ##rotation -1.0 -1.0 1.0 2.0944 ##debug kxr_amv
-  controller "irteusgl"
-  controllerArgs "transform-demo.l"
+  controller "<extern>"
+  controllerArgs ""
+  #controller "irteusgl" #auto-controller
+  #controllerArgs "transform-demo.l" #auto-controller
   synchronization FALSE
   #controller "python_demo"
 }

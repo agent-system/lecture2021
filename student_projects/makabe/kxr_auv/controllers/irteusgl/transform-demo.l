@@ -50,7 +50,20 @@
      (t
       (wb_motor_set_position
        (get j :device)
-       (deg2rad (send j :joint-angle)))))))
+       (deg2rad (send j :joint-angle))))))
+
+  ;;gripper settings
+   (when t
+     (setq j (send *robot* :rarm-gripper2-r))
+     (wb_motor_set_position (get j :device) (deg2rad (send j :joint-angle)))
+     
+     (setq j (send *robot* :larm-gripper2-r))
+     (wb_motor_set_position (get j :device) (deg2rad (send j :joint-angle)))
+     )
+   ;;end gripper settings
+   
+  
+  )
 (defun read-webots nil
   (dolist
       (j (send *robot* :joint-list))
@@ -228,79 +241,137 @@
       (format t "keyboard space: i=~d key=~d~%" i new_key)))
     (setq prev_key new_key)))
 (defun main-init (&optional fname)
-  (wb_robot_init)
-  (setq *robot-name* (wb_robot_get_name))
-  (format t ";; *robot-name*=~S~%" *robot-name*)
-  (setq n_devices (wb_robot_get_number_of_devices))
-  (dotimes
+   (wb_robot_init)
+   (setq *robot-name* (wb_robot_get_name))
+   (format t ";; *robot-name*=~S~%" *robot-name*)
+   (setq n_devices (wb_robot_get_number_of_devices))
+   (dotimes
       (i n_devices)
-    (setq d (wb_robot_get_device_by_index i))
-    (format t ";; i:~A name:~S~%" i (wb_device_get_name d)))
-  (load (format nil "~A.l" *robot-name*))
-  (if
+      (setq d (wb_robot_get_device_by_index i))
+      (format t ";; i:~A name:~S~%" i (wb_device_get_name d)))
+   (load (format nil "~A.l" *robot-name*))
+   (if
       (probe-file (format nil "~A-motions.l" *robot-name*))
       (load (format nil "~A-motions.l" *robot-name*)))
-  (setq *robot* (funcall (read-from-string *robot-name*)))
-  (objects (list *robot*))
-  (dolist
-      (j (send *robot* :joint-list))
-    (setq n (send j :name))
-    (setq n (string-downcase (if (symbolp n) (symbol-name n) n)))
-    (send j :put :device (wb_robot_get_device n))
-    (send j :put :sensor (wb_robot_get_device (format nil "~A_sensor" n)))
-    (format t ";; joint name=~S :device=~S~%" n (get j :device))
-    (if
-	(get j :sensor)
-	(wb_position_sensor_enable (get j :sensor) time_step)))
-  (setq *camera0* (wb_robot_get_device "camera_camera0_camera"))
-  (send *robot* :reset-pose)
-  ;; (send *robot* :init-swim-pose)
-  ;; (setq *camera0* (wb_robot_get_device "m5_camera/M5-CAMERA-HEAD_31680_17_camera"))
-  ;; (when (eq (send *robot* :name) "kxr_auv_fullbody_initial")
-  ;;     (send *robot* :init-swim-pose)
-  ;;     (setq *camera0* (wb_robot_get_device "m5_camera/M5-CAMERA-HEAD_31680_17_camera"))
-  ;;   )
-  (when
+   (setq *robot* (funcall (read-from-string *robot-name*)))
+   (objects (list *robot*))
+   (dolist (j (send *robot* :joint-list))
+     (setq n (send j :name))
+     (setq n (string-downcase (if (symbolp n) (symbol-name n) n)))
+     (send j :put :device (wb_robot_get_device n))
+     (send j :put :sensor (wb_robot_get_device (format nil "~A_sensor" n)))
+      (format t ";; joint name=~S :device=~S~%" n (get j :device))
+      (if
+	  (get j :sensor)
+	  (wb_position_sensor_enable (get j :sensor) time_step))
+      )
+   
+   ;;gripper settings
+   (when t
+     (setq j (send *robot* :rarm-gripper2-r))
+     (setq n (send j :name))
+     (setq n (string-downcase (if (symbolp n) (symbol-name n) n)))
+     (send j :put :device (wb_robot_get_device n))
+     (send j :put :sensor (wb_robot_get_device (format nil "~A_sensor" n)))
+     (format t ";; joint name=~S :device=~S~%" n (get j :device))
+     (if
+	 (get j :sensor)
+	 (wb_position_sensor_enable (get j :sensor) time_step))
+
+     (setq j (send *robot* :larm-gripper2-r))
+     (setq n (send j :name))
+     (setq n (string-downcase (if (symbolp n) (symbol-name n) n)))
+     (send j :put :device (wb_robot_get_device n))
+     (send j :put :sensor (wb_robot_get_device (format nil "~A_sensor" n)))
+     (format t ";; joint name=~S :device=~S~%" n (get j :device))
+     (if
+	 (get j :sensor)
+	 (wb_position_sensor_enable (get j :sensor) time_step))
+     )
+   ;;end gripper settings
+   
+   (send *robot* :reset-pose)
+   (setq *camera0* (wb_robot_get_device "camera_camera0_camera"))
+   (when
       (> *camera0* 0)
-    (wb_camera_enable *camera0* time_step)
-    (wb_camera_recognition_enable *camera0* time_step)
-    (setq *camera0-width* (wb_camera_get_width *camera0*))
-    (setq *camera0-height* (wb_camera_get_height *camera0*))
-    (setq *camera0-fstring* (webots-camera-fstring *camera0*))
-    (format t "fstring length=~S~%" (length *camera0-fstring*))
-    (print_camera_image *camera0*)
-    (format
-     t
-     "camera0 width=~A height=~A~%"
-     *camera0-width*
-     *camera0-height*))
-  (when
+      (wb_camera_enable *camera0* time_step)
+      (wb_camera_recognition_enable *camera0* time_step)
+      (setq *camera0-width* (wb_camera_get_width *camera0*))
+      (setq *camera0-height* (wb_camera_get_height *camera0*))
+      (setq *camera0-fstring* (webots-camera-fstring *camera0*))
+      (format t "fstring length=~S~%" (length *camera0-fstring*))
+      (print_camera_image *camera0*)
+      (format
+         t
+         "camera0 width=~A height=~A~%"
+         *camera0-width*
+         *camera0-height*))
+   (setq *camera1* (wb_robot_get_device "camera_camera1_camera"))
+   (when
+      (> *camera1* 0)
+      (wb_camera_enable *camera1* time_step)
+      (wb_camera_recognition_enable *camera1* time_step)
+      (setq *camera1-width* (wb_camera_get_width *camera1*))
+      (setq *camera1-height* (wb_camera_get_height *camera1*))
+      (setq *camera1-fstring* (webots-camera-fstring *camera1*))
+      (format t "fstring length=~S~%" (length *camera1-fstring*))
+      (print_camera_image *camera1*)
+      (format
+         t
+         "camera1 width=~A height=~A~%"
+         *camera1-width*
+         *camera1-height*))
+   (when
       (> (setq *gyro* (wb_robot_get_device "imu_gyrometer_topic gyro")) 0)
-    (format t ";; *gyro*=~A~%" *gyro*)
-    (wb_gyro_enable *gyro* time_step))
-  (when
-      (> (setq *acc* (wb_robot_get_device "imu_gyrometer_topic accelerometer")) 0)
-    (format t ";; *acc*=~A~%" *acc*)
-    (wb_accelerometer_enable *acc* time_step))
-  (when
-      (> (setq *imu* (wb_robot_get_device "imu_gyrometer_topic inertialunit")) 0)
-    (format t ";; *imu-vec*=~A~%" *imu*)
-    (wb_inertial_unit_enable *imu* time_step))
-  (when
-      (> (setq *compass* (wb_robot_get_device "imu_gyrometer_topic compass")) 0)
-    (format t ";; *compass*=~A~%" *compass*)
-    (wb_compass_enable *compass* time_step))
-  (format t "joint angle~%")
-  ;;(send *robot* :stand-pose)
-  (squat-1.9)
-  (send *robot* :fix-leg-to-coords (make-coords))
-  ;; (init-swim :arm t)
-  (print (send *robot* :angle-vector))
-  (send-webots)
-  (wb_keyboard_enable time_step)
-  (setq prev_key 0 i 0)
-  (setq *init* t))
-(defun main nil (unless *init* (main-init)) (do-until-key (main-step2)))
+      (format t ";; *gyro*=~A~%" *gyro*)
+      (wb_gyro_enable *gyro* time_step))
+   (when
+      (>
+         (setq
+            *acc* (wb_robot_get_device "imu_gyrometer_topic accelerometer"))
+         0)
+      (format t ";; *acc*=~A~%" *acc*)
+      (wb_accelerometer_enable *acc* time_step))
+   (when
+      (>
+         (setq
+            *imu* (wb_robot_get_device "imu_gyrometer_topic inertialunit"))
+         0)
+      (format t ";; *imu-vec*=~A~%" *imu*)
+      (wb_inertial_unit_enable *imu* time_step))
+   (when
+      (>
+         (setq
+            *compass* (wb_robot_get_device "imu_gyrometer_topic compass"))
+         0)
+      (format t ";; *compass*=~A~%" *compass*)
+      (wb_compass_enable *compass* time_step))
+   (when
+       (>
+	(setq
+	 *rleg-foot-bumper* (wb_robot_get_device "imu_gyrometer_topic inertialunit"))
+         0)
+     (format t ";; *imu-vec*=~A~%" *imu*)
+     (wb_inertial_unit_enable *imu* time_step))
+   
+   ;;(set-joint-angle :larm-shoulder-r 90.0)
+   ;;(set-joint-angle :rarm-shoulder-r -90.0)
+   (send-webots)
+   (wb_keyboard_enable time_step)
+   (setq prev_key 0 i 0)
+   (setq *init* t))
+(defun main (&key (step 2))
+  (unless *init* (main-init))
+  (do-until-key
+   (cond ((= step 2)
+	  (main-step2)
+	  )
+	 ((= step 3)
+	  (main-step3)
+	  )
+	 )
+   )
+  )
 (defun main-step nil
   (my_step)
   (read-webots)
@@ -353,13 +424,36 @@
   (send *irtviewer* :draw-objects)
   (x::window-main-one)
   (unix:usleep (* time_step 1000)))
-(defun itimer-on nil
+(defun main-step3 nil
+  (my_step)
+  (read-webots)
+  (transform_step)
+  (setpose_step)
+  ;;(recognition-step *camera0*)
+  ;;(read-keyboard)
+  (send *irtviewer* :draw-objects)
+  (x::window-main-one)
+  (unix:usleep (* time_step 1000))
+  )
+(defun itimer-on (&key (step 3))
   (unless *init* (main-init))
   (setq *top-selector-interval* 0.01)
-  ;;(pushnew 'main-step *timer-job*)
-  (pushnew 'main-step2 *timer-job*)
-  ;;(pushnew 'main-step3 *timer-job*)
+  (format t "main-step~A~%" step)
+  (cond ((= step 1)
+	 (pushnew 'main-step *timer-job*)
+	 )
+	((= step 2)
+	 (pushnew 'main-step2 *timer-job*)
+	 )
+	((= step 3)
+	 (pushnew 'main-step3 *timer-job*)
+	 )
+	)
   )
-(defun itimer-off nil (setq *timer-job* (remove 'main-step *timer-job*)))
+(defun itimer-off nil
+  (setq *timer-job* (remove 'main-step *timer-job*))
+  (setq *timer-job* (remove 'main-step2 *timer-job*))
+  (setq *timer-job* (remove 'main-step3 *timer-job*))
+  )
 (itimer-on)
 ;;(main-init)
