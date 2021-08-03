@@ -1,0 +1,252 @@
+#VRML_SIM R2021a utf8
+WorldInfo {
+  title "garb_collect"
+  basicTimeStep 4
+  coordinateSystem "NUE"
+  contactProperties [
+    ContactProperties {
+      material1 "leg"
+      material2 "floor"
+      coulombFriction [
+        5
+      ]
+    }
+    ContactProperties {
+      material1 "body"
+      material2 "floor"
+      coulombFriction [
+        0.2
+      ]
+    }
+    ContactProperties {
+      material1 "garb"
+      material2 "floor"
+    }
+  ]
+}
+Viewpoint {
+  orientation -0.24876087061692662 0.9032372020198244 0.34968641114190835 1.9818410487742026
+  position 8.177756915818422 3.9930425991289242 -3.226174410878778
+}
+TexturedBackground {
+}
+TexturedBackgroundLight {
+}
+DEF AQUARIUM Solid {
+  translation 0 0.1 0
+  children [
+    DEF SIDES_GROUP Group {
+      children [
+        Transform {
+          translation 0 0 4
+          children [
+            DEF GLASS_SHAPE1 Shape {
+              appearance DEF GLASS_APPEARANCE PBRAppearance {
+                baseColor 1 0.6 0.6
+                roughness 1
+                metalness 0
+              }
+              geometry Box {
+                size 12 0.7 0.02
+              }
+            }
+          ]
+        }
+        Transform {
+          translation 0 0 -4
+          children [
+            USE GLASS_SHAPE1
+          ]
+        }
+        Transform {
+          translation -6 0 0
+          rotation 0 1 0 1.5708
+          children [
+            DEF GLASS_SHAPE2 Shape {
+              appearance USE GLASS_APPEARANCE
+              geometry Box {
+                size 8 0.7 0.02
+              }
+            }
+          ]
+        }
+        Transform {
+          translation 6 0 0
+          rotation 0 1 0 1.5708
+          children [
+            USE GLASS_SHAPE2
+          ]
+        }
+      ]
+    }
+  ]
+  name "aquarium"
+  boundingObject USE SIDES_GROUP
+  locked TRUE
+}
+DEF FLOOR Solid {
+  children [
+    DEF GND Group {
+      children [
+        Transform {
+          translation -4.42876 -0.3 0
+          children [
+            Shape {
+              appearance DEF GROUND_APPEARANCE PBRAppearance {
+                baseColorMap ImageTexture {
+                  url [
+                    "textures/texture_grid.png"
+                  ]
+                }
+                roughness 1
+                metalness 0
+              }
+              geometry Box {
+                size 3.14249 0.1 8
+              }
+            }
+          ]
+        }
+        Transform {
+          translation 0 -0.05 0
+          rotation 0 0 1 0.087266
+          children [
+            Shape {
+              appearance USE GROUND_APPEARANCE
+              geometry Box {
+                size 5.73686 0.1 8
+              }
+            }
+          ]
+        }
+        Transform {
+          translation 4.42876 0.2 0
+          children [
+            Shape {
+              appearance USE GROUND_APPEARANCE
+              geometry Box {
+                size 3.14249 0.1 8
+              }
+            }
+          ]
+        }
+      ]
+    }
+  ]
+  name "ground"
+  contactMaterial "floor"
+  boundingObject USE GND
+  locked TRUE
+}
+Garbage {
+  translation 5.20181 0.62 -1.64638
+  rotation 0 1 0 -1.5707953071795862
+  size 0.2 0.05 0.05
+  name "garb3(1)"
+}
+Solid {
+  translation 4.2119 0.53 -3.47491
+  children [
+    DEF gc_box Group {
+      children [
+        Transform {
+          children [
+            DEF box_z Shape {
+              appearance PBRAppearance {
+                baseColor 0.447059 0.623529 0.811765
+                metalness 0
+              }
+              geometry Box {
+                size 0.03 0.5 0.83
+              }
+            }
+          ]
+        }
+        Transform {
+          translation 0.5 0 0
+          children [
+            USE box_z
+          ]
+        }
+        Transform {
+          translation 0.25 0 0.4
+          children [
+            DEF box_x Shape {
+              appearance PBRAppearance {
+                baseColor 0.447059 0.623529 0.811765
+                metalness 0
+              }
+              geometry Box {
+                size 0.5 0.5 0.03
+              }
+            }
+          ]
+        }
+        Transform {
+          translation 0.25 0 -0.4
+          children [
+            USE box_x
+          ]
+        }
+        Transform {
+          translation 0.25 -0.25 0
+          children [
+            Shape {
+              appearance PBRAppearance {
+                baseColor 0.12549 0.290196 0.529412
+                metalness 0
+              }
+              geometry Box {
+                size 0.53 0.05 0.83
+              }
+            }
+          ]
+        }
+      ]
+    }
+  ]
+  name "gc_box"
+  boundingObject USE gc_box
+  physics Physics {
+    density 1
+  }
+  recognitionColors [
+    0.4 0.6 0.8
+  ]
+}
+Solid {
+  translation 5.44128 0.4 -1.83399
+  children [
+    Shape {
+      appearance PBRAppearance {
+        baseColor 0.913725 0.72549 0.431373
+        metalness 0
+      }
+      geometry DEF DESK Box {
+        size 1 0.3 1
+      }
+    }
+  ]
+  boundingObject USE DESK
+  physics Physics {
+    density 1
+  }
+}
+TiagoTitanium {
+  translation 3.90407 0.355 -1.75224
+  rotation 0.9999999999921543 8.73215999993149e-07 -3.863789999969686e-06 -1.5708053071795867
+  controller "<extern>"
+  controllerArgs [
+    ""
+  ]
+  cameraSlot [
+    Camera {
+      rotation 0 1 0 -1.5705
+      fieldOfView 1
+      width 256
+      height 192
+      recognition Recognition {
+      }
+    }
+  ]
+}
