@@ -1,0 +1,86 @@
+#VRML_SIM R2021a utf8
+WorldInfo {
+  info [
+    "This demonstration shows a DJI Mavic 2 PRO flying over a rural area."
+    "After the drone has taken off, you can control it with the keyboard of your computer."
+  ]
+  title "DJI Mavic 2 PRO demo"
+  basicTimeStep 8
+  defaultDamping Damping {
+    linear 0.5
+    angular 0.5
+  }
+  coordinateSystem "NUE"
+}
+Viewpoint {
+  orientation 0.619073324487198 -0.7631920735969039 -0.18516500130215363 5.880492158453011
+  position 0.3315620316927982 0.6255181757349435 1.6792501215677091
+  near 0.2
+  follow "Mavic 2 PRO"
+  followSmoothness 0.2
+}
+TexturedBackground {
+  luminosity 3
+}
+TexturedBackgroundLight {
+}
+Floor {
+  size 400 400
+  tileSize 6 6
+  appearance SandyGround {
+  }
+}
+#Road {
+#  translation -43.8 0.01 -9.2
+#  rotation 0 1 0 1.1781
+#  width 3
+#  numberOfLanes 1
+#  rightBorder FALSE
+#  leftBorder FALSE
+#  wayPoints [
+#    0 0 0
+#    0 0 100
+#    200 0 200
+#  ]
+#  splineSubdivision 8
+#  appearance Pavement {
+#    type "black stone"
+#  }
+#}
+
+Apple {
+  translation -4 1.5 0
+}
+DEF SolidBox Solid {
+  name "box"
+  children [ SolidBox {
+    size 1.5 0.2 1.5   # any positive vector
+    translation -4.0 1.4 0
+    appearance PBRAppearance {
+      baseColor 0 0.1 0
+    }
+  }]
+}
+Mavic2Pro {
+  translation 0 0.3 0
+  rotation -5.085758426212298e-09 0.707107781185531 0.70710578118615 3.14159
+  bodySlot [
+    Khr2hv {
+      translation -0.0289 -2.83797e-17 -0.12
+      rotation 0.57735 0.57735 0.57735 2.0944
+    }
+  ]
+  cameraSlot [
+    Camera {
+      width 400
+      height 240
+      near 0.2
+      recognition Recognition {
+        maxRange 2000
+        frameColor 0.929412 0.831373 0
+        frameThickness 3
+      }
+    }
+  ]
+}
+
