@@ -671,7 +671,7 @@
     )  
   )
 
-(format t "(search-min-time :max 1100 :min 500 :step 200 :b-time 500)~%")
+(format t "(search-min-time :max 3000 :min 0 :step 300 :b-time 500)~%")
 
 (defun setpose_step nil
   (let ((tmp-time))
