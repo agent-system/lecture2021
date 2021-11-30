@@ -33,6 +33,7 @@ services:
       # - ROS_HOME=/ros_home
               ## mount directory /tmp/jskrobotics -> docker:/jsk_robotics
     volumes:  ## you can change /tmp/jskrobotics to your favorite directory
+      # - "c:\\tmp:/jskrobotics" ## for windows environment
       - '/tmp/jskrobotics:/jskrobotics'
     volumes_from:
       - xserver
